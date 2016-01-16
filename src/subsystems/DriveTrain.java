@@ -4,7 +4,12 @@ import org.usfirst.frc.team2729.robot.RobotMap;
 import java.util.Timer;
 import java.util.TimerTask;
 
+<<<<<<< Updated upstream
 import org.usfirst.frc.team2729.robot.RobotMap;
+=======
+	public static void main(String[] args) {
+		
+>>>>>>> Stashed changes
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Encoder;
