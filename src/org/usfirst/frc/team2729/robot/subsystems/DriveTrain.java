@@ -7,6 +7,7 @@ import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
 public class DriveTrain extends Subsystem {
     
@@ -16,13 +17,74 @@ public class DriveTrain extends Subsystem {
 						  _rightEncoder = new Encoder(RobotMap.PORT_ENCODER_RIGHT_1, RobotMap.PORT_ENCODER_RIGHT_2);;
 	private final DoubleSolenoid _shifter = new DoubleSolenoid(RobotMap.PORT_SHIFT_DRIVE_HIGH, RobotMap.PORT_SHIFT_DRIVE_LOW);
 	
+	private boolean _halfOne = false, _halfTwo = false;
+	private boolean _isHighGear = false;
 	public DriveTrain(){
-		
+		_shifter.set(DoubleSolenoid.Value.kForward);
+		_isHighGear = false;
 	}
 	
 	public void initDefaultCommand() {
-        // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
     }
+	public void halveOne(boolean half){
+		_halfOne = half;
+	}
+	
+	public void halveTwo(boolean half){
+		_halfTwo = half;
+	}
+
+	public void halt() {
+		_left.set(0);
+		_right.set(0);
+	}
+	
+	public void stop(){
+		_left.set(0);
+		_right.set(0);
+	}
+	
+	public void kDrive(double left, double right){
+		_left.set((left/3) + (_halfOne ? (left/3) : 0) + (_halfTwo ? (left/3) : 0));
+		_right.set((right/3) + (_halfOne ? (right/3) : 0) + (_halfTwo ? (right/3) : 0));
+	}
+
+	public double getLeftDistance(){
+		return _leftEncoder.get();
+	}
+	//negated due to encoder being backwards
+	public double getRightDistance(){
+		return -_rightEncoder.get();
+	}
+	public double getLeftSpeedEnc() {
+		return _leftEncoder.getRate();
+	}
+
+	public void resetLeftEnc() {
+		_leftEncoder.reset();
+	}
+
+	public void resetRightEnc() {
+		_rightEncoder.reset();
+	}
+	
+	public double getRightSpeedEnc() {
+		return -_rightEncoder.getRate();
+	}
+
+	public double getLeftSpeed() {
+		return _left.get();
+	}
+
+	public double getRightSpeed() {
+		return _right.get();
+	}
+
+	public void setHighGear(boolean enabled) {
+		_isHighGear  = enabled;
+		_shifter.set(enabled ? DoubleSolenoid.Value.kReverse
+				: DoubleSolenoid.Value.kForward);
+	}
 }
 
