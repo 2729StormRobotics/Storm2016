@@ -2,12 +2,16 @@
 package org.usfirst.frc.team2729.robot.subsystems;
 
 import org.usfirst.frc.team2729.robot.RobotMap;
+import org.usfirst.frc.team2729.robot.commands.TankDrive;
+
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
+
+//import org.usfirst.frc.team2729.robot.commands.joystick.TankDrive;
 
 public class DriveTrain extends Subsystem {
     
@@ -16,6 +20,9 @@ public class DriveTrain extends Subsystem {
 	private final Encoder _leftEncoder = new Encoder(RobotMap.PORT_ENCODER_DRIVE_LEFT_1, RobotMap.PORT_ENCODER_DRIVE_LEFT_2),
 						  _rightEncoder = new Encoder(RobotMap.PORT_ENCODER_DRIVE_RIGHT_1, RobotMap.PORT_ENCODER_DRIVE_RIGHT_2);;
 	private final DoubleSolenoid _shifter = new DoubleSolenoid(RobotMap.PORT_SHIFT_DRIVE_HIGH, RobotMap.PORT_SHIFT_DRIVE_LOW);
+	
+	double   
+	
 	
 	private boolean _halfOne = false, _halfTwo = false;
 	private boolean _isHighGear = false;
@@ -26,6 +33,7 @@ public class DriveTrain extends Subsystem {
 	
 	public void initDefaultCommand() {
         //setDefaultCommand(new MySpecialCommand());
+		setDefaultCommand(new TankDrive());
     }
 	public void halveOne(boolean half){
 		_halfOne = half;
@@ -45,7 +53,7 @@ public class DriveTrain extends Subsystem {
 		_right.set(0);
 	}
 	
-	public void kDrive(double left, double right){
+	public void TankDrive(double left, double right){
 		_left.set((left/3) + (_halfOne ? (left/3) : 0) + (_halfTwo ? (left/3) : 0));
 		_right.set((right/3) + (_halfOne ? (right/3) : 0) + (_halfTwo ? (right/3) : 0));
 	}

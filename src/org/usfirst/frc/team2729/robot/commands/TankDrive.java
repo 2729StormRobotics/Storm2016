@@ -5,12 +5,9 @@ import edu.wpi.first.wpilibj.command.Command;
 
 import org.usfirst.frc.team2729.robot.Robot;
 
-/**
- *
- */
-public class ExampleCommand extends Command {
+public class TankDrive extends Command {
 
-    public ExampleCommand() {
+    public TankDrive() {
         // Use requires() here to declare subsystem dependencies
         requires(Robot.driveTrain);
     }
@@ -21,19 +18,21 @@ public class ExampleCommand extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+    	double left = Robot.oi.getLeftDrive(),
+ 			   right = Robot.oi.getRightDrive();
+ 		Robot.driveTrain.TankDrive(left, right);
     }
 
-    // Make this return true when this Command no longer needs to run execute()
+    // Make this return true when this Command no longer needs to run execute
     protected boolean isFinished() {
         return false;
     }
 
-    // Called once after isFinished returns true
     protected void end() {
+    	Robot.driveTrain.TankDrive(0, 0);
     }
 
-    // Called when another command which requires one or more of the same
-    // subsystems is scheduled to run
     protected void interrupted() {
+    	Robot.driveTrain.TankDrive(0, 0);
     }
 }
