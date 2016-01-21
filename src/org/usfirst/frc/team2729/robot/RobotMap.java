@@ -6,6 +6,11 @@ public class RobotMap {
     	PORT_JOYSTICK_ARMS  			= 1,
     	PORT_JOYSTICK_DEBUG 			= 2;
 	
+	//Buttons
+	public static final int
+		JOYDRIVE_BUTTON_HALVE_1			   = 8,
+		JOYDRIVE_BUTTON_HALVE_2			   = 7;
+	
 	//Axes
 	public static final int
 		JOYDRIVE_AXIS_DRIVE_LEFT		 = 1,

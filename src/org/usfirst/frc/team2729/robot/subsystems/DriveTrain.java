@@ -21,9 +21,6 @@ public class DriveTrain extends Subsystem {
 						  _rightEncoder = new Encoder(RobotMap.PORT_ENCODER_DRIVE_RIGHT_1, RobotMap.PORT_ENCODER_DRIVE_RIGHT_2);;
 	private final DoubleSolenoid _shifter = new DoubleSolenoid(RobotMap.PORT_SHIFT_DRIVE_HIGH, RobotMap.PORT_SHIFT_DRIVE_LOW);
 	
-	double   
-	
-	
 	private boolean _halfOne = false, _halfTwo = false;
 	private boolean _isHighGear = false;
 	public DriveTrain(){
@@ -32,7 +29,6 @@ public class DriveTrain extends Subsystem {
 	}
 	
 	public void initDefaultCommand() {
-        //setDefaultCommand(new MySpecialCommand());
 		setDefaultCommand(new TankDrive());
     }
 	public void halveOne(boolean half){
@@ -56,6 +52,7 @@ public class DriveTrain extends Subsystem {
 	public void TankDrive(double left, double right){
 		_left.set((left/3) + (_halfOne ? (left/3) : 0) + (_halfTwo ? (left/3) : 0));
 		_right.set((right/3) + (_halfOne ? (right/3) : 0) + (_halfTwo ? (right/3) : 0));
+
 	}
 
 	public double getLeftDistance(){
