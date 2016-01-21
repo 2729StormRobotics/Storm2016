@@ -12,7 +12,7 @@ public class ExampleCommand extends Command {
 
     public ExampleCommand() {
         // Use requires() here to declare subsystem dependencies
-        requires(Robot.exampleSubsystem);
+        requires(Robot.driveTrain);
     }
 
     // Called just before this Command runs the first time
