@@ -9,7 +9,9 @@ public class RobotMap {
 	//Buttons
 	public static final int
 		JOYDRIVE_BUTTON_HALVE_1			   = 8,
-		JOYDRIVE_BUTTON_HALVE_2			   = 7;
+		JOYDRIVE_BUTTON_HALVE_2			   = 7,
+		JOYDRIVE_BUTTON_SHIFT_DRIVE_HIGH   = 4,
+		JOYDRIVE_BUTTON_SHIFT_DRIVE_LOW    = 2;
 	
 	//Axes
 	public static final int
