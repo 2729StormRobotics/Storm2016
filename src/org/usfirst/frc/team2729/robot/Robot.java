@@ -6,7 +6,10 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import org.usfirst.frc.team2729.robot.commands.TankDrive;
+import org.usfirst.frc.team2729.robot.commands.Tilt;
 import org.usfirst.frc.team2729.robot.subsystems.DriveTrain;
+import org.usfirst.frc.team2729.robot.subsystems.Intake;
+
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -21,7 +24,8 @@ public class Robot extends IterativeRobot {
 
 	public static final DriveTrain driveTrain = new DriveTrain();
 	public static OI oi;
-
+	public static Intake intake;
+	public static Tilt tilt;
     Command autonomousCommand;
     SendableChooser chooser;
 
@@ -35,6 +39,8 @@ public class Robot extends IterativeRobot {
         chooser.addDefault("Default Auto", new TankDrive());
 //        chooser.addObject("My Auto", new MyAutoCommand());
         SmartDashboard.putData("Auto mode", chooser);
+        intake = new Intake();
+        tilt= new Tilt();
     }
 	
 	/**

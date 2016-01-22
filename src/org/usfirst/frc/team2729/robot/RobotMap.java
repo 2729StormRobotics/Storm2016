@@ -23,7 +23,9 @@ public class RobotMap {
 		PORT_MOTOR_SHOOT_LEFT 			= 2,
 		PORT_MOTOR_SHOOT_RIGHT 			= 3,
 		PORT_MOTOR_INTAKE_HOR 			= 4,
-		PORT_MOTOR_INTAKE_VER 			= 5;
+		PORT_MOTOR_INTAKE_VER 			= 5,
+		PORT_MOTOR_INTAKE_TILT			= 6;
+	
 	
 	//Digital I/O Ports
 	public static final int
@@ -34,8 +36,8 @@ public class RobotMap {
 		PORT_ENCODER_SHOOT_LEFT_1       =  4,
 		PORT_ENCODER_SHOOT_LEFT_2       =  5,
 		PORT_ENCODER_SHOOT_RIGHT_1      =  6,
-		PORT_ENCODER_SHOOT_RIGHT_2      =  7;
-	
+		PORT_ENCODER_SHOOT_RIGHT_2      =  7,
+		PORT_LIMIT_SWITCH_INTAKE		=  8;
 	//Relay
 	public static final int PORT_RELAY_COMPRESSOR = 0;
 	
