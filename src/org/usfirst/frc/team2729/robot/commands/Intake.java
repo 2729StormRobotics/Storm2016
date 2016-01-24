@@ -19,8 +19,8 @@ public class Intake extends Command {
 
 	@Override
 	protected void execute() {
-		// TODO Auto-generated method stub
-		
+		double intake = Robot.oi.getLeftDrive();
+		Robot.intake.Intake(intake);
 	}
 
 	@Override

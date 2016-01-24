@@ -28,6 +28,12 @@ public class Shooter extends Subsystem {
 	public void Shoot(){
 		
 	}
+
+	@Override
+	protected void initDefaultCommand() {
+		// TODO Auto-generated method stub
+		
+	}
 	
 	
 }

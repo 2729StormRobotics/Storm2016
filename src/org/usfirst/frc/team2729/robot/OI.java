@@ -10,8 +10,8 @@ import org.usfirst.frc.team2729.robot.commands.TankDrive;
 
 public class OI {
 
-	private final Joystick driveJoystick = new Joystick(RobotMap.PORT_JOYSTICK_DRIVE);
-			  // armJoystick = new Joystick(RobotMap.PORT_JOYSTICK_ARMS);
+	private final Joystick driveJoystick = new Joystick(RobotMap.PORT_JOYSTICK_DRIVE),
+				armJoystick = new Joystick(RobotMap.PORT_JOYSTICK_ARMS);
 
 	private final Button halveOne = new JoystickButton(driveJoystick, RobotMap.JOYDRIVE_BUTTON_HALVE_1),
 						 halveTwo = new JoystickButton(driveJoystick, RobotMap.JOYDRIVE_BUTTON_HALVE_2),
@@ -27,6 +27,12 @@ public class OI {
 	public double getRightDrive(){
 	    	return _zeroDeadzone(driveJoystick.getRawAxis(RobotMap.JOYDRIVE_AXIS_DRIVE_RIGHT), 0.15);
 	}
+	public double getIntake(){
+		//not sure if this is correct
+		return _zeroDeadzone(driveJoystick.getRawAxis(RobotMap.JOYARM_AXIS_INTAKE), 0.15);
+		
+	}
+		
 	public OI(){
 		shiftHighDrive.whenPressed(new Shift(true));
 		shiftLowDrive.whenPressed(new Shift(false));
