@@ -40,6 +40,4 @@ public class Intake extends Command {
 		// TODO Auto-generated method stub
 		
 	}
-	
-
 }
