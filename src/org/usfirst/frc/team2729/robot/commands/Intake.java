@@ -19,8 +19,8 @@ public class Intake extends Command {
 
 	@Override
 	protected void execute() {
-		double intake = Robot.oi.getLeftDrive();
-		Robot.intake.Intake(intake);
+		double power = Robot.oi.getLeftDrive();
+		Robot.intake.Intake(power);
 	}
 
 	@Override
@@ -40,6 +40,4 @@ public class Intake extends Command {
 		// TODO Auto-generated method stub
 		
 	}
-	
-
 }
