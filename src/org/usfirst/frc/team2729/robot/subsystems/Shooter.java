@@ -2,10 +2,13 @@ package org.usfirst.frc.team2729.robot.subsystems;
 
 import org.usfirst.frc.team2729.robot.RobotMap;
 
+import edu.wpi.first.wpilibj.AnalogPotentiometer;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.command.Subsystem;
+
+import edu.wpi.first.wpilibj.AnalogPotentiometer;
 
 public class Shooter extends Subsystem {
 
@@ -13,7 +16,10 @@ public class Shooter extends Subsystem {
 	private final Encoder _rightShooter = new Encoder(RobotMap.PORT_ENCODER_SHOOT_RIGHT_1, RobotMap.PORT_ENCODER_SHOOT_RIGHT_2);
 	
 	private final Talon _left = new Talon(RobotMap.PORT_MOTOR_SHOOT_LEFT),
-		   				_right= new Talon(RobotMap.PORT_MOTOR_SHOOT_RIGHT);
+		   				_right= new Talon(RobotMap.PORT_MOTOR_SHOOT_RIGHT),
+		   				_tilt = new Talon(RobotMap.PORT_MOTOR_SHOOT_TILT);
+
+	private AnalogPotentiometer _pot;
 	
 	private boolean _shoot;
 	
