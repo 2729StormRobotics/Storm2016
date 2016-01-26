@@ -14,7 +14,7 @@ public class IntakeSystem extends Subsystem {
 	
 	
 	protected void initDefaultCommand() {
-		setDefaultCommand(new IntakeSystem());
+		setDefaultCommand(new Intake());
 	
 	}
 	//private void setDefaultCommand(Intake intake) {
