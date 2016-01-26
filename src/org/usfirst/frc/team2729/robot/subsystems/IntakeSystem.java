@@ -4,7 +4,7 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import org.usfirst.frc.team2729.robot.RobotMap;
-public class Intake extends Subsystem {
+public class IntakeSystem extends Subsystem {
 
 	private final Talon _intakeHor = new Talon(RobotMap.PORT_MOTOR_INTAKE_HOR);
 	private final Talon _intakeVer = new Talon(RobotMap.PORT_MOTOR_INTAKE_VER);
@@ -14,7 +14,7 @@ public class Intake extends Subsystem {
 	
 	
 	protected void initDefaultCommand() {
-		setDefaultCommand(new Intake());
+		setDefaultCommand(new IntakeSystem());
 	
 	}
 	//private void setDefaultCommand(Intake intake) {

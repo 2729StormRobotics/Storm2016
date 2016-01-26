@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import org.usfirst.frc.team2729.robot.commands.TankDrive;
 import org.usfirst.frc.team2729.robot.commands.IntakeTilt;
 import org.usfirst.frc.team2729.robot.subsystems.DriveTrain;
-import org.usfirst.frc.team2729.robot.subsystems.Intake;
+import org.usfirst.frc.team2729.robot.subsystems.IntakeSystem;
 
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -24,7 +24,7 @@ public class Robot extends IterativeRobot {
 
 	public static final DriveTrain driveTrain = new DriveTrain();
 	public static OI oi;
-	public static Intake intake= new Intake() ;
+	public static IntakeSystem intake= new IntakeSystem() ;
 	public static IntakeTilt intakeTilt= new IntakeTilt();
 	
     Command autonomousCommand;
