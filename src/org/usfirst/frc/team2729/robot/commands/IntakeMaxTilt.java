@@ -4,13 +4,13 @@ import org.usfirst.frc.team2729.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class IntakeTilt extends Command{
+public class IntakeMaxTilt extends Command{
 
-	public IntakeTilt(){
+	public IntakeMaxTilt(){
 		requires(Robot.intakeTilt);
 	}
 	
-	private void requires(IntakeTilt tilt) {
+	private void requires(IntakeMaxTilt tilt) {
 		// TODO Auto-generated method stub
 		
 	}

@@ -7,6 +7,7 @@ import edu.wpi.first.wpilibj.command.Command;
 
 import org.usfirst.frc.team2729.robot.commands.Shift;
 import org.usfirst.frc.team2729.robot.commands.TankDrive;
+import org.usfirst.frc.team2729.robot.RobotMap;
 
 public class OI {
 
@@ -29,7 +30,7 @@ public class OI {
 	}
 	public double getIntake(){
 		//not sure if this is correct
-		return _zeroDeadzone(driveJoystick.getRawAxis(RobotMap.JOYARM_AXIS_INTAKE), 0.15);
+		return _zeroDeadzone(armJoystick.getRawAxis(RobotMap.JOYARM_AXIS_INTAKE), 0.15);
 		
 	}
 		
