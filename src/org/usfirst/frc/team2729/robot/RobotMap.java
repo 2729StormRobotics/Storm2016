@@ -17,6 +17,8 @@ public class RobotMap {
 	public static final int
 		JOYDRIVE_AXIS_DRIVE_LEFT		 = 1,
 		JOYDRIVE_AXIS_DRIVE_RIGHT		 = 3,
+		JOYDRIVE_BUTTON_FORWARD			 = 10,
+		JOYDRIVE_BUTTON_BACKWARDS		 = 9,
 		JOYARM_AXIS_INTAKE				 = 1,
 		JOYARM_AXIS_INTAKE_TILT			 = 3;
 	

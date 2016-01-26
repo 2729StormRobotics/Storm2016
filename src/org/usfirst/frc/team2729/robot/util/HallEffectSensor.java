@@ -27,20 +27,17 @@ public class HallEffectSensor implements LiveWindowSendable{
 	
 	@Override
 	public void initTable(ITable subtable) {
-		// TODO Auto-generated method stub
 		_table = subtable;
 		updateTable();
 	}
 
 	@Override
 	public ITable getTable() {
-		// TODO Auto-generated method stub
 		return _table;
 	}
 
 	@Override
 	public String getSmartDashboardType() {
-		// TODO Auto-generated method stub
 		return "Analog input";
 	}
 
