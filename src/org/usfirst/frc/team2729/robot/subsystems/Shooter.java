@@ -7,8 +7,7 @@ import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.command.Subsystem;
-
-import edu.wpi.first.wpilibj.AnalogPotentiometer;
+import org.usfirst.frc.team2729.robot.util.StringPot;
 
 public class Shooter extends Subsystem {
 
@@ -18,10 +17,19 @@ public class Shooter extends Subsystem {
 	private final Talon _left = new Talon(RobotMap.PORT_MOTOR_SHOOT_LEFT),
 		   				_right= new Talon(RobotMap.PORT_MOTOR_SHOOT_RIGHT),
 		   				_tilt = new Talon(RobotMap.PORT_MOTOR_SHOOT_TILT);
-
-	private AnalogPotentiometer _pot;
 	
 	private boolean _shoot;
+	
+	private StringPot _stringPot = new StringPot(RobotMap.PORT_STRINGPOT, 1);
+	
+	public double getShooterAngle(){
+		return _stringPot.get();
+	}
+	
+	public Talon get_tilt() {
+		return _tilt;
+	}
+	
 	
 	Shooter(){
 		
