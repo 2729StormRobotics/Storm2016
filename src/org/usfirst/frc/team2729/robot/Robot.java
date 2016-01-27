@@ -7,6 +7,7 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import org.usfirst.frc.team2729.robot.commands.TankDrive;
 import org.usfirst.frc.team2729.robot.commands.IntakeMaxTilt;
+import org.usfirst.frc.team2729.robot.commands.IntakeMinTilt;
 import org.usfirst.frc.team2729.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team2729.robot.subsystems.IntakeSystem;
 
@@ -25,7 +26,8 @@ public class Robot extends IterativeRobot {
 	public static final DriveTrain driveTrain = new DriveTrain();
 	public static OI oi;
 	public static IntakeSystem intake= new IntakeSystem() ;
-	public static IntakeMaxTilt intakeTilt= new IntakeMaxTilt();
+	public static IntakeMaxTilt intakeMaxTilt= new IntakeMaxTilt();
+	public static IntakeMinTilt intakeMinTilt= new IntakeMinTilt();
 	
     Command autonomousCommand;
     SendableChooser chooser;
