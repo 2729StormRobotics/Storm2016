@@ -7,7 +7,8 @@ import edu.wpi.first.wpilibj.command.Command;
 public class IntakeMaxTilt extends Command{
 
 	public IntakeMaxTilt(){
-		requires(Robot.intakeTilt);
+		requires(Robot.intakeMaxTilt);
+		
 	}
 	
 	private void requires(IntakeMaxTilt tilt) {
@@ -29,8 +30,7 @@ public class IntakeMaxTilt extends Command{
 
 	@Override
 	protected boolean isFinished() {
-		// TODO Auto-generated method stub
-		return false;
+		
 	}
 
 	@Override

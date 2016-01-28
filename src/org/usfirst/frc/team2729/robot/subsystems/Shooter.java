@@ -18,28 +18,43 @@ public class Shooter extends Subsystem {
 		   				_right= new Talon(RobotMap.PORT_MOTOR_SHOOT_RIGHT),
 		   				_tilt = new Talon(RobotMap.PORT_MOTOR_SHOOT_TILT);
 	
-	private boolean _shoot;
-	
 	private StringPot _stringPot = new StringPot(RobotMap.PORT_STRINGPOT, 1);
+	
+	private double leftPower;
+	private double rightPower;
+
+	//command that tilts shooter at given speed up or down, needs to have a bottom and top value set on string pot: should be saved in subsystem
+	//setters and getters for right and left motors, use power
+	
+	public void setTiltPower(double power){
+		_tilt.set(power);
+	}
+	
+	public void setLeftPower(double power){
+		_left.set(power);
+		leftPower = power;
+	}
+	
+	public void setRightPower(double power){
+		_right.set(power);
+		rightPower = power;
+	}
+	
+	public double getLeftPower(){
+		return leftPower;
+	}
+	
+	public double getRightPower(){
+		return rightPower;
+	}
+	
 	
 	public double getShooterAngle(){
 		return _stringPot.get();
 	}
 	
-	public Talon get_tilt() {
-		return _tilt;
-	}
-	
 	
 	Shooter(){
-		
-	}
-	
-	public void ElevateShooter(){
-		
-	}
-	
-	public void Shoot(){
 		
 	}
 

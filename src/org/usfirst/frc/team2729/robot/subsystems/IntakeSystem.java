@@ -27,23 +27,26 @@ public class IntakeSystem extends Subsystem {
 	public void halt() {
 		_intakeHor.set(0);
 		_intakeVer.set(0);
-	
+		_intakeTilt.set(0);
 	}
 	public void stop() {
 		_intakeHor.set(0);
 		_intakeVer.set(0);
+		_intakeTilt.set(0);
 	}
 
 	public void Intake(double intake) {
 		_intakeHor.set(intake/3);
 		_intakeVer.set(intake/3);
+		_intakeTilt.set(intake/3);
 	}
 
 	public boolean isMax(){
 		return !_switch.get();
 		
 	}
-		
+	
+
 
 	
 	//Drive Intake Talons
