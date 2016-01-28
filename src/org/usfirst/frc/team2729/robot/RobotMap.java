@@ -20,6 +20,7 @@ public class RobotMap {
 		JOYARM_AXIS_INTAKE				 = 1,
 		JOYARM_AXIS_INTAKE_TILT			 = 3;
 	
+
 	//PWM Ports
 	public static final int
 		PORT_MOTOR_DRIVE_LEFT 			= 0,
@@ -45,7 +46,8 @@ public class RobotMap {
 		PORT_ENCODER_SHOOT_LEFT_2       =  5,
 		PORT_ENCODER_SHOOT_RIGHT_1      =  6,
 		PORT_ENCODER_SHOOT_RIGHT_2      =  7,
-		PORT_LIMIT_SWITCH_INTAKE_TILT	=  8;
+		PORT_LIMIT_SWITCH_MAX_TILT		=  8,
+		PORT_LIMIT_SWITCH_MIN_TILT		=  9;
 	
 	//Relay
 	public static final int PORT_RELAY_COMPRESSOR = 0;

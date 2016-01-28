@@ -32,11 +32,13 @@ public class OI {
 	    	return _zeroDeadzone(driveJoystick.getRawAxis(RobotMap.JOYDRIVE_AXIS_DRIVE_RIGHT), 0.15);
 	}
 	public double getIntake(){
-		//not sure if this is correct
 		return _zeroDeadzone(armJoystick.getRawAxis(RobotMap.JOYARM_AXIS_INTAKE), 0.15);
 		
 	}
+	public double getIntakeTilt(){
+		return _zeroDeadzone(armJoystick.getRawAxis(RobotMap.JOYARM_AXIS_INTAKE_TILT), 0.15);
 		
+	}
 	public OI(){
 		shiftHighDrive.whenPressed(new Shift(true));
 		shiftLowDrive.whenPressed(new Shift(false));
