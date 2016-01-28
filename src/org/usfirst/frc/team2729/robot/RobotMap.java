@@ -17,8 +17,6 @@ public class RobotMap {
 	public static final int
 		JOYDRIVE_AXIS_DRIVE_LEFT		 = 1,
 		JOYDRIVE_AXIS_DRIVE_RIGHT		 = 3,
-		JOYDRIVE_BUTTON_FORWARD			 = 10,
-		JOYDRIVE_BUTTON_BACKWARDS		 = 9,
 		JOYARM_AXIS_INTAKE				 = 1,
 		JOYARM_AXIS_INTAKE_TILT			 = 3;
 	
@@ -34,6 +32,9 @@ public class RobotMap {
 		PORT_MOTOR_INTAKE_VER 			= 6,
 		PORT_MOTOR_INTAKE_TILT			= 7;
 	
+	// Analog ports
+    public static final int PORT_SENSOR_GYRO      = 1,
+    		PORT_STRINGPOT						  = 0;
 	
 	//Digital I/O Ports
 	public static final int

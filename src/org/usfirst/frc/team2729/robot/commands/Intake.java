@@ -13,31 +13,30 @@ public class Intake extends Command {
 	
 	@Override
 	protected void initialize() {
-		// TODO Auto-generated method stub
+	
 		
 	}
 
 	@Override
 	protected void execute() {
-		double power = Robot.oi.getLeftDrive();
+		double power = Robot.oi.getIntake();
 		Robot.intake.Intake(power);
 	}
 
 	@Override
 	protected boolean isFinished() {
-		// TODO Auto-generated method stub
+	
 		return false;
 	}
 
 	@Override
 	protected void end() {
-		// TODO Auto-generated method stub
-		
+	
 	}
 
 	@Override
 	protected void interrupted() {
-		// TODO Auto-generated method stub
+	
 		
 	}
 }
