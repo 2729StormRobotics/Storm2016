@@ -1,20 +1,12 @@
 package org.usfirst.frc.team2729.robot.commands;
 
+
 import org.usfirst.frc.team2729.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class IntakeMaxTilt extends Command{
 
-	public IntakeMaxTilt(){
-		requires(Robot.intakeMaxTilt);
-		
-	}
-	
-	private void requires(IntakeMaxTilt tilt) {
-		// TODO Auto-generated method stub
-		
-	}
+public class IntakeTilt extends Command{
 
 	@Override
 	protected void initialize() {
@@ -24,13 +16,19 @@ public class IntakeMaxTilt extends Command{
 
 	@Override
 	protected void execute() {
-		// TODO Auto-generated method stub
+		if (Robot.intake.isMax() == true){
+			Robot.intake.IntakeTilt(0);
+		}
 		
+		if (Robot.intake.isMin() == true){
+			Robot.intake.IntakeTilt(0);
+		}
 	}
 
 	@Override
 	protected boolean isFinished() {
-		
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 	@Override
