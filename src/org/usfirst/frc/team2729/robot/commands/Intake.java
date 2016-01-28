@@ -19,7 +19,7 @@ public class Intake extends Command {
 
 	@Override
 	protected void execute() {
-		double power = Robot.oi.getLeftDrive();
+		double power = Robot.oi.getIntake();
 		Robot.intake.Intake(power);
 	}
 
