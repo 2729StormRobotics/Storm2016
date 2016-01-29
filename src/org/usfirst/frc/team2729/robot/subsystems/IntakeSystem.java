@@ -14,8 +14,8 @@ public class IntakeSystem extends Subsystem {
 	private final Talon _intakeVer = new Talon(RobotMap.PORT_MOTOR_INTAKE_VER);
 	private final Talon _intakeTilt = new Talon(RobotMap.PORT_MOTOR_INTAKE_TILT);
 	
-	private final DigitalInput _switch = new DigitalInput(RobotMap.PORT_LIMIT_SWITCH_INTAKE_TILT);
-	
+	private final DigitalInput _switchMax = new DigitalInput(RobotMap.PORT_LIMIT_SWITCH_MAX_TILT);
+	private final DigitalInput _switchMin = new DigitalInput(RobotMap.PORT_LIMIT_SWITCH_MIN_TILT);
 	
 	protected void initDefaultCommand() {
 		setDefaultCommand(new Intake());
@@ -35,17 +35,25 @@ public class IntakeSystem extends Subsystem {
 		_intakeTilt.set(0);
 	}
 
-	public void Intake(double intake) {
-		_intakeHor.set(intake/3);
-		_intakeVer.set(intake/3);
-		_intakeTilt.set(intake/3);
+	public void Intake(double power) {
+		_intakeHor.set(power);
+		_intakeVer.set(power);
 	}
 
+	public void IntakeTilt(double power){
+		_intakeTilt.set(power);
+	}
+	
+	
 	public boolean isMax(){
-		return !_switch.get();
+		return _switchMax.get();
 		
 	}
 	
+	public boolean isMin(){
+		return _switchMin.get();
+		
+	}
 
 
 	

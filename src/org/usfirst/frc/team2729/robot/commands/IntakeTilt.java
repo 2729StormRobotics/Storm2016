@@ -1,31 +1,31 @@
 package org.usfirst.frc.team2729.robot.commands;
 
+
 import org.usfirst.frc.team2729.robot.Robot;
 
+import edu.wpi.first.wpilibj.PIDSource;
 import edu.wpi.first.wpilibj.command.Command;
 
-public class Intake extends Command {
-	
-	public Intake(){
-		requires(Robot.intake);
-	}
-	
-	
+public class IntakeTilt extends Command{
+
 	@Override
 	protected void initialize() {
 	
-		
 	}
 
 	@Override
 	protected void execute() {
-		double power = Robot.oi.getIntake();
-		Robot.intake.Intake(power);
+		if (Robot.intake.isMax() == true && Robot.oi.getIntakeTilt()>0){
+			Robot.intake.IntakeTilt(0);
+		} else if (Robot.intake.isMin() == true && Robot.oi.getIntakeTilt()<0){
+			Robot.intake.IntakeTilt(0);
+		} else {
+			Robot.intake.IntakeTilt(Robot.oi.getIntakeTilt());
+		}
 	}
 
 	@Override
 	protected boolean isFinished() {
-	
 		return false;
 	}
 
@@ -36,7 +36,8 @@ public class Intake extends Command {
 
 	@Override
 	protected void interrupted() {
-	
+		
 		
 	}
+
 }

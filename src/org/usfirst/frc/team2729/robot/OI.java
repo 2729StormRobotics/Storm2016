@@ -20,9 +20,7 @@ public class OI {
 						 shiftHighDrive = new JoystickButton(driveJoystick, RobotMap.JOYDRIVE_BUTTON_SHIFT_DRIVE_HIGH),
 						 shiftLowDrive = new JoystickButton(driveJoystick, RobotMap.JOYDRIVE_BUTTON_SHIFT_DRIVE_LOW),
 						 driveForward = new JoystickButton(driveJoystick, RobotMap.JOYDRIVE_BUTTON_FORWARD),
-						 driveBackward = new JoystickButton(driveJoystick, RobotMap.JOYDRIVE_BUTTON_BACKWARDS),
-						 extender = new JoystickButton(driveJoystick, RobotMap.JOYARM_BUTTON_EXTENDER);
-						 
+						 driveBackward = new JoystickButton(driveJoystick, RobotMap.JOYDRIVE_BUTTON_BACKWARDS);
 	
 	private double _zeroDeadzone(double joyValue,double dead) {
         return Math.abs(joyValue) > dead ? joyValue : 0;
@@ -34,18 +32,13 @@ public class OI {
 	    	return _zeroDeadzone(driveJoystick.getRawAxis(RobotMap.JOYDRIVE_AXIS_DRIVE_RIGHT), 0.15);
 	}
 	public double getIntake(){
-		//not sure if this is correct
 		return _zeroDeadzone(armJoystick.getRawAxis(RobotMap.JOYARM_AXIS_INTAKE), 0.15);
-	}
-	//public double getextenderLeft(){
-		//not sure if this is correct
-		//return _zeroDeadzone(armJoystick.getRawAxis(RobotMap.JOYARM_BUTTON_EXTENDER_LEFT), 0.15);	
-	//}
-	//public double getextenderRight(){
-		//not sure if this is correct
-		//return _zeroDeadzone(armJoystick.getRawAxis(RobotMap.JOYARM_BUTTON_EXTENDER_RIGHT), 0.15);	
-	//}
 		
+	}
+	public double getIntakeTilt(){
+		return _zeroDeadzone(armJoystick.getRawAxis(RobotMap.JOYARM_AXIS_INTAKE_TILT), 0.15);
+		
+	}
 	public OI(){
 		shiftHighDrive.whenPressed(new Shift(true));
 		shiftLowDrive.whenPressed(new Shift(false));
@@ -53,8 +46,6 @@ public class OI {
 		driveForward.whileHeld(new PIDDrive(0.8));
 		driveBackward.whileHeld(new PIDDrive(-0.8));
 		
-		extender.whileheld(new Extend());
-				
 		halveOne.whileHeld(new Command() {
 			@Override
 			protected void initialize() { Robot.driveTrain.halveOne(true); }

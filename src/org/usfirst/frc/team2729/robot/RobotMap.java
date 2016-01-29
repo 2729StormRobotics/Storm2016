@@ -12,18 +12,17 @@ public class RobotMap {
 		JOYDRIVE_BUTTON_HALVE_2			   = 7,
 		JOYDRIVE_BUTTON_SHIFT_DRIVE_HIGH   = 4,
 		JOYDRIVE_BUTTON_SHIFT_DRIVE_LOW    = 2,
-	    JOYARM_BUTTON_EXTENDER             = 9;
-	
+		JOYDRIVE_BUTTON_FORWARD			   = 10,
+		JOYDRIVE_BUTTON_BACKWARDS		   = 9;
 	
 	//Axes
 	public static final int
 		JOYDRIVE_AXIS_DRIVE_LEFT		 = 1,
 		JOYDRIVE_AXIS_DRIVE_RIGHT		 = 3,
-		JOYDRIVE_BUTTON_FORWARD			 = 10,
-		JOYDRIVE_BUTTON_BACKWARDS		 = 9,
 		JOYARM_AXIS_INTAKE				 = 1,
 		JOYARM_AXIS_INTAKE_TILT			 = 3;
 	
+
 	//PWM Ports
 	public static final int
 		PORT_MOTOR_DRIVE_LEFT 			= 0,
@@ -33,9 +32,11 @@ public class RobotMap {
 		PORT_MOTOR_SHOOT_TILT			= 4,
 		PORT_MOTOR_INTAKE_HOR 			= 5,
 		PORT_MOTOR_INTAKE_VER 			= 6,
-		PORT_MOTOR_INTAKE_TILT			= 7,
-	    PORT_MOTOR_EXTENDER_LEFT        = 8,
-	    PORT_MOTOR_EXTENDER_RIGHT       = 9; 
+		PORT_MOTOR_INTAKE_TILT			= 7;
+	
+	// Analog ports
+    public static final int PORT_SENSOR_GYRO      = 1,
+    		PORT_STRINGPOT						  = 0;
 	
 	//Digital I/O Ports
 	public static final int
@@ -47,11 +48,9 @@ public class RobotMap {
 		PORT_ENCODER_SHOOT_LEFT_2       =  5,
 		PORT_ENCODER_SHOOT_RIGHT_1      =  6,
 		PORT_ENCODER_SHOOT_RIGHT_2      =  7,
-		PORT_LIMIT_SWITCH_INTAKE_TILT	=  8,
-	    PORT_ENCODER_EXTENDER_LEFT_1     =  9, 
-	    PORT_ENCODER_EXTENDER_LEFT_2     =  10,
-	    PORT_ENCODER_EXTENDER_RIGHT_1     =  11,
-	    PORT_ENCODER_EXTENDER_RIGHT_2     =  12;
+		PORT_LIMIT_SWITCH_MAX_TILT		=  8,
+		PORT_LIMIT_SWITCH_MIN_TILT		=  9;
+	
 	//Relay
 	public static final int PORT_RELAY_COMPRESSOR = 0;
 	

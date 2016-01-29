@@ -7,8 +7,7 @@ import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.command.Subsystem;
-
-import edu.wpi.first.wpilibj.AnalogPotentiometer;
+import org.usfirst.frc.team2729.robot.util.StringPot;
 
 public class Shooter extends Subsystem {
 
@@ -18,20 +17,44 @@ public class Shooter extends Subsystem {
 	private final Talon _left = new Talon(RobotMap.PORT_MOTOR_SHOOT_LEFT),
 		   				_right= new Talon(RobotMap.PORT_MOTOR_SHOOT_RIGHT),
 		   				_tilt = new Talon(RobotMap.PORT_MOTOR_SHOOT_TILT);
-
-	private AnalogPotentiometer _pot;
 	
-	private boolean _shoot;
+	private StringPot _stringPot = new StringPot(RobotMap.PORT_STRINGPOT, 1);
+	
+	private double leftPower;
+	private double rightPower;
+
+	//command that tilts shooter at given speed up or down, needs to have a bottom and top value set on string pot: should be saved in subsystem
+	//setters and getters for right and left motors, use power
+	
+	public void setTiltPower(double power){
+		_tilt.set(power);
+	}
+	
+	public void setLeftPower(double power){
+		_left.set(power);
+		leftPower = power;
+	}
+	
+	public void setRightPower(double power){
+		_right.set(power);
+		rightPower = power;
+	}
+	
+	public double getLeftPower(){
+		return leftPower;
+	}
+	
+	public double getRightPower(){
+		return rightPower;
+	}
+	
+	
+	public double getShooterAngle(){
+		return _stringPot.get();
+	}
+	
 	
 	Shooter(){
-		
-	}
-	
-	public void ElevateShooter(){
-		
-	}
-	
-	public void Shoot(){
 		
 	}
 
