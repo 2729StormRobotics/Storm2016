@@ -15,7 +15,10 @@ public class RobotMap {
 		JOYDRIVE_BUTTON_FORWARD			   = 10,
 		JOYDRIVE_BUTTON_BACKWARDS		   = 9,
 		JOYARM_BUTTON_EXTENDER_UP		   = 2,
-		JOYARM_BUTTON_EXTENDER_DOWN		   = 4;
+		JOYARM_BUTTON_EXTENDER_DOWN		   = 4,
+		JOYDRIVE_BUTTON_SHOOTER_UP         = 1,
+		JOYDRIVE_BUTTON_SHOOTER_DOWN	   = 3,
+		JOYDRIVE_BUTTON_SHOOTER_SPIN	   = 5;
 	
 	//Axes
 	public static final int
@@ -36,7 +39,8 @@ public class RobotMap {
 		PORT_MOTOR_INTAKE_VER 			= 6,
 		PORT_MOTOR_INTAKE_TILT			= 7,
 		PORT_MOTOR_EXTENDER_LEFT 		= 8,
-		PORT_MOTOR_EXTENDER_RIGHT		= 9;
+		PORT_MOTOR_EXTENDER_RIGHT		= 9,
+		PORT_MOTOR_SHOOT_INTAKE			= 10;
 	
 	// Analog ports
     public static final int PORT_SENSOR_GYRO      = 1,

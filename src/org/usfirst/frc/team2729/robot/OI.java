@@ -7,13 +7,14 @@ import edu.wpi.first.wpilibj.command.Command;
 
 import org.usfirst.frc.team2729.robot.commands.PIDDrive;
 import org.usfirst.frc.team2729.robot.commands.Shift;
+import org.usfirst.frc.team2729.robot.commands.ShooterSpin;
 import org.usfirst.frc.team2729.robot.commands.TankDrive;
 import org.usfirst.frc.team2729.robot.RobotMap;
 
 public class OI {
 
 	private final Joystick driveJoystick = new Joystick(RobotMap.PORT_JOYSTICK_DRIVE),
-				armJoystick = new Joystick(RobotMap.PORT_JOYSTICK_ARMS);
+						   armJoystick = new Joystick(RobotMap.PORT_JOYSTICK_ARMS);
 
 	private final Button halveOne = new JoystickButton(driveJoystick, RobotMap.JOYDRIVE_BUTTON_HALVE_1),
 						 halveTwo = new JoystickButton(driveJoystick, RobotMap.JOYDRIVE_BUTTON_HALVE_2),
@@ -22,8 +23,10 @@ public class OI {
 						 driveForward = new JoystickButton(driveJoystick, RobotMap.JOYDRIVE_BUTTON_FORWARD),
 						 driveBackward = new JoystickButton(driveJoystick, RobotMap.JOYDRIVE_BUTTON_BACKWARDS),
 						 hangingExtenderUp = new JoystickButton(driveJoystick, RobotMap.JOYARM_BUTTON_EXTENDER_UP),
-	 					 hangingExtenderDown = new JoystickButton(driveJoystick, RobotMap.JOYARM_BUTTON_EXTENDER_DOWN);
-	
+	 					 hangingExtenderDown = new JoystickButton(driveJoystick, RobotMap.JOYARM_BUTTON_EXTENDER_DOWN),
+						 shooterUp = new JoystickButton(driveJoystick, RobotMap.JOYDRIVE_BUTTON_SHOOTER_UP),
+						 shooterDown = new JoystickButton(driveJoystick, RobotMap.JOYDRIVE_BUTTON_SHOOTER_DOWN),
+						 shooterSpin = new JoystickButton(driveJoystick, RobotMap.JOYDRIVE_BUTTON_SHOOTER_SPIN);
 	
 	private double _zeroDeadzone(double joyValue,double dead) {
         return Math.abs(joyValue) > dead ? joyValue : 0;
@@ -35,14 +38,16 @@ public class OI {
 	    	return _zeroDeadzone(driveJoystick.getRawAxis(RobotMap.JOYDRIVE_AXIS_DRIVE_RIGHT), 0.15);
 	}
 	public double getIntake(){
-		return _zeroDeadzone(armJoystick.getRawAxis(RobotMap.JOYARM_AXIS_INTAKE), 0.15);
-		
+		return _zeroDeadzone(armJoystick.getRawAxis(RobotMap.JOYARM_AXIS_INTAKE), 0.15);	
 	}
 	public double getIntakeTilt(){
 		return _zeroDeadzone(armJoystick.getRawAxis(RobotMap.JOYARM_AXIS_INTAKE_TILT), 0.15);
 		
 	}
 	public OI(){
+		
+		shooterSpin.whileHeld(new ShooterSpin(1));
+		
 		shiftHighDrive.whenPressed(new Shift(true));
 		shiftLowDrive.whenPressed(new Shift(false));
 		
