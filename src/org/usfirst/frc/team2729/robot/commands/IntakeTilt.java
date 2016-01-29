@@ -7,7 +7,11 @@ import edu.wpi.first.wpilibj.PIDSource;
 import edu.wpi.first.wpilibj.command.Command;
 
 public class IntakeTilt extends Command{
-
+	
+	public IntakeTilt(){
+		requires(Robot.intake);
+	}
+	
 	@Override
 	protected void initialize() {
 	

@@ -11,6 +11,7 @@ public class PIDDrive extends Command{
 	
 	public PIDDrive(double power){
 		_power = power;
+		requires(Robot.driveTrain);
 	}
 	
 	@Override

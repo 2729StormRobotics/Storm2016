@@ -10,11 +10,8 @@ public class Intake extends Command {
 		requires(Robot.intake);
 	}
 	
-	
-	@Override
 	protected void initialize() {
 	
-		
 	}
 
 	@Override
@@ -36,7 +33,6 @@ public class Intake extends Command {
 
 	@Override
 	protected void interrupted() {
-	
 		
 	}
 }
