@@ -20,7 +20,10 @@ public class OI {
 						 shiftHighDrive = new JoystickButton(driveJoystick, RobotMap.JOYDRIVE_BUTTON_SHIFT_DRIVE_HIGH),
 						 shiftLowDrive = new JoystickButton(driveJoystick, RobotMap.JOYDRIVE_BUTTON_SHIFT_DRIVE_LOW),
 						 driveForward = new JoystickButton(driveJoystick, RobotMap.JOYDRIVE_BUTTON_FORWARD),
-						 driveBackward = new JoystickButton(driveJoystick, RobotMap.JOYDRIVE_BUTTON_BACKWARDS);
+						 driveBackward = new JoystickButton(driveJoystick, RobotMap.JOYDRIVE_BUTTON_BACKWARDS),
+						 hangingExtenderUp = new JoystickButton(driveJoystick, RobotMap.JOYARM_BUTTON_EXTENDER_UP),
+	 					 hangingExtenderDown = new JoystickButton(driveJoystick, RobotMap.JOYARM_BUTTON_EXTENDER_DOWN);
+	
 	
 	private double _zeroDeadzone(double joyValue,double dead) {
         return Math.abs(joyValue) > dead ? joyValue : 0;
