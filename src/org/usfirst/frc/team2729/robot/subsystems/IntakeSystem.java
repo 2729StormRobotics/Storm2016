@@ -19,10 +19,7 @@ public class IntakeSystem extends Subsystem {
 	
 	protected void initDefaultCommand() {
 		setDefaultCommand(new Intake());
-	
 	}
-	//private void setDefaultCommand(Intake intake) {
-		// TODO Auto-generated method stub
 		
 	public void halt() {
 		_intakeHor.set(0);
@@ -40,10 +37,9 @@ public class IntakeSystem extends Subsystem {
 		_intakeVer.set(power);
 	}
 
-	public void IntakeTilt(double power){
-		_intakeTilt.set(power);
+	public void IntakeTilt(double tiltPower){
+		_intakeTilt.set(tiltPower);
 	}
-	
 	
 	public boolean isMax(){
 		return _switchMax.get();
@@ -56,9 +52,4 @@ public class IntakeSystem extends Subsystem {
 	}
 
 
-	
-	//Drive Intake Talons
-	
-	//Drive tilt talon
-	//get button state
 }

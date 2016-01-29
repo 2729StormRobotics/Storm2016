@@ -15,28 +15,34 @@ public class IntakeTilt extends Command{
 
 	@Override
 	protected void execute() {
-		if (Robot.intake.isMax() == true && Robot.oi.getIntakeTilt()>0){
+		
+		double tiltPower = Robot.oi.getIntakeTilt();
+		
+		if (Robot.intake.isMax() == true && tiltPower>0){
 			Robot.intake.IntakeTilt(0);
-		} else if (Robot.intake.isMin() == true && Robot.oi.getIntakeTilt()<0){
+			
+		} else if (Robot.intake.isMin() == true && tiltPower<0){
 			Robot.intake.IntakeTilt(0);
+			
 		} else {
-			Robot.intake.IntakeTilt(Robot.oi.getIntakeTilt());
+			Robot.intake.IntakeTilt(tiltPower);
 		}
 	}
 
 	@Override
 	protected boolean isFinished() {
 		return false;
+		
 	}
 
 	@Override
 	protected void end() {
-	
+		Robot.intake.IntakeTilt(0);
 	}
 
 	@Override
 	protected void interrupted() {
-		
+		Robot.intake.IntakeTilt(0);
 		
 	}
 
