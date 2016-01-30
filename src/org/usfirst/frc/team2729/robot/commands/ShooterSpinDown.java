@@ -4,34 +4,31 @@ import org.usfirst.frc.team2729.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class Intake extends Command {
-	
-	public Intake(){
-		requires(Robot.intake);
-	}
-	
-	protected void initialize() {
-	
-	}
+public class ShooterSpinDown extends Command {
+	private double _shoot;
 
+	public ShooterSpinDown(){
+	}
+	
 	@Override
-	protected void execute() {
-		double power = Robot.oi.getIntake();
-		Robot.intake.Intake(power);
+	protected void initialize() {
+		Robot.shoot.setTargetSpeed(0);
 	}
 
+	protected void execute() {
+		
+	}
+	
 	@Override
 	protected boolean isFinished() {
 		return false;
 	}
-
+	
 	@Override
 	protected void end() {
-		Robot.intake.Intake(0);
 	}
 
 	@Override
 	protected void interrupted() {
-		Robot.intake.Intake(0);
 	}
 }

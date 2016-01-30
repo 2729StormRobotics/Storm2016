@@ -7,7 +7,8 @@ import edu.wpi.first.wpilibj.command.Command;
 
 import org.usfirst.frc.team2729.robot.commands.PIDDrive;
 import org.usfirst.frc.team2729.robot.commands.Shift;
-import org.usfirst.frc.team2729.robot.commands.ShooterSpin;
+import org.usfirst.frc.team2729.robot.commands.ShooterSpinDown;
+import org.usfirst.frc.team2729.robot.commands.ShooterSpinUp;
 import org.usfirst.frc.team2729.robot.commands.TankDrive;
 import org.usfirst.frc.team2729.robot.RobotMap;
 
@@ -24,9 +25,11 @@ public class OI {
 						 driveBackward = new JoystickButton(driveJoystick, RobotMap.JOYDRIVE_BUTTON_BACKWARDS),
 						 hangingExtenderUp = new JoystickButton(driveJoystick, RobotMap.JOYARM_BUTTON_EXTENDER_UP),
 	 					 hangingExtenderDown = new JoystickButton(driveJoystick, RobotMap.JOYARM_BUTTON_EXTENDER_DOWN),
-						 shooterUp = new JoystickButton(driveJoystick, RobotMap.JOYDRIVE_BUTTON_SHOOTER_UP),
-						 shooterDown = new JoystickButton(driveJoystick, RobotMap.JOYDRIVE_BUTTON_SHOOTER_DOWN),
-						 shooterSpin = new JoystickButton(driveJoystick, RobotMap.JOYDRIVE_BUTTON_SHOOTER_SPIN);
+						 shooterUp = new JoystickButton(driveJoystick, RobotMap.JOYARM_BUTTON_SHOOTER_UP),
+						 shooterDown = new JoystickButton(driveJoystick, RobotMap.JOYARM_BUTTON_SHOOTER_DOWN),
+						 shooterSpinUP = new JoystickButton(driveJoystick, RobotMap.JOYARM_BUTTON_SHOOTER_SPINUP),
+						 shooterSpinDOWN = new JoystickButton(driveJoystick, RobotMap.JOYARM_BUTTON_SHOOTER_SPINDOWN);
+
 	
 	private double _zeroDeadzone(double joyValue,double dead) {
         return Math.abs(joyValue) > dead ? joyValue : 0;
@@ -46,7 +49,8 @@ public class OI {
 	}
 	public OI(){
 		
-		shooterSpin.whileHeld(new ShooterSpin(1));
+		shooterSpinUP.whenPressed(new ShooterSpinUp());
+		shooterSpinDOWN.whenPressed(new ShooterSpinDown());
 		
 		shiftHighDrive.whenPressed(new Shift(true));
 		shiftLowDrive.whenPressed(new Shift(false));

@@ -11,8 +11,6 @@ import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
-//import org.usfirst.frc.team2729.robot.commands.joystick.TankDrive;
-
 public class DriveTrain extends Subsystem {
     
 	private final Talon _left = new Talon(RobotMap.PORT_MOTOR_DRIVE_LEFT),
@@ -23,6 +21,7 @@ public class DriveTrain extends Subsystem {
 	
 	private boolean _halfOne = false, _halfTwo = false;
 	private boolean _isHighGear = false;
+	
 	public DriveTrain(){
 		_shifter.set(DoubleSolenoid.Value.kForward);
 		_isHighGear = false;
@@ -31,6 +30,7 @@ public class DriveTrain extends Subsystem {
 	public void initDefaultCommand() {
 		setDefaultCommand(new TankDrive());
     }
+	
 	public void halveOne(boolean half){
 		_halfOne = half;
 	}
@@ -52,16 +52,16 @@ public class DriveTrain extends Subsystem {
 	public void TankDrive(double left, double right){
 		_left.set((left/3) + (_halfOne ? (left/3) : 0) + (_halfTwo ? (left/3) : 0));
 		_right.set((right/3) + (_halfOne ? (right/3) : 0) + (_halfTwo ? (right/3) : 0));
-
 	}
 
 	public double getLeftDistance(){
 		return _leftEncoder.get();
 	}
-	//negated due to encoder being backwards
+	
 	public double getRightDistance(){
-		return -_rightEncoder.get();
+		return _rightEncoder.get();
 	}
+	
 	public double getLeftSpeedEnc() {
 		return _leftEncoder.getRate();
 	}
