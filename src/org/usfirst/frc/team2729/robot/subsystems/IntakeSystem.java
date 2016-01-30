@@ -50,6 +50,4 @@ public class IntakeSystem extends Subsystem {
 		return _switchMin.get();
 		
 	}
-
-
 }

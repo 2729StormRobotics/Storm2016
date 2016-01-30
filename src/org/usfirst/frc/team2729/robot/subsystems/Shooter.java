@@ -1,5 +1,8 @@
 package org.usfirst.frc.team2729.robot.subsystems;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 import org.usfirst.frc.team2729.robot.RobotMap;
 
 import edu.wpi.first.wpilibj.AnalogPotentiometer;
@@ -27,26 +30,36 @@ public class Shooter extends Subsystem {
 	private double rightPower;
 	private double intakePower;
 
-	//command that tilts shooter at given speed up or down, needs to have a bottom and top value set on string pot: should be saved in subsystem
-	//setters and getters for right and left motors, use power
-	
+	//Integral Control Variables
+	private double targetTicks = 0;
+	private double IntErrorLeft = 0;
+	private double IntErrorRight = 0;
+	private double KiLeft = 0.1;
+	private double KiRight = 0.1;
+
+	public Shooter(){
+		Timer _timer = new Timer();
+		_timer.schedule(new TimerTask() {
+			public void run() {
+				IntErrorLeft += _leftShooter.getRate() - targetTicks;
+				IntErrorRight += _rightShooter.getRate() - targetTicks;
+				_right.set(KiRight * IntErrorRight);
+				_left.set(KiLeft * IntErrorLeft);
+			}
+		}, 50, 50);
+	}
+
 	public void setTiltPower(double power){
 		_tilt.set(power);
 	}
 	
-	public void setLeftPower(double power){
-		_left.set(power);
-		leftPower = power;
+	public void setTargetSpeed(double _target){
+		targetTicks = _target;
 	}
 	
-	public void setRightPower(double power){
-		_right.set(power);
-		rightPower = power;
-	}
-	
-	public void setInktakePower(double power){
-		_intake.set(power);
-		intakePower = power;
+	public void haltSpin(){
+		_right.set(0);
+		_left.set(0);
 	}
 	
 	public double getLeftPower(){
@@ -57,22 +70,11 @@ public class Shooter extends Subsystem {
 		return rightPower;
 	}
 
-	
-	
 	public double getShooterAngle(){
 		return _stringPot.get();
 	}
 	
-	
-	public Shooter(){
-		
-	}
-
 	@Override
 	protected void initDefaultCommand() {
-		// TODO Auto-generated method stub
-		
 	}
-	
-	
 }
