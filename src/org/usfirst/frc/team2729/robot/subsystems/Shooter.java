@@ -22,16 +22,20 @@ public class Shooter extends Subsystem {
 						_intake = new Talon(RobotMap.PORT_MOTOR_SHOOT_INTAKE);
 	
 	private StringPot _stringPot = new StringPot(RobotMap.PORT_STRINGPOT, 1);
+	private double TiltMax = 1; //TODO: Find these values experimentally
+	private double TiltMin = 0;
 	
 	private double leftPower;
 	private double rightPower;
 	private double intakePower;
+	private double tiltPower;
 
 	//command that tilts shooter at given speed up or down, needs to have a bottom and top value set on string pot: should be saved in subsystem
 	//setters and getters for right and left motors, use power
 	
 	public void setTiltPower(double power){
 		_tilt.set(power);
+		tiltPower = power;
 	}
 	
 	public void setLeftPower(double power){
@@ -56,13 +60,14 @@ public class Shooter extends Subsystem {
 	public double getRightPower(){
 		return rightPower;
 	}
-
 	
-	
-	public double getShooterAngle(){
+	public double getShooterTilt(){
 		return _stringPot.get();
 	}
 	
+	public double getTiltPower(){
+		return tiltPower;
+	}
 	
 	public Shooter(){
 		
@@ -73,6 +78,35 @@ public class Shooter extends Subsystem {
 		// TODO Auto-generated method stub
 		
 	}
+
+	public double getTiltMin() {
+		return TiltMin;
+	}
+
+	public double getTiltMax() {
+		return TiltMax;
+	}
 	
+	public boolean isMax(){
+		
+		if (tiltPower == TiltMax){
+			return true;
+		}
+		else{
+			return false;
+		}
+		
+	}
+	
+	public boolean isMin(){
+		
+		if (tiltPower == TiltMin){
+			return true;
+		}
+		else{
+			return false;
+		}
+		
+	}
 	
 }

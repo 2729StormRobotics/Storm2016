@@ -9,8 +9,8 @@ public class ShooterSpin extends Command {
 	private double _shoot;
 
 	public ShooterSpin(double shoot){
+		requires(Robot.shoot);
 		_shoot = shoot;
-		requires(Robot.driveTrain);
 	}
 	
 	@Override

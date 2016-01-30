@@ -19,6 +19,7 @@ public class RobotMap {
 		JOYDRIVE_BUTTON_SHOOTER_UP         = 1,
 		JOYDRIVE_BUTTON_SHOOTER_DOWN	   = 3,
 		JOYDRIVE_BUTTON_SHOOTER_SPIN	   = 5;
+		
 	
 	//Axes
 	public static final int
@@ -44,7 +45,7 @@ public class RobotMap {
 	
 	// Analog ports
     public static final int PORT_SENSOR_GYRO      = 1,
-    		PORT_STRINGPOT						  = 0;
+    		                PORT_STRINGPOT		  = 0;
 	
 	//Digital I/O Ports
 	public static final int

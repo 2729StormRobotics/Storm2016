@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc.team2729.robot.commands.PIDDrive;
 import org.usfirst.frc.team2729.robot.commands.Shift;
 import org.usfirst.frc.team2729.robot.commands.ShooterSpin;
+import org.usfirst.frc.team2729.robot.commands.ShooterTilt;
 import org.usfirst.frc.team2729.robot.commands.TankDrive;
 import org.usfirst.frc.team2729.robot.RobotMap;
 
@@ -47,6 +48,9 @@ public class OI {
 	public OI(){
 		
 		shooterSpin.whileHeld(new ShooterSpin(1));
+		
+		shooterUp.whileHeld(new ShooterTilt(1));
+		shooterDown.whileHeld(new ShooterTilt(-1));
 		
 		shiftHighDrive.whenPressed(new Shift(true));
 		shiftLowDrive.whenPressed(new Shift(false));
