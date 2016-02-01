@@ -73,7 +73,6 @@ public class Shooter extends Subsystem {
 	public double getRightPower(){
 		return rightPower;
 	}
-<<<<<<< HEAD
 	
 	public double getShooterTilt(){
 		return _stringPot.get();
@@ -82,22 +81,14 @@ public class Shooter extends Subsystem {
 	public double getTiltPower(){
 		return tiltPower;
 	}
-	
-	public Shooter(){
-		
-	}
-
-=======
 
 	public double getShooterAngle(){
 		return _stringPot.get();
 	}
 	
->>>>>>> bf6e793f34aff0457c45c1c81083132c3dfabffe
 	@Override
 	protected void initDefaultCommand() {
 	}
-<<<<<<< HEAD
 
 	public double getTiltMin() {
 		return TiltMin;
@@ -128,7 +119,4 @@ public class Shooter extends Subsystem {
 		}
 		
 	}
-	
-=======
->>>>>>> bf6e793f34aff0457c45c1c81083132c3dfabffe
 }
