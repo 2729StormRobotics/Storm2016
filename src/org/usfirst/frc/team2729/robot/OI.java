@@ -52,10 +52,14 @@ public class OI {
 		return _zeroDeadzone(armJoystick.getRawAxis(RobotMap.JOYARM_AXIS_INTAKE_TILT), 0.15);
 		
 	}
+
 	public OI(){
 		
 		shooterSpinUP.whenPressed(new ShooterSpinUp());
 		shooterSpinDOWN.whenPressed(new ShooterSpinDown());
+		
+		hangingExtenderDown.whileHeld(new ExtendHanging(-1));
+		hangingExtenderUp.whileHeld(new ExtendHanging(1));
 		
 		shooterUp.whileHeld(new ShooterTilt(1));
 		shooterDown.whileHeld(new ShooterTilt(-1));
@@ -65,6 +69,9 @@ public class OI {
 		
 		driveForward.whileHeld(new PIDDrive(0.8));
 		driveBackward.whileHeld(new PIDDrive(-0.8));
+		
+		hangingExtenderDown.whileHeld(new ExtendHanging(-1));
+		hangingExtenderUp.whileHeld(new ExtendHanging(1));
 		
 		halveOne.whileHeld(new Command() {
 			@Override

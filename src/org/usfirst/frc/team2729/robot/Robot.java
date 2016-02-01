@@ -7,6 +7,7 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import org.usfirst.frc.team2729.robot.commands.TankDrive;
 import org.usfirst.frc.team2729.robot.subsystems.DriveTrain;
+import org.usfirst.frc.team2729.robot.subsystems.HangingSystem;
 import org.usfirst.frc.team2729.robot.subsystems.IntakeSystem;
 import org.usfirst.frc.team2729.robot.subsystems.Shooter;
 
@@ -19,7 +20,7 @@ public class Robot extends IterativeRobot {
 	public static OI oi;
 	public static IntakeSystem intake = new IntakeSystem();
 	public static Shooter shoot = new Shooter();
-	
+	public static HangingSystem hang = new HangingSystem();
 	
     Command autonomousCommand;
     SendableChooser chooser;
