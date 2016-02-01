@@ -16,20 +16,10 @@ public class HangingSystem extends Subsystem {
 	private double leftExtendPower;
 	private double rightExtendPower;
 	@Override
-	protected void initDefaultCommand() {
-		setDefaultCommand(new Extender());
-		
-	}
+	protected void initDefaultCommand() {}
 	public void halt() {
 		_extenderLeft.set(0);
 		_extenderRight.set(0);
-	
-	}
-	public void stop() {
-		_extenderLeft.set(0);
-		_extenderRight.set(0);
-	
-		
 	}
 	public void setLeftExtendPower(double power){
 		_extenderLeft.set(power);
@@ -45,7 +35,6 @@ public class HangingSystem extends Subsystem {
 	public double getRighttExtendPower(){
 		return rightExtendPower;
 	}
-		
-	}
+}
 
 

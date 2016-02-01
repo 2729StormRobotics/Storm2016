@@ -13,17 +13,13 @@ public class ShooterSpinUp extends Command {
 	
 	@Override
 	protected void initialize() {}
-
 	protected void execute() {}
-	
 	@Override
 	protected boolean isFinished() {
 		return false;
 	}
-	
 	@Override
 	protected void end() {}
-
 	@Override
 	protected void interrupted() {}
 }

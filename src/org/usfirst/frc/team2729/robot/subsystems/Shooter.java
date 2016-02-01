@@ -37,15 +37,15 @@ public class Shooter extends Subsystem {
 	private double targetTicks = 0;
 	private double IntErrorLeft = 0;
 	private double IntErrorRight = 0;
-	private double KiLeft = 0.1;
-	private double KiRight = 0.1;
+	private double KiLeft = 0.001;
+	private double KiRight = 0.001;
 
 	public Shooter(){
 		Timer _timer = new Timer();
 		_timer.schedule(new TimerTask() {
 			public void run() {
-				IntErrorLeft += _leftShooter.getRate() - targetTicks;
-				IntErrorRight += _rightShooter.getRate() - targetTicks;
+				IntErrorLeft += targetTicks - _leftShooter.getRate();
+				IntErrorRight += targetTicks - _rightShooter.getRate();
 				_right.set(KiRight * IntErrorRight);
 				_left.set(KiLeft * IntErrorLeft);
 			}
@@ -62,6 +62,7 @@ public class Shooter extends Subsystem {
 	}
 	
 	public void haltSpin(){
+		targetTicks = 0;
 		_right.set(0);
 		_left.set(0);
 	}
@@ -80,11 +81,6 @@ public class Shooter extends Subsystem {
 	
 	public double getTiltPower(){
 		return tiltPower;
-	}
-	
-
-	public double getShooterAngle(){
-		return _stringPot.get();
 	}
 	
 	@Override

@@ -43,11 +43,9 @@ public class IntakeSystem extends Subsystem {
 	
 	public boolean isMax(){
 		return _switchMax.get();
-		
 	}
 	
 	public boolean isMin(){
-		return _switchMin.get();
-		
+		return _switchMin.get();	
 	}
 }
