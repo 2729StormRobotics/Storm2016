@@ -7,8 +7,8 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class HangingSystem extends Subsystem {
 	
-	private final Talon _extenderLeft = new Talon(RobotMap.PORT_MOTOR_EXTENDER_LEFT),
-						_extenderRight = new Talon(RobotMap.PORT_MOTOR_EXTENDER_RIGHT);
+	private final Talon _extenderLeft = new Talon(RobotMap.PORT_MOTOR_DRIVE_LEFT),
+						_extenderRight = new Talon(RobotMap.PORT_MOTOR_DRIVE_RIGHT);
 	
 	private final Encoder _extender_left_encoder = new Encoder(RobotMap.PORT_ENCODER_EXTENDER_LEFT_1, RobotMap.PORT_ENCODER_EXTENDER_RIGHT_2);
 	private final Encoder _extender_right_encoder = new Encoder(RobotMap.PORT_ENCODER_EXTENDER_RIGHT_1, RobotMap.PORT_ENCODER_EXTENDER_RIGHT_2);
