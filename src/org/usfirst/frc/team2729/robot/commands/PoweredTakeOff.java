@@ -2,8 +2,9 @@ package org.usfirst.frc.team2729.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class IsPoweredTakeOff extends Command{
-
+public class PoweredTakeOff extends Command{
+	public PoweredTakeOff(){}
+	
 	@Override
 	protected void initialize() {
 		

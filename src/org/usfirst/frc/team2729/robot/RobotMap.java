@@ -19,7 +19,8 @@ public class RobotMap {
 		JOYARM_BUTTON_SHOOTER_UP    	   = 1,
 		JOYARM_BUTTON_SHOOTER_DOWN	  	   = 3,
 		JOYARM_BUTTON_SHOOTER_SPINUP	   = 5,
-		JOYARM_BUTTON_SHOOTER_SPINDOWN	   = 7;
+		JOYARM_BUTTON_SHOOTER_SPINDOWN	   = 7,
+		JOYARM_BUTTON_POWER_SWITCH		   = 6;
 	
 	//Axes
 	public static final int
