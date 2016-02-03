@@ -1,4 +1,3 @@
-
 package org.usfirst.frc.team2729.robot.subsystems;
 
 import org.usfirst.frc.team2729.robot.RobotMap;
@@ -18,14 +17,21 @@ public class DriveTrain extends Subsystem {
 	private final Encoder _leftEncoder = new Encoder(RobotMap.PORT_ENCODER_DRIVE_LEFT_1, RobotMap.PORT_ENCODER_DRIVE_LEFT_2),
 						  _rightEncoder = new Encoder(RobotMap.PORT_ENCODER_DRIVE_RIGHT_1, RobotMap.PORT_ENCODER_DRIVE_RIGHT_2);;
 	private final DoubleSolenoid _shifter = new DoubleSolenoid(RobotMap.PORT_SHIFT_DRIVE_HIGH, RobotMap.PORT_SHIFT_DRIVE_LOW);
+	private final 
 	
 	private boolean _halfOne = false, _halfTwo = false;
 	private boolean _isHighGear = false;
+	
 	
 	public DriveTrain(){
 		_shifter.set(DoubleSolenoid.Value.kForward);
 		_isHighGear = false;
 	}
+	
+	public boolean isPoweredTakeOff(){
+		
+	}
+	
 	
 	public void initDefaultCommand() {
 		setDefaultCommand(new TankDrive());
@@ -92,4 +98,3 @@ public class DriveTrain extends Subsystem {
 				: DoubleSolenoid.Value.kForward);
 	}
 }
-

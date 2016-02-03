@@ -9,20 +9,14 @@ public class ShooterTilt extends Command{
 	private double _tilt;
 	
 	public ShooterTilt(double tilt){
-		
 		requires(Robot.shoot);
-		
 	}
 	
 	@Override
-	protected void initialize() {
-		// TODO Auto-generated method stub
-		
-	}
-
+	protected void initialize() {}
+	
 	@Override
-	protected void execute() {
-		
+	protected void execute() {	
 		if (Robot.shoot.isMax() == true){
 			Robot.shoot.setTiltPower(0);
 			
@@ -32,27 +26,20 @@ public class ShooterTilt extends Command{
 		} else {
 			Robot.shoot.setTiltPower(_tilt);
 		}
-		
 	}
 
 	@Override
 	protected boolean isFinished() {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	protected void end() {
-		
-		Robot.shoot.setTiltPower(0);
-		
+		Robot.shoot.setTiltPower(0);	
 	}
 
 	@Override
 	protected void interrupted() {
-		
 		Robot.shoot.setTiltPower(0);
-		
 	}
-
 }

@@ -5,15 +5,12 @@ import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.command.Command;
 
+import org.usfirst.frc.team2729.robot.commands.ExtendHanging;
 import org.usfirst.frc.team2729.robot.commands.PIDDrive;
 import org.usfirst.frc.team2729.robot.commands.Shift;
-<<<<<<< HEAD
-import org.usfirst.frc.team2729.robot.commands.ShooterSpin;
 import org.usfirst.frc.team2729.robot.commands.ShooterTilt;
-=======
 import org.usfirst.frc.team2729.robot.commands.ShooterSpinDown;
 import org.usfirst.frc.team2729.robot.commands.ShooterSpinUp;
->>>>>>> bf6e793f34aff0457c45c1c81083132c3dfabffe
 import org.usfirst.frc.team2729.robot.commands.TankDrive;
 import org.usfirst.frc.team2729.robot.RobotMap;
 
