@@ -82,7 +82,18 @@ public class Shooter extends Subsystem {
 	public double getTiltPower(){
 		return tiltPower;
 	}
+<<<<<<< HEAD
+=======
 	
+<<<<<<< HEAD
+>>>>>>> 0a1f0f09267eeccaedba2ab2ca3623f41d17d72e
+
+	public double getShooterAngle(){
+		return _stringPot.get();
+	}
+	
+=======
+>>>>>>> b16e24cfa0a1deee98ac9a0bbc8612eff64da8a5
 	@Override
 	protected void initDefaultCommand() {
 	}

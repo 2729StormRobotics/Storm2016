@@ -1,4 +1,3 @@
-//robot.DriveTrain.isPoweredTakeOff.enabled
 package org.usfirst.frc.team2729.robot.subsystems;
 
 import org.usfirst.frc.team2729.robot.RobotMap;
@@ -100,4 +99,3 @@ public class DriveTrain extends Subsystem {
 				: DoubleSolenoid.Value.kForward);
 	}
 }
-

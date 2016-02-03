@@ -9,12 +9,18 @@ import org.usfirst.frc.team2729.robot.commands.ExtendHanging;
 import org.usfirst.frc.team2729.robot.commands.PIDDrive;
 import org.usfirst.frc.team2729.robot.commands.PoweredTakeOff;
 import org.usfirst.frc.team2729.robot.commands.Shift;
+<<<<<<< HEAD
 import org.usfirst.frc.team2729.robot.commands.ShooterSpin;
 import org.usfirst.frc.team2729.robot.commands.ShooterTilt;
 
 import org.usfirst.frc.team2729.robot.commands.ShooterSpinDown;
 import org.usfirst.frc.team2729.robot.commands.ShooterSpinUp;
 
+=======
+import org.usfirst.frc.team2729.robot.commands.ShooterTilt;
+import org.usfirst.frc.team2729.robot.commands.ShooterSpinDown;
+import org.usfirst.frc.team2729.robot.commands.ShooterSpinUp;
+>>>>>>> 6b6f393f829de99a433dc0292e7f908ad658216a
 import org.usfirst.frc.team2729.robot.commands.TankDrive;
 import org.usfirst.frc.team2729.robot.RobotMap;
 
