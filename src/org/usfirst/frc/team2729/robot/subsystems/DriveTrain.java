@@ -1,14 +1,15 @@
 package org.usfirst.frc.team2729.robot.subsystems;
 
 import org.usfirst.frc.team2729.robot.RobotMap;
+
 import org.usfirst.frc.team2729.robot.commands.TankDrive;
-
-
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
+
+import org.usfirst.frc.team2729.robot.OI;
 
 public class DriveTrain extends Subsystem {
     
@@ -17,18 +18,18 @@ public class DriveTrain extends Subsystem {
 	private final Encoder _leftEncoder = new Encoder(RobotMap.PORT_ENCODER_DRIVE_LEFT_1, RobotMap.PORT_ENCODER_DRIVE_LEFT_2),
 						  _rightEncoder = new Encoder(RobotMap.PORT_ENCODER_DRIVE_RIGHT_1, RobotMap.PORT_ENCODER_DRIVE_RIGHT_2);;
 	private final DoubleSolenoid _shifter = new DoubleSolenoid(RobotMap.PORT_SHIFT_DRIVE_HIGH, RobotMap.PORT_SHIFT_DRIVE_LOW);
-	private final 
+	private final DoubleSolenoid _pto = new DoubleSolenoid(RobotMap.PORT_SHIFT_HANG_ON, RobotMap.PORT_SHIFT_HANG_OFF);
 	
 	private boolean _halfOne = false, _halfTwo = false;
 	private boolean _isHighGear = false;
-	
+	private boolean _isPowered = false;
 	
 	public DriveTrain(){
 		_shifter.set(DoubleSolenoid.Value.kForward);
 		_isHighGear = false;
 	}
 	
-	public boolean isPoweredTakeOff(){
+	public void PoweredTakeOff(){
 		
 	}
 	
