@@ -8,13 +8,14 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 public class HangingSystem extends Subsystem {
 	
 	private final Talon _winchLeft = new Talon(RobotMap.PORT_MOTOR_DRIVE_LEFT),
-						_winchRight = new Talon(RobotMap.PORT_MOTOR_DRIVE_RIGHT);
+						_winchRight = new Talon(RobotMap.PORT_MOTOR_DRIVE_RIGHT),
+						_extenderLeft = new Talon(RobotMap.PORT_MOTOR_EXTENDER_LEFT),
+						_extenderRight = new Talon(RobotMap.PORT_MOTOR_EXTENDER_RIGHT);
+
 	
-	private final Encoder _extender_left_encoder = new Encoder(RobotMap.PORT_ENCODER_EXTENDER_LEFT_1, RobotMap.PORT_ENCODER_EXTENDER_RIGHT_2);
-	private final Encoder _extender_right_encoder = new Encoder(RobotMap.PORT_ENCODER_EXTENDER_RIGHT_1, RobotMap.PORT_ENCODER_EXTENDER_RIGHT_2);
+	private final Encoder _extenderLeftEncoder = new Encoder(RobotMap.PORT_ENCODER_EXTENDER_LEFT_1, RobotMap.PORT_ENCODER_EXTENDER_RIGHT_2);
+	private final Encoder _extenderRightEncoder = new Encoder(RobotMap.PORT_ENCODER_EXTENDER_RIGHT_1, RobotMap.PORT_ENCODER_EXTENDER_RIGHT_2);
 	
-	private double leftExtendPower;
-	private double rightExtendPower;
 	@Override
 	protected void initDefaultCommand() {}
 	public void halt() {
@@ -23,18 +24,14 @@ public class HangingSystem extends Subsystem {
 	}
 	public void setLeftExtendPower(double power){
 		_winchLeft.set(power);
-		leftExtendPower = power;
 	}
 	public void setRightExtendPower(double power){
 		_winchRight.set(power);
-		rightExtendPower = power;
 	}
 	public double getLeftExtendPower(){
-		return leftExtendPower;
+		return _winchLeft.get();
 	}
 	public double getRighttExtendPower(){
-		return rightExtendPower;
+		return _winchRight.get();
 	}
 }
-
-

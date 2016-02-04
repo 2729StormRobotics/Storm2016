@@ -1,12 +1,15 @@
 package org.usfirst.frc.team2729.robot.commands;
 import org.usfirst.frc.team2729.robot.Robot;
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.Timer;
 
-public class ExtendHanging extends Command{
+public class ExtendHangingAuto extends Command{
 	
-	private double _hang;
-	public ExtendHanging(double hang){
+	private double _hang, _time;
+	private Timer _timer = new Timer();
+	public ExtendHangingAuto(double hang, double time){
 		_hang = hang;
+		_time = time;
 		requires(Robot.hang);
 	}
 
@@ -16,12 +19,13 @@ public class ExtendHanging extends Command{
 		Robot.hang.setRightExtendPower(_hang);	
 	}
 	
-	protected void initialize() {		
+	protected void initialize() {
+		_timer.start();
 	}
 
 	@Override
 	protected boolean isFinished() {
-		return false;
+		return (_timer.get() < _time) ? false : true;
 	}
 
 	@Override

@@ -7,21 +7,16 @@ import edu.wpi.first.wpilibj.command.Command;
 
 import org.usfirst.frc.team2729.robot.commands.ExtendHanging;
 import org.usfirst.frc.team2729.robot.commands.PIDDrive;
-import org.usfirst.frc.team2729.robot.commands.PoweredTakeOff;
+import org.usfirst.frc.team2729.robot.commands.ActuatePTO;
 import org.usfirst.frc.team2729.robot.commands.Shift;
-<<<<<<< HEAD
-import org.usfirst.frc.team2729.robot.commands.ShooterSpin;
-import org.usfirst.frc.team2729.robot.commands.ShooterTilt;
-
-import org.usfirst.frc.team2729.robot.commands.ShooterSpinDown;
-import org.usfirst.frc.team2729.robot.commands.ShooterSpinUp;
-
-=======
 import org.usfirst.frc.team2729.robot.commands.ShooterTilt;
 import org.usfirst.frc.team2729.robot.commands.ShooterSpinDown;
 import org.usfirst.frc.team2729.robot.commands.ShooterSpinUp;
->>>>>>> 6b6f393f829de99a433dc0292e7f908ad658216a
 import org.usfirst.frc.team2729.robot.commands.TankDrive;
+
+import java.util.Timer;
+import java.util.TimerTask;
+
 import org.usfirst.frc.team2729.robot.RobotMap;
 
 public class OI {
@@ -41,7 +36,7 @@ public class OI {
 						 shooterDown = new JoystickButton(driveJoystick, RobotMap.JOYARM_BUTTON_SHOOTER_DOWN),
 						 shooterSpinUP = new JoystickButton(driveJoystick, RobotMap.JOYARM_BUTTON_SHOOTER_SPINUP),
 						 shooterSpinDOWN = new JoystickButton(driveJoystick, RobotMap.JOYARM_BUTTON_SHOOTER_SPINDOWN),
-						 toggleHanging = new JoystickButton(armJoystick, RobotMap.JOYARM_BUTTON_POWER_SWITCH);
+						 togglePTO = new JoystickButton(armJoystick, RobotMap.JOYARM_BUTTON_PTO_TOGGLE);
 	
 	private double _zeroDeadzone(double joyValue,double dead) {
         return Math.abs(joyValue) > dead ? joyValue : 0;
@@ -65,7 +60,7 @@ public class OI {
 		shooterSpinUP.whenPressed(new ShooterSpinUp());
 		shooterSpinDOWN.whenPressed(new ShooterSpinDown());
 		
-		toggleHanging.whenPressed(new PoweredTakeOff());
+		togglePTO.whenPressed(new ActuatePTO(!Robot.driveTrain.getPTO()));
 		
 		hangingExtenderDown.whileHeld(new ExtendHanging(-1));
 		hangingExtenderUp.whileHeld(new ExtendHanging(1));
@@ -78,9 +73,6 @@ public class OI {
 		
 		driveForward.whileHeld(new PIDDrive(0.8));
 		driveBackward.whileHeld(new PIDDrive(-0.8));
-		
-		hangingExtenderDown.whileHeld(new ExtendHanging(-1));
-		hangingExtenderUp.whileHeld(new ExtendHanging(1));
 		
 		halveOne.whileHeld(new Command() {
 			@Override
@@ -107,6 +99,12 @@ public class OI {
 			@Override
 			protected void interrupted() { end(); }
 		});
+		
+		Timer _timer = new Timer();
+		_timer.schedule(new TimerTask() {
+			public void run() {
+				armJoystick.getPOV(0); //TODO: Figure this out
+			}
+		}, 50, 50);
 	}
 }
-

@@ -22,17 +22,13 @@ public class DriveTrain extends Subsystem {
 	
 	private boolean _halfOne = false, _halfTwo = false;
 	private boolean _isHighGear = false;
-	private boolean _isPowered = false;
+	private boolean _isPTOEnabled = false;
 	
 	public DriveTrain(){
 		_shifter.set(DoubleSolenoid.Value.kForward);
+		_pto.set(DoubleSolenoid.Value.kForward);
 		_isHighGear = false;
 	}
-	
-	public void PoweredTakeOff(){
-		
-	}
-	
 	
 	public void initDefaultCommand() {
 		setDefaultCommand(new TankDrive());
@@ -57,8 +53,10 @@ public class DriveTrain extends Subsystem {
 	}
 	
 	public void TankDrive(double left, double right){
+		if(!_isPTOEnabled){ //While PTO is enabled, chassis driver cannot control driveTrain
 		_left.set((left/3) + (_halfOne ? (left/3) : 0) + (_halfTwo ? (left/3) : 0));
 		_right.set((right/3) + (_halfOne ? (right/3) : 0) + (_halfTwo ? (right/3) : 0));
+		}
 	}
 
 	public double getLeftDistance(){
@@ -97,5 +95,13 @@ public class DriveTrain extends Subsystem {
 		_isHighGear  = enabled;
 		_shifter.set(enabled ? DoubleSolenoid.Value.kReverse
 				: DoubleSolenoid.Value.kForward);
+	}
+	public void setPTO(boolean enabled){
+		_isPTOEnabled = enabled;
+		_pto.set(enabled ? DoubleSolenoid.Value.kReverse
+				: DoubleSolenoid.Value.kForward);
+	}
+	public boolean getPTO(){
+		return _isPTOEnabled;
 	}
 }
