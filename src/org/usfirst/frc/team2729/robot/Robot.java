@@ -10,6 +10,7 @@ import org.usfirst.frc.team2729.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team2729.robot.subsystems.HangingSystem;
 import org.usfirst.frc.team2729.robot.subsystems.IntakeSystem;
 import org.usfirst.frc.team2729.robot.subsystems.Shooter;
+import org.usfirst.frc.team2729.robot.subsystems.VisionSystem;
 
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -21,6 +22,7 @@ public class Robot extends IterativeRobot {
 	public static IntakeSystem intake = new IntakeSystem();
 	public static Shooter shoot = new Shooter();
 	public static HangingSystem hang = new HangingSystem();
+	public static VisionSystem vision = new VisionSystem();
 	
     Command autonomousCommand;
     SendableChooser chooser;
