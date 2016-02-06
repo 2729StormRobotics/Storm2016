@@ -14,7 +14,6 @@ public class IntakeSystem extends Subsystem {
 	private final Talon _intakeVer = new Talon(RobotMap.PORT_MOTOR_INTAKE_VER);
 	private final Talon _intakeTilt = new Talon(RobotMap.PORT_MOTOR_INTAKE_TILT);
 	
-	private final DigitalInput _switchMax = new DigitalInput(RobotMap.PORT_LIMIT_SWITCH_MAX_TILT);
 	private final DigitalInput _switchMin = new DigitalInput(RobotMap.PORT_LIMIT_SWITCH_MIN_TILT);
 	
 	protected void initDefaultCommand() {

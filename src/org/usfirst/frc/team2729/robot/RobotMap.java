@@ -45,7 +45,7 @@ public class RobotMap {
 		PORT_MOTOR_SHOOT_INTAKE			= 10;
 	
 	// Analog ports
-    public static final int PORT_SENSOR_GYRO      = 1,
+    public static final int PORT_ROTATE_POT		  = 1,
     		                PORT_STRINGPOT		  = 0;
 	
 	//Digital I/O Ports
@@ -58,7 +58,7 @@ public class RobotMap {
 		PORT_ENCODER_SHOOT_LEFT_2       =  5,
 		PORT_ENCODER_SHOOT_RIGHT_1      =  6,
 		PORT_ENCODER_SHOOT_RIGHT_2      =  7,
-		PORT_LIMIT_SWITCH_MAX_TILT		=  8,
+		//PORT_LIMIT_SWITCH_MAX_TILT		=  8,
 		PORT_LIMIT_SWITCH_MIN_TILT		=  9,
 		PORT_ENCODER_EXTENDER_LEFT_1    =  10,
 		PORT_ENCODER_EXTENDER_LEFT_2    =  11,

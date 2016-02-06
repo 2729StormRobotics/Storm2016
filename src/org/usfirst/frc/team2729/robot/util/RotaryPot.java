@@ -6,22 +6,20 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindowSendable;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.tables.ITable;
 
-public class StringPot implements LiveWindowSendable {
+public class RotaryPot implements LiveWindowSendable {
 	
-	public double VAL_MAX_SAFE = 0;
-    public final double EXTENDED_LENGTH = 0.65325625; //Length in meters
-	
+	public double VAL_MAX_SAFE = 0;	
     //Pot is good, especially when it's analog 
     private AnalogPotentiometer _pot;
     
-    public StringPot(int Num, double maxSafeVal) {
+    public RotaryPot(int Num, double maxSafeVal) {
         _pot = new AnalogPotentiometer(Num);
         VAL_MAX_SAFE = maxSafeVal;
     }
     
     public double get() {
         double val = _pot.get();
-        return val > 0.06 ? val : 0;
+        return val > 0.00 ? val : 0; //find min value
     }
     
     //Makes a Readable and Writeable table
@@ -47,8 +45,5 @@ public class StringPot implements LiveWindowSendable {
 
     public String getSmartDashboardType() {
         return "Analog Input";
-    }
-    public double getLength(){
-    	return _pot.get() * EXTENDED_LENGTH;
     }
 }
