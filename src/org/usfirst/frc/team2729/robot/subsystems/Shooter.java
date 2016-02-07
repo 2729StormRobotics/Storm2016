@@ -6,7 +6,6 @@ import java.util.TimerTask;
 import org.usfirst.frc.team2729.robot.RobotMap;
 
 import edu.wpi.first.wpilibj.AnalogPotentiometer;
-import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Talon;
@@ -14,6 +13,8 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 import org.usfirst.frc.team2729.robot.util.StringPot;
 
 public class Shooter extends Subsystem {
+
+	//button hold spins up hte shooting wheels, button to raise and lower shooter, button whiel shooting also running intake
 	
 	private final Encoder _leftShooter = new Encoder(RobotMap.PORT_ENCODER_SHOOT_LEFT_1, RobotMap.PORT_ENCODER_SHOOT_LEFT_2);
 	private final Encoder _rightShooter = new Encoder(RobotMap.PORT_ENCODER_SHOOT_RIGHT_1, RobotMap.PORT_ENCODER_SHOOT_RIGHT_2);
@@ -23,14 +24,12 @@ public class Shooter extends Subsystem {
 		   				_tilt = new Talon(RobotMap.PORT_MOTOR_SHOOT_TILT),
 						_intake = new Talon(RobotMap.PORT_MOTOR_SHOOT_INTAKE);
 	
-	private final DigitalInput _minSwitch = new DigitalInput(RobotMap.PORT_LIMIT_SWITCH_MIN_TILT);
-	
 	private StringPot _stringPot = new StringPot(RobotMap.PORT_STRINGPOT, 1);
 	private double TiltMax = 1; //TODO: Find these values experimentally
 	private double TiltMin = 0;
-	public final double SHOOTER_BASE = 0.24050625;
 	
-	private double shootPower;
+	private double leftPower;
+	private double rightPower;
 	private double intakePower;
 	private double tiltPower;
 
@@ -68,9 +67,14 @@ public class Shooter extends Subsystem {
 		_left.set(0);
 	}
 	
-	public double getShootPower(){
-		return shootPower;
+	public double getLeftPower(){
+		return leftPower;
 	}
+	
+	public double getRightPower(){
+		return rightPower;
+	}
+	
 	public double getShooterTilt(){
 		return _stringPot.get();
 	}
@@ -80,11 +84,15 @@ public class Shooter extends Subsystem {
 	}
 
 	public double getShooterAngle(){
-		return Math.acos(1 - (Math.pow(_stringPot.getLength(),2)/(2*Math.pow(SHOOTER_BASE, 2))));
+		return _stringPot.get();
 	}
 	
 	@Override
 	protected void initDefaultCommand() {
+	}
+
+	public double getTiltMin() {
+		return TiltMin;
 	}
 
 	public double getTiltMax() {
@@ -92,10 +100,24 @@ public class Shooter extends Subsystem {
 	}
 	
 	public boolean isMax(){
-		return (_stringPot.get() > TiltMax);
+		
+		if (tiltPower == TiltMax){
+			return true;
+		}
+		else{
+			return false;
+		}
+		
 	}
 	
 	public boolean isMin(){
-		return _minSwitch.get();
+		
+		if (tiltPower == TiltMin){
+			return true;
+		}
+		else{
+			return false;
+		}
+		
 	}
 }

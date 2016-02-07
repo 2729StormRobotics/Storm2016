@@ -14,7 +14,7 @@ import org.usfirst.frc.team2729.robot.OI;
 public class DriveTrain extends Subsystem {
     
 	private final Talon _left = new Talon(RobotMap.PORT_MOTOR_DRIVE_LEFT),
-						_right= new Talon(RobotMap.PORT_MOTOR_DRIVE_RIGHT);
+						_right= new Talon(RobotMap.PORT_MOTOR_DRIVE_RIGHT);	
 	private final Encoder _leftEncoder = new Encoder(RobotMap.PORT_ENCODER_DRIVE_LEFT_1, RobotMap.PORT_ENCODER_DRIVE_LEFT_2),
 						  _rightEncoder = new Encoder(RobotMap.PORT_ENCODER_DRIVE_RIGHT_1, RobotMap.PORT_ENCODER_DRIVE_RIGHT_2);;
 	private final DoubleSolenoid _shifter = new DoubleSolenoid(RobotMap.PORT_SHIFT_DRIVE_HIGH, RobotMap.PORT_SHIFT_DRIVE_LOW);
@@ -43,11 +43,6 @@ public class DriveTrain extends Subsystem {
 	}
 
 	public void halt() {
-		_left.set(0);
-		_right.set(0);
-	}
-	
-	public void stop(){
 		_left.set(0);
 		_right.set(0);
 	}

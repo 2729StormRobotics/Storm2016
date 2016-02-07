@@ -23,12 +23,12 @@ public class Robot extends IterativeRobot {
 	public static Shooter shoot = new Shooter();
 	public static HangingSystem hang = new HangingSystem();
 	public static VisionSystem vision = new VisionSystem();
+
 	
     Command autonomousCommand;
     SendableChooser chooser;
 
 	public void robotInit() {
-		oi = new OI();
         chooser = new SendableChooser();
         chooser.addDefault("Default Auto", new TankDrive());
 //        chooser.addObject("My Auto", new MyAutoCommand());

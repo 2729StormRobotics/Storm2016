@@ -25,10 +25,10 @@ public class TankDrive extends Command {
     }
 
     protected void end() {
-    	Robot.driveTrain.TankDrive(0, 0);
+    	Robot.driveTrain.halt();
     }
 
     protected void interrupted() {
-    	Robot.driveTrain.TankDrive(0, 0);
+    	Robot.driveTrain.halt();
     }
 }
