@@ -22,11 +22,10 @@ public class Shooter extends Subsystem {
 	
 	private final Talon _left = new Talon(RobotMap.PORT_MOTOR_SHOOT_LEFT),
 		   				_right= new Talon(RobotMap.PORT_MOTOR_SHOOT_RIGHT),
-		   				_tilt = new Talon(RobotMap.PORT_MOTOR_SHOOT_TILT),
-						_intake = new Talon(RobotMap.PORT_MOTOR_SHOOT_INTAKE);
+		   				_tilt = new Talon(RobotMap.PORT_MOTOR_SHOOT_TILT);
 	
 	private StringPot _stringPot = new StringPot(RobotMap.PORT_STRINGPOT, 1);
-	private final DigitalInput _minSwitch = new DigitalInput(RobotMap.PORT_LIMIT_SWITCH_MIN_TILT);
+	private final DigitalInput _minSwitch = new DigitalInput(RobotMap.PORT_SHOOTER_SWITCH_MIN_TILT);
 	private double TiltMax = 1; //TODO: Find these values experimentally
 	private double TiltMin = 0;
 	public final double SHOOTER_BASE = 0.24050625;
