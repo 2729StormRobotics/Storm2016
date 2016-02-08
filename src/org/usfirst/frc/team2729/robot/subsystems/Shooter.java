@@ -63,7 +63,7 @@ public class Shooter extends Subsystem {
 	public void setTargetSpeed(double _target){
 		targetTicks = _target;
 	}
-	
+	 
 	public void haltSpin(){
 		targetTicks = 0;
 		_right.set(0);
@@ -86,6 +86,7 @@ public class Shooter extends Subsystem {
 		return Math.acos(1 - (Math.pow(_stringPot.getLength(),2)/(2*Math.pow(SHOOTER_BASE, 2))));
 	}
 	
+	public double shootTiltToAngle()
 	@Override
 	protected void initDefaultCommand() {
 	}
