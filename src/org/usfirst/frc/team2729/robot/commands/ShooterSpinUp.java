@@ -8,7 +8,7 @@ public class ShooterSpinUp extends Command {
 	private int DEFAULT_TARGET_SPEED = 500;
 
 	public ShooterSpinUp(){
-		Robot.shoot.setTargetSpeed(DEFAULT_TARGET_SPEED);
+		Robot.shoot.setTargetSpeed(Robot.shoot.getTargetTicks() + 100);
 	}
 	public ShooterSpinUp(double targetSpeed){
 		Robot.shoot.setTargetSpeed(targetSpeed);

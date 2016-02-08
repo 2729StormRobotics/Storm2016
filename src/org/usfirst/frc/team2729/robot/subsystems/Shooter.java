@@ -4,6 +4,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import org.usfirst.frc.team2729.robot.RobotMap;
+import org.usfirst.frc.team2729.robot.commands.ShooterSpinUp;
 
 import edu.wpi.first.wpilibj.AnalogPotentiometer;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
@@ -42,6 +43,7 @@ public class Shooter extends Subsystem {
 	private double KiRight = 0.001;
 
 	public Shooter(){
+		new ShooterSpinUp(1000).start();
 		Timer _timer = new Timer();
 		_timer.schedule(new TimerTask() {
 			public void run() {
@@ -68,8 +70,8 @@ public class Shooter extends Subsystem {
 		_left.set(0);
 	}
 	
-	public double getShootPower(){
-		return shootPower;
+	public double getTargetTicks(){
+		return targetTicks;
 	}
 	
 	public double getShooterTilt(){
