@@ -3,7 +3,6 @@ package org.usfirst.frc.team2729.robot.subsystems;
 import java.util.Comparator;
 import java.util.Vector;
 
-import org.usfirst.frc.team2729.robot.commands.TankDrive;
 import org.usfirst.frc.team2729.robot.commands.Vision;
 
 import com.ni.vision.NIVision;
@@ -12,7 +11,6 @@ import com.ni.vision.NIVision.ImageType;
 
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.command.Subsystem;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class VisionSystem extends Subsystem {
 	
@@ -61,7 +59,7 @@ public class VisionSystem extends Subsystem {
 	NIVision.Range TARGET_VAL_RANGE = new NIVision.Range(134, 255);	//Default value range for target
 	double AREA_MINIMUM = 0.5; //Default Area minimum for particle as a percentage of total image area
 	double SCORE_MIN = 75.0;  //Minimum score to be considered a target
-	double VIEW_ANGLE = 60; //View angle fo camera, set to 49.4 for Axis m1011 by default, 64 for m1013, 51.7 for 206, 52 for HD3000 square, 60 for HD3000 640x480
+	double VIEW_ANGLE = 60; //View angle for camera, set to 49.4 for Axis m1011 by default, 64 for m1013, 51.7 for 206, 52 for HD3000 square, 60 for HD3000 640x480
 	NIVision.ParticleFilterCriteria2 criteria[] = new NIVision.ParticleFilterCriteria2[1];
 	NIVision.ParticleFilterOptions2 filterOptions = new NIVision.ParticleFilterOptions2(0,0,1,1);
 	Scores scores = new Scores();
