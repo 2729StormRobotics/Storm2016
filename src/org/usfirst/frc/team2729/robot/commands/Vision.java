@@ -17,7 +17,7 @@ public class Vision extends Command {
 
 	@Override
 	protected void execute() {
-		Robot.vision.detectTarget();
+		//Robot.vision.detectTarget();
 	}
 
 	@Override
