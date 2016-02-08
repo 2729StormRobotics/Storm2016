@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import org.usfirst.frc.team2729.robot.util.StringPot;
+import edu.wpi.first.wpilibj.DigitalInput;
 
 public class Shooter extends Subsystem {
 
@@ -25,11 +26,12 @@ public class Shooter extends Subsystem {
 						_intake = new Talon(RobotMap.PORT_MOTOR_SHOOT_INTAKE);
 	
 	private StringPot _stringPot = new StringPot(RobotMap.PORT_STRINGPOT, 1);
+	private final DigitalInput _minSwitch = new DigitalInput(RobotMap.PORT_LIMIT_SWITCH_MIN_TILT);
 	private double TiltMax = 1; //TODO: Find these values experimentally
 	private double TiltMin = 0;
+	public final double SHOOTER_BASE = 0.24050625;
 	
-	private double leftPower;
-	private double rightPower;
+	private double shootPower;
 	private double intakePower;
 	private double tiltPower;
 
@@ -67,12 +69,8 @@ public class Shooter extends Subsystem {
 		_left.set(0);
 	}
 	
-	public double getLeftPower(){
-		return leftPower;
-	}
-	
-	public double getRightPower(){
-		return rightPower;
+	public double getShootPower(){
+		return shootPower;
 	}
 	
 	public double getShooterTilt(){
@@ -84,40 +82,19 @@ public class Shooter extends Subsystem {
 	}
 
 	public double getShooterAngle(){
-		return _stringPot.get();
+		return Math.acos(1 - (Math.pow(_stringPot.getLength(),2)/(2*Math.pow(SHOOTER_BASE, 2))));
 	}
 	
 	@Override
 	protected void initDefaultCommand() {
 	}
 
-	public double getTiltMin() {
-		return TiltMin;
-	}
-
-	public double getTiltMax() {
-		return TiltMax;
-	}
 	
 	public boolean isMax(){
-		
-		if (tiltPower == TiltMax){
-			return true;
-		}
-		else{
-			return false;
-		}
-		
+		return (_stringPot.get() > TiltMax);
 	}
 	
 	public boolean isMin(){
-		
-		if (tiltPower == TiltMin){
-			return true;
-		}
-		else{
-			return false;
-		}
-		
+		return _minSwitch.get();
 	}
 }
