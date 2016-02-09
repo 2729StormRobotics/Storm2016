@@ -39,11 +39,11 @@ public class Shooter extends Subsystem {
 	private double targetTicks = 0;
 	private double IntErrorLeft = 0;
 	private double IntErrorRight = 0;
-	private double KiLeft = 0.001;
-	private double KiRight = 0.001;
+	private double KiLeft = 0.00001;
+	private double KiRight = 0.00001;
 
 	public Shooter(){
-		new ShooterSpinUp(1000).start();
+		targetTicks = 0;
 		Timer _timer = new Timer();
 		_timer.schedule(new TimerTask() {
 			public void run() {
@@ -86,7 +86,6 @@ public class Shooter extends Subsystem {
 		return Math.acos(1 - (Math.pow(_stringPot.getLength(),2)/(2*Math.pow(SHOOTER_BASE, 2))));
 	}
 	
-	public double shootTiltToAngle()
 	@Override
 	protected void initDefaultCommand() {
 	}

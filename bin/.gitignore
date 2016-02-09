@@ -1,3 +1,4 @@
-/Subsystems/
+*.class
 /org/
-/commands/
+/build/
+/dist/

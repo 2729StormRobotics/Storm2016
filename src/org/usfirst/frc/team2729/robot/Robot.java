@@ -5,6 +5,8 @@ import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
+
+import org.usfirst.frc.team2729.robot.commands.ShooterSpinUp;
 import org.usfirst.frc.team2729.robot.commands.TankDrive;
 import org.usfirst.frc.team2729.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team2729.robot.subsystems.HangingSystem;
@@ -17,18 +19,24 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Robot extends IterativeRobot {
 
-	public static final DriveTrain driveTrain = new DriveTrain();
+	public static DriveTrain driveTrain;
+	public static IntakeSystem intake;
+	public static Shooter shoot;
+	public static HangingSystem hang;
+	//public static VisionSystem vision = new VisionSystem();
 	public static OI oi;
-	public static IntakeSystem intake = new IntakeSystem();
-	public static Shooter shoot = new Shooter();
-	public static HangingSystem hang = new HangingSystem();
-	public static VisionSystem vision = new VisionSystem();
 
 	
     Command autonomousCommand;
     SendableChooser chooser;
 
 	public void robotInit() {
+		driveTrain = new DriveTrain();
+		intake = new IntakeSystem();
+		shoot = new Shooter();
+		hang = new HangingSystem();
+		oi = new OI();
+		
         chooser = new SendableChooser();
         chooser.addDefault("Default Auto", new TankDrive());
 //        chooser.addObject("My Auto", new MyAutoCommand());
@@ -69,6 +77,7 @@ public class Robot extends IterativeRobot {
 
     public void teleopInit() {
         if (autonomousCommand != null) autonomousCommand.cancel();
+        new ShooterSpinUp(15000).start();
     }
 
     public void teleopPeriodic() {

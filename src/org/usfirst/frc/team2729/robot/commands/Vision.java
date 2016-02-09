@@ -7,7 +7,7 @@ import edu.wpi.first.wpilibj.command.Command;
 public class Vision extends Command {
 
 	public Vision() {
-		requires(Robot.vision);
+		//requires(Robot.vision);
 	}
 	
 	@Override
