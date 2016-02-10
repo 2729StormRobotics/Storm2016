@@ -54,9 +54,9 @@ public class VisionSystem extends Subsystem {
 	int imaqError;
 
 	//Constants
-	NIVision.Range TARGET_HUE_RANGE = new NIVision.Range(101, 64);	//Default hue range for target
-	NIVision.Range TARGET_SAT_RANGE = new NIVision.Range(88, 255);	//Default saturation range for target
-	NIVision.Range TARGET_VAL_RANGE = new NIVision.Range(134, 255);	//Default value range for target
+	NIVision.Range TARGET_HUE_RANGE = new NIVision.Range(0, 255);	//Default hue range for target
+	NIVision.Range TARGET_SAT_RANGE = new NIVision.Range(0, 255);	//Default saturation range for target
+	NIVision.Range TARGET_VAL_RANGE = new NIVision.Range(245, 255);	//Default value range for target
 	double AREA_MINIMUM = 0.5; //Default Area minimum for particle as a percentage of total image area
 	double SCORE_MIN = 75.0;  //Minimum score to be considered a target
 	double VIEW_ANGLE = 60; //View angle for camera, set to 49.4 for Axis m1011 by default, 64 for m1013, 51.7 for 206, 52 for HD3000 square, 60 for HD3000 640x480
