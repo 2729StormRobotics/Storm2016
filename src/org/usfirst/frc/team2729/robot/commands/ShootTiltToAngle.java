@@ -7,28 +7,25 @@ import edu.wpi.first.wpilibj.command.Command;
 public class ShootTiltToAngle extends Command {
 	
 	private double target = 0;
+	private double setTiltPower;
 	public ShootTiltToAngle(double _target){
 		target =  _target;
 	}
 	@Override
 	protected void initialize() {
-	
-		
 	}
 
 	@Override
 	protected void execute() {
 		double err = target - Robot.shoot.getShooterAngle();
-		double Kp = 0.001;
-		double setTiltPower = Kp*err;
+		double Kp = 0.0001;
+		setTiltPower = Kp*err;
 		Robot.shoot.setTiltPower(setTiltPower);
-		
 	}
 
 	@Override
 	protected boolean isFinished() {
-
-		return false;
+		return setTiltPower < 0.01;
 	}
 
 	@Override
@@ -41,8 +38,4 @@ public class ShootTiltToAngle extends Command {
 	Robot.shoot.setTiltPower(0);
 		
 	}
-
 }
-//getHooterAngle
-//ouput=err*kp=0.001
-//
