@@ -1,7 +1,4 @@
 *.class
-<<<<<<< HEAD
-=======
-/org/
-/build/
-/dist/
->>>>>>> origin/master
+*.classpath
+*.jar
+*.xml
