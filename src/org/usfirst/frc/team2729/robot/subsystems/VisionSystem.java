@@ -104,14 +104,6 @@ public class VisionSystem extends Subsystem {
 	public void detectTarget(){
 		NIVision.IMAQdxGrab(session, frame, 1);
 
-		//Update threshold values from SmartDashboard. For performance reasons it is recommended to remove this after calibration is finished.
-    	TARGET_HUE_RANGE.minValue = (int)TARGET_HUE_RANGE.minValue;
-    	TARGET_HUE_RANGE.maxValue = (int)TARGET_HUE_RANGE.maxValue;
-    	TARGET_SAT_RANGE.minValue = (int)TARGET_SAT_RANGE.minValue;
-    	TARGET_SAT_RANGE.maxValue = (int)TARGET_SAT_RANGE.maxValue;
-    	TARGET_VAL_RANGE.minValue = (int)TARGET_VAL_RANGE.minValue;
-    	TARGET_VAL_RANGE.maxValue = (int)TARGET_VAL_RANGE.maxValue;
-
 		//Threshold the image looking for yellow (tote color)
 		NIVision.imaqColorThreshold(binaryFrame, frame, 255, NIVision.ColorMode.HSV, TARGET_HUE_RANGE, TARGET_SAT_RANGE, TARGET_VAL_RANGE);
 
@@ -156,7 +148,13 @@ public class VisionSystem extends Subsystem {
 			//SmartDashboard.putNumber("Aspect", scores.Aspect);
 			scores.Area = AreaScore(particles.elementAt(0));
 			//SmartDashboard.putNumber("Area", scores.Area);
+			
+			//Set values
 			targetDetected = scores.Aspect > SCORE_MIN && scores.Area > SCORE_MIN;
+			targetDistance = computeTargetDistance(binaryFrame, particles.elementAt(0));
+			targetHorizontalAngle = computeHorizontalAngle(binaryFrame, particles.elementAt(0));
+			targetVerticalAngle = computeVerticalAngle(binaryFrame, particles.elementAt(0));
+			towerDistance = computeTowerDistance();
 
 			//Send distance and tote status to dashboard. The bounding rect, particularly the horizontal center (left - right) may be useful for rotating/driving towards a tote
 			//SmartDashboard.putBoolean("IsTarget", isTarget);
@@ -206,7 +204,7 @@ public class VisionSystem extends Subsystem {
 	 * @param report The Particle Analysis Report for the particle
 	 * @return The estimated distance to the target in feet.
 	 */
-  	private double computeDistance (Image image, ParticleReport report) {
+  	private double computeTargetDistance (Image image, ParticleReport report) {
 		double normalizedWidth, targetWidth;
 		NIVision.GetImageSizeResult size;
 
@@ -215,6 +213,27 @@ public class VisionSystem extends Subsystem {
 		targetWidth = 20;
 		
 		//targetWidth*size.width/(2*(report.BoundingRectRight - report.BoundingRectLeft)*tan(viewangle))
-		return  targetWidth/(normalizedWidth*12*Math.tan(VIEW_ANGLE*Math.PI/(180*2)));
+		return targetWidth/(normalizedWidth*12*Math.tan(VIEW_ANGLE*Math.PI/(180*2))) * 0.0254;
 	}
+  	
+  	private double computeHorizontalAngle (Image image, ParticleReport report) {
+  		NIVision.GetImageSizeResult size;
+		size = NIVision.imaqGetImageSize(image);
+  		
+		//(int) (((((2 * rec1.tl().x + rec1.width)) / original.width()) - 1) * (_fieldOfViewH.getValue()/2));
+  		return (report.BoundingRectLeft + (report.BoundingRectRight - report.BoundingRectLeft)/2)/size.width * VIEW_ANGLE;
+  	}
+  	
+  	private double computeVerticalAngle (Image image, ParticleReport report) {
+  		NIVision.GetImageSizeResult size;
+		size = NIVision.imaqGetImageSize(image);
+  		
+		//until vertical view angle is determined, using 2/3 horizontal view angle
+		//(int) (((((2 * rec1.tl().x + rec1.width)) / original.width()) - 1) * (_fieldOfViewH.getValue()/2));
+  		return (report.BoundingRectBottom - (report.BoundingRectBottom - report.BoundingRectTop)/2)/size.height * (VIEW_ANGLE * 2/3);
+  	}
+  	
+  	private double computeTowerDistance () {
+  		return targetDistance * Math.cos(targetVerticalAngle);
+  	}
 }
