@@ -23,7 +23,7 @@ public class Robot extends IterativeRobot {
 	public static IntakeSystem intake;
 	public static Shooter shoot;
 	public static HangingSystem hang;
-	//public static VisionSystem vision = new VisionSystem();
+	public static VisionSystem vision;
 	public static OI oi;
 
 	
@@ -36,6 +36,7 @@ public class Robot extends IterativeRobot {
 		shoot = new Shooter();
 		hang = new HangingSystem();
 		oi = new OI();
+		vision = new VisionSystem();
 		
         chooser = new SendableChooser();
         chooser.addDefault("Default Auto", new TankDrive());
