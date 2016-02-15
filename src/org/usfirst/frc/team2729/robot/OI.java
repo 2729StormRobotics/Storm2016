@@ -19,8 +19,6 @@ import org.usfirst.frc.team2729.robot.commands.TankDrive;
 import java.util.Timer;
 import java.util.TimerTask;
 
-
-
 public class OI {
 
 	private final Joystick driveJoystick = new Joystick(RobotMap.PORT_JOYSTICK_DRIVE),
@@ -68,9 +66,6 @@ public class OI {
 		
 		togglePTOOn.whenPressed(new ActuatePTO(true));
 		togglePTOOn.whenPressed(new ActuatePTO(false));
-		
-		hangingExtenderDown.whileHeld(new ExtendHanging(-1));
-		hangingExtenderUp.whileHeld(new ExtendHanging(1));
 		
 		shiftHighDrive.whenPressed(new Shift(true));
 		shiftLowDrive.whenPressed(new Shift(false));

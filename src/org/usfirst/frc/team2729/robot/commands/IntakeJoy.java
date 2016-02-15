@@ -11,13 +11,11 @@ public class IntakeJoy extends Command {
 	}
 	
 	protected void initialize() {
-	
 	}
 
 	@Override
 	protected void execute() {
-		Robot.intake.Intake(Robot.oi.getIntake());
-		Robot.intake.IntakeTilt(Robot.oi.getIntakeTilt());
+		Robot.intake.intakeDrive(Robot.oi.getIntake());
 	}
 
 	@Override
@@ -27,14 +25,11 @@ public class IntakeJoy extends Command {
 
 	@Override
 	protected void end() {
-		Robot.intake.Intake(0);
-		Robot.intake.IntakeTilt(0);
-
+		Robot.intake.intakeDrive(0);
 	}
 
 	@Override
 	protected void interrupted() {
-		Robot.intake.Intake(0);
-		Robot.intake.IntakeTilt(0);
+		Robot.intake.intakeDrive(0);
 	}
 }

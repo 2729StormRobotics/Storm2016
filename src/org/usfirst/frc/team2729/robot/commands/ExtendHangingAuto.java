@@ -15,8 +15,7 @@ public class ExtendHangingAuto extends Command{
 
 	@Override
 	protected void execute() {
-		Robot.hang.setLeftExtendPower(_hang);
-		Robot.hang.setRightExtendPower(_hang);	
+		Robot.hang.setExtendPower(_hang);
 	}
 	
 	protected void initialize() {
@@ -30,13 +29,11 @@ public class ExtendHangingAuto extends Command{
 
 	@Override
 	protected void end() {
-		Robot.hang.setLeftExtendPower(0);
-		Robot.hang.setRightExtendPower(0);
+		Robot.hang.setExtendPower(0);
 	}
 
 	@Override
 	protected void interrupted() {
-		Robot.hang.setLeftExtendPower(0);
-		Robot.hang.setRightExtendPower(0);		
+		Robot.hang.setExtendPower(0);
 	}
 }
