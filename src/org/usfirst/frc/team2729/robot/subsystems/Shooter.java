@@ -15,8 +15,6 @@ import org.usfirst.frc.team2729.robot.util.StringPot;
 import edu.wpi.first.wpilibj.DigitalInput;
 
 public class Shooter extends Subsystem {
-
-	//button hold spins up hte shooting wheels, button to raise and lower shooter, button whiel shooting also running intake
 	
 	private final Encoder _leftShooter = new Encoder(RobotMap.PORT_ENCODER_SHOOT_LEFT_1, RobotMap.PORT_ENCODER_SHOOT_LEFT_2);
 	private final Encoder _rightShooter = new Encoder(RobotMap.PORT_ENCODER_SHOOT_RIGHT_1, RobotMap.PORT_ENCODER_SHOOT_RIGHT_2);
@@ -31,7 +29,8 @@ public class Shooter extends Subsystem {
 	private final DigitalInput _intakeHalt= new DigitalInput(RobotMap.PORT_LIMIT_SWITCH_INTAKE_HALT);
 	private double TiltMax = 1; //TODO: Find these values experimentally
 	private double TiltMin = 0;
-	public final double SHOOTER_BASE = 0.24050625;
+	private final double beta = 10, phi = 40;//TODO: Find these angles
+	private final double ANGLE_CONST_NUM = 20, ANGLE_CONST_DENOM = 20;
 	
 	private double shootPower;
 	private double intakePower;
@@ -93,7 +92,7 @@ public class Shooter extends Subsystem {
 	}
 
 	public double getShooterAngle(){
-		return Math.acos(1 - (Math.pow(_stringPot.getLength(),2)/(2*Math.pow(SHOOTER_BASE, 2))));
+		return 180 - phi - beta - Math.acos((ANGLE_CONST_NUM - Math.pow(_stringPot.getLength(),2))/ANGLE_CONST_DENOM);
 	}
 	
 	@Override

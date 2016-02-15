@@ -14,7 +14,7 @@ import org.usfirst.frc.team2729.robot.util.RotaryPot;
 
 public class IntakeSystem extends Subsystem {
 
-	private final Talon _intakeDrive = new Talon(RobotMap.PORT_MOTOR_INTAKE_HOR);
+	private final Talon _intakeDrive = new Talon(RobotMap.PORT_MOTOR_INTAKE_DRIVE);
 	private final Talon _intakeTilt = new Talon(RobotMap.PORT_MOTOR_INTAKE_TILT);
 	
 	private final DigitalInput _switchBallin = new DigitalInput(RobotMap.PORT_LIMIT_SWITCH_INTAKE_HALT);
@@ -23,8 +23,6 @@ public class IntakeSystem extends Subsystem {
 	
 	//Feedback Loop Variables
 	private double target = 0;//TODO: Determine the top value
-	private double intError = 0;
-	private double Ki = 0.000001; //TODO: Tune these
 	private double Kp = 0.0001;
 	
 	public IntakeSystem(){
@@ -32,8 +30,7 @@ public class IntakeSystem extends Subsystem {
 		_timer.schedule(new TimerTask() {
 			public void run() {
 				double error = target - _pot.get();
-				intError += target - _pot.get();
-				_intakeTilt.set((Kp * error) + (Ki * intError));
+				_intakeTilt.set((Kp * error));
 			}
 		}, 50, 50);
 	}
