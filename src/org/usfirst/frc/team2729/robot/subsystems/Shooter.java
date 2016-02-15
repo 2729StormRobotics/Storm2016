@@ -39,8 +39,8 @@ public class Shooter extends Subsystem {
 	private double targetTicks = 0;
 	private double IntErrorLeft = 0;
 	private double IntErrorRight = 0;
-	private double KiLeft = 0.00001;
-	private double KiRight = 0.00001;
+	private double KiLeft = 0.000003;
+	private double KiRight = 0.000003;
 
 	public Shooter(){
 		targetTicks = 0;

@@ -9,8 +9,7 @@ public class HangingSystem extends Subsystem {
 	
 	private final Talon _extenderLeft = new Talon(RobotMap.PORT_MOTOR_EXTENDER_LEFT),
 						_extenderRight = new Talon(RobotMap.PORT_MOTOR_EXTENDER_RIGHT);
-			//_winchLeft = new Talon(RobotMap.PORT_MOTOR_DRIVE_LEFT),
-			//_winchRight = new Talon(RobotMap.PORT_MOTOR_DRIVE_RIGHT),
+	private double winchPower = 0;
 	
 	@Override
 	protected void initDefaultCommand() {}
@@ -18,16 +17,22 @@ public class HangingSystem extends Subsystem {
 		_extenderLeft.set(0);
 		_extenderRight.set(0);
 	}
-	public void setLeftExtendPower(double power){
+	public void setExtendPower(double power){
 		_extenderLeft.set(power);
-	}
-	public void setRightExtendPower(double power){
 		_extenderRight.set(power);
 	}
-	public double getLeftExtendPower(){
+	public double getExtendPower(){
 		return _extenderLeft.get();
 	}
-	public double getRighttExtendPower(){
-		return _extenderRight.get();
+	public void setWinch(double power){
+		if(Robot.driveTrain.getPTO()){
+			winchPower = power;
+			Robot.driveTrain.TankDrive(power, power);
+		} else {
+			winchPower = 0;
+		}
+	}
+	public double getWinch(){
+		return winchPower;
 	}
 }

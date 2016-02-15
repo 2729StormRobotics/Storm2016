@@ -95,6 +95,9 @@ public class DriveTrain extends Subsystem {
 		_isPTOEnabled = enabled;
 		_pto.set(enabled ? DoubleSolenoid.Value.kReverse
 				: DoubleSolenoid.Value.kForward);
+		if(enabled){
+			this.halt();
+		}
 	}
 	public boolean getPTO(){
 		return _isPTOEnabled;
