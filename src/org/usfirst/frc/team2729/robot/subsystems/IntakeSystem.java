@@ -28,7 +28,7 @@ public class IntakeSystem extends Subsystem {
 	private double Ki = 0.0001;
 	private double Kp = 0.0001;
 	
-	public void IntakeSystem(){
+	public IntakeSystem(){
 		Timer _timer = new Timer();
 		_timer.schedule(new TimerTask() {
 			public void run() {
