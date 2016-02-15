@@ -23,10 +23,12 @@ public class Shooter extends Subsystem {
 	
 	private final Talon _left = new Talon(RobotMap.PORT_MOTOR_SHOOT_LEFT),
 		   				_right= new Talon(RobotMap.PORT_MOTOR_SHOOT_RIGHT),
-		   				_tilt = new Talon(RobotMap.PORT_MOTOR_SHOOT_TILT);
+		   				_tilt = new Talon(RobotMap.PORT_MOTOR_SHOOT_TILT),
+		   				_intake = new Talon(RobotMap.PORT_MOTOR_SHOOT_INTAKE);
 	
-	private StringPot _stringPot = new StringPot(RobotMap.PORT_STRINGPOT, 1);
+	private final StringPot _stringPot = new StringPot(RobotMap.PORT_STRINGPOT, 1);
 	private final DigitalInput _minSwitch = new DigitalInput(RobotMap.PORT_SHOOTER_SWITCH_MIN_TILT);
+	private final DigitalInput _intakeHalt= new DigitalInput(RobotMap.PORT_LIMIT_SWITCH_INTAKE_HALT);
 	private double TiltMax = 1; //TODO: Find these values experimentally
 	private double TiltMin = 0;
 	public final double SHOOTER_BASE = 0.24050625;
@@ -40,17 +42,22 @@ public class Shooter extends Subsystem {
 	private double IntErrorLeft = 0;
 	private double IntErrorRight = 0;
 	private double KiLeft = 0.000003;
+	private double KpLeft = 0.000003;
 	private double KiRight = 0.000003;
+	private double KpRight = 0.000003;
+	private double errorL = 0, errorR = 0;
 
 	public Shooter(){
 		targetTicks = 0;
 		Timer _timer = new Timer();
 		_timer.schedule(new TimerTask() {
 			public void run() {
-				IntErrorLeft += targetTicks - _leftShooter.getRate();
-				IntErrorRight += targetTicks - _rightShooter.getRate();
-				_right.set(KiRight * IntErrorRight);
-				_left.set(KiLeft * IntErrorLeft);
+				errorL = targetTicks - _leftShooter.getRate();
+				errorR = targetTicks - _rightShooter.getRate();
+				IntErrorLeft += errorL;
+				IntErrorRight += errorR;
+				_right.set((KpRight * errorR) + (KiRight * IntErrorRight));
+				_left.set((KpLeft * errorL) + (KiLeft * IntErrorLeft));
 			}
 		}, 50, 50);
 	}
@@ -63,7 +70,10 @@ public class Shooter extends Subsystem {
 	public void setTargetSpeed(double _target){
 		targetTicks = _target;
 	}
-	 
+	
+	public void setIntake(double power){
+		_intake.set(0);
+	}
 	public void haltSpin(){
 		targetTicks = 0;
 		_right.set(0);
@@ -89,7 +99,6 @@ public class Shooter extends Subsystem {
 	@Override
 	protected void initDefaultCommand() {
 	}
-
 	
 	public boolean isMax(){
 		return (_stringPot.get() > TiltMax);
@@ -97,5 +106,8 @@ public class Shooter extends Subsystem {
 	
 	public boolean isMin(){
 		return _minSwitch.get();
+	}
+	public boolean getIntakeHalt(){
+		return _intakeHalt.get();
 	}
 }

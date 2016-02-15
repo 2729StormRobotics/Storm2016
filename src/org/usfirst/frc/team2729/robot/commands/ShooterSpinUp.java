@@ -5,10 +5,10 @@ import org.usfirst.frc.team2729.robot.Robot;
 import edu.wpi.first.wpilibj.command.Command;
 
 public class ShooterSpinUp extends Command {
-	private int DEFAULT_TARGET_SPEED = 500;
+	private int DEFAULT_TARGET_SPEED = 22500;
 
 	public ShooterSpinUp(){
-		Robot.shoot.setTargetSpeed(Robot.shoot.getTargetTicks() + 100);
+		Robot.shoot.setTargetSpeed(DEFAULT_TARGET_SPEED);
 	}
 	public ShooterSpinUp(double targetSpeed){
 		Robot.shoot.setTargetSpeed(targetSpeed);

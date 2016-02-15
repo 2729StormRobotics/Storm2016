@@ -16,6 +16,7 @@ public class IntakeJoy extends Command {
 	@Override
 	protected void execute() {
 		Robot.intake.intakeDrive(Robot.oi.getIntake());
+		Robot.shoot.setIntake(!(Robot.shoot.getIntakeHalt.get()) ? Robot.oi.getIntake() : 0);
 	}
 
 	@Override
