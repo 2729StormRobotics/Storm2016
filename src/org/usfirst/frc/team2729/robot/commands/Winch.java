@@ -5,10 +5,12 @@ import org.usfirst.frc.team2729.robot.Robot;
 import edu.wpi.first.wpilibj.command.Command;
 
 public class Winch extends Command{
+private final double EXTEND_POWER = .75;		
+
 	private boolean winch;
 	public Winch(boolean _winch){
 		winch = _winch;
-		
+		requires(Robot.hang);
 	}
 	
 	@Override
@@ -18,27 +20,24 @@ public class Winch extends Command{
 
 	@Override
 	protected void execute() {
-		if (Robot.hang.setWinch = true){
-			
-		}
-		
-	}
+		Robot.hang.setWinch(EXTEND_POWER * (winch ? 1 : -1));
+	}		
+	
 
 	@Override
 	protected boolean isFinished() {
-		// TODO Auto-generated method stub
+		
 		return false;
 	}
 
 	@Override
 	protected void end() {
-		// TODO Auto-generated method stub
-		
+		Robot.hang.setWinch(0);
 	}
 
 	@Override
 	protected void interrupted() {
-		// TODO Auto-generated method stub
+		Robot.hang.setWinch(0);
 		
 	}
 
