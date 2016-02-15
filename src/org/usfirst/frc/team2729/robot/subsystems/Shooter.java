@@ -28,9 +28,8 @@ public class Shooter extends Subsystem {
 	private final DigitalInput _minSwitch = new DigitalInput(RobotMap.PORT_SHOOTER_SWITCH_MIN_TILT);
 	private final DigitalInput _intakeHalt= new DigitalInput(RobotMap.PORT_LIMIT_SWITCH_INTAKE_HALT);
 	private double TiltMax = 1; //TODO: Find these values experimentally
-	private double TiltMin = 0;
 	private final double beta = 10, phi = 40;//TODO: Find these angles
-	private final double ANGLE_CONST_NUM = 20, ANGLE_CONST_DENOM = 20;
+	private final double ANGLE_CONST_NUM = 20, ANGLE_CONST_DENOM = 20; //TODO: Find these constants
 	
 	private double shootPower;
 	private double intakePower;
@@ -41,9 +40,9 @@ public class Shooter extends Subsystem {
 	private double IntErrorLeft = 0;
 	private double IntErrorRight = 0;
 	private double KiLeft = 0.000003;
-	private double KpLeft = 0.000003;
+	private double KpLeft = 0.0003; //TODO: Tune this
 	private double KiRight = 0.000003;
-	private double KpRight = 0.000003;
+	private double KpRight = 0.0003; //TODO: Tune this
 	private double errorL = 0, errorR = 0;
 
 	public Shooter(){

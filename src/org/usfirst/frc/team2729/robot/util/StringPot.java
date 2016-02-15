@@ -10,7 +10,7 @@ public class StringPot implements LiveWindowSendable {
 	
 	public double VAL_MAX_SAFE = 0;
     public final double EXTENDED_LENGTH = 0.65325625; //Length in meters
-	
+    public final double DISTANCE_EYELET = 0.12; //TODO: Find this length from pot to eyelet
     //Pot is good, especially when it's analog 
     private AnalogPotentiometer _pot;
     
@@ -49,6 +49,6 @@ public class StringPot implements LiveWindowSendable {
         return "Analog Input";
     }
     public double getLength(){
-    	return _pot.get() * EXTENDED_LENGTH;
+    	return (_pot.get() * EXTENDED_LENGTH) - DISTANCE_EYELET;
     }
 }
