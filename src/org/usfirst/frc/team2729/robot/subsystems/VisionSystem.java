@@ -54,9 +54,9 @@ public class VisionSystem extends Subsystem {
 	int imaqError;
 
 	//Constants
-	NIVision.Range TARGET_HUE_RANGE = new NIVision.Range(0, 255);	//Default hue range for target
-	NIVision.Range TARGET_SAT_RANGE = new NIVision.Range(0, 255);	//Default saturation range for target
-	NIVision.Range TARGET_VAL_RANGE = new NIVision.Range(245, 255);	//Default value range for target
+	NIVision.Range TARGET_HUE_RANGE = new NIVision.Range(101, 64);	//Default hue range for target
+	NIVision.Range TARGET_SAT_RANGE = new NIVision.Range(88, 255);	//Default saturation range for target
+	NIVision.Range TARGET_VAL_RANGE = new NIVision.Range(134, 255);	//Default value range for target
 	double AREA_MINIMUM = 0.5; //Default Area minimum for particle as a percentage of total image area
 	double SCORE_MIN = 75.0;  //Minimum score to be considered a target
 	double VIEW_ANGLE = 60; //View angle for camera, set to 49.4 for Axis m1011 by default, 64 for m1013, 51.7 for 206, 52 for HD3000 square, 60 for HD3000 640x480
@@ -65,12 +65,12 @@ public class VisionSystem extends Subsystem {
 	Scores scores = new Scores();
 	
 	public VisionSystem(){
-		// create images
+		//Create images
 		frame = NIVision.imaqCreateImage(ImageType.IMAGE_RGB, 0);
 		binaryFrame = NIVision.imaqCreateImage(ImageType.IMAGE_U8, 0);
 		criteria[0] = new NIVision.ParticleFilterCriteria2(NIVision.MeasurementType.MT_AREA_BY_IMAGE_AREA, AREA_MINIMUM, 100.0, 0, 0);
 
-		// the camera name (ex "cam0") can be found through the roborio web interface
+		//The camera name (ex "cam0") can be found through the roborio web interface
 		session = NIVision.IMAQdxOpenCamera("cam1", NIVision.IMAQdxCameraControlMode.CameraControlModeController);
         NIVision.IMAQdxConfigureGrab(session);
 		
@@ -104,14 +104,14 @@ public class VisionSystem extends Subsystem {
 	public void detectTarget(){
 		NIVision.IMAQdxGrab(session, frame, 1);
 
-		//Threshold the image looking for yellow (tote color)
+		//Threshold the image looking for green (retroreflective target color)
 		NIVision.imaqColorThreshold(binaryFrame, frame, 255, NIVision.ColorMode.HSV, TARGET_HUE_RANGE, TARGET_SAT_RANGE, TARGET_VAL_RANGE);
 
 		//Send particle count to dashboard
 		int numParticles = NIVision.imaqCountParticles(binaryFrame, 1);
 		//SmartDashboard.putNumber("Masked particles", numParticles);
 
-		//Send masked image to dashboard to assist in tweaking mask.
+		//Send masked image to dashboard to assist in tweaking mask
 		CameraServer.getInstance().setImage(binaryFrame);
 		//CameraServer.getInstance().setImage(frame);
 
@@ -141,9 +141,7 @@ public class VisionSystem extends Subsystem {
 			}
 			particles.sort(null);
 
-			//This example only scores the largest particle. Extending to score all particles and choosing the desired one is left as an exercise
-			//for the reader. Note that this scores and reports information about a single particle (single L shaped target). To get accurate information 
-			//about the location of the tote (not just the distance) you will need to correlate two adjacent targets in order to find the true center of the tote.
+			//Scores the largest particle
 			scores.Aspect = AspectScore(particles.elementAt(0));
 			//SmartDashboard.putNumber("Aspect", scores.Aspect);
 			scores.Area = AreaScore(particles.elementAt(0));
@@ -156,7 +154,7 @@ public class VisionSystem extends Subsystem {
 			targetVerticalAngle = computeVerticalAngle(binaryFrame, particles.elementAt(0));
 			towerDistance = computeTowerDistance();
 
-			//Send distance and tote status to dashboard. The bounding rect, particularly the horizontal center (left - right) may be useful for rotating/driving towards a tote
+			//Send distance and target status to dashboard. The bounding rect, particularly the horizontal center (left - right) may be useful for rotating/driving towards a target
 			//SmartDashboard.putBoolean("IsTarget", isTarget);
 			//SmartDashboard.putNumber("Distance", computeDistance(binaryFrame, particles.elementAt(0)));
 		} else {
