@@ -8,13 +8,13 @@ import org.usfirst.frc.team2729.robot.Robot;
 
 public class BreachDefenseAuto extends Command{
 
-	public final int _defense;
+
 	public final double _distance;
 	public final double _power;
 	
-	public BreachDefenseAuto(int defense, double distance, double power){
+	public BreachDefenseAuto(double distance, double power){
 		requires(Robot.driveTrain);
-		_defense = defense;
+	
 		_distance = distance;
 		_power = power;	
 	}
