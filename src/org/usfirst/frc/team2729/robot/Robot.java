@@ -33,6 +33,9 @@ public class Robot extends IterativeRobot {
     SendableChooser chooser;
 
 	public void robotInit() {
+		Command autoCommand;
+		String[] autoModeNames;
+		Command[] autoModes;
 		driveTrain = new DriveTrain();
 		intake = new IntakeSystem();
 		shoot = new Shooter();
@@ -43,7 +46,17 @@ public class Robot extends IterativeRobot {
 		compressor.start();
         chooser = new SendableChooser();
         chooser.addDefault("Default Auto", new TankDrive());
-        chooser.addObject("My Auto", new BreachDefenseAuto(0, 1, 2000));
+//        chooser.addObject("My Auto", new MyAutoCommand());
+        
+		autoModeNames = new String[]{"Position Center Left", "Position Left", "Position Center", "Position Center Right", "Position Right", 
+				};
+		autoModes = new Command[]{};
+		
+		//configure and send the sendableChooser, which allows the modes
+		//to be chosen via radio button on the SmartDashboard
+		for(int i = 0; i < autoModes.length; ++i){
+			chooser.addObject(autoModeNames[i], autoModes[i]);
+		}
         SmartDashboard.putData("Auto mode", chooser);
         SmartDashboard.putNumber("Encoder", driveTrain.getRightSpeedEnc());
     }
@@ -55,6 +68,10 @@ public class Robot extends IterativeRobot {
 		Scheduler.getInstance().run();
 	}
 
+	public void sendSensorData() {
+		SmartDashboard.putNumber("Right Encoder", driveTrain.getRightDistance());
+		SmartDashboard.putNumber("Left Encoder", driveTrain.getLeftDistance());
+	}
     public void autonomousInit() {
         autonomousCommand = (Command) chooser.getSelected();
         
