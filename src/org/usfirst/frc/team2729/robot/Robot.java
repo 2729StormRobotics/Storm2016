@@ -1,11 +1,13 @@
 
 package org.usfirst.frc.team2729.robot;
 
+import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
+import org.usfirst.frc.team2729.robot.autoModes.BreachDefenseAuto;
 import org.usfirst.frc.team2729.robot.commands.ShooterSpinUp;
 import org.usfirst.frc.team2729.robot.commands.TankDrive;
 import org.usfirst.frc.team2729.robot.subsystems.DriveTrain;
@@ -25,7 +27,7 @@ public class Robot extends IterativeRobot {
 	public static HangingSystem hang;
 	public static VisionSystem vision;
 	public static OI oi;
-
+	private Compressor compressor;
 	
     Command autonomousCommand;
     SendableChooser chooser;
@@ -40,7 +42,8 @@ public class Robot extends IterativeRobot {
 		hang = new HangingSystem();
 		oi = new OI();
 		vision = new VisionSystem();
-		
+		compressor = new Compressor();
+		compressor.start();
         chooser = new SendableChooser();
         chooser.addDefault("Default Auto", new TankDrive());
 //        chooser.addObject("My Auto", new MyAutoCommand());
@@ -56,11 +59,9 @@ public class Robot extends IterativeRobot {
 		}
         SmartDashboard.putData("Auto mode", chooser);
         SmartDashboard.putNumber("Encoder", driveTrain.getRightSpeedEnc());
-      
     }
 
     public void disabledInit(){
-
     }
 	
 	public void disabledPeriodic() {
@@ -95,7 +96,6 @@ public class Robot extends IterativeRobot {
 
     public void teleopInit() {
         if (autonomousCommand != null) autonomousCommand.cancel();
-        new ShooterSpinUp(15000).start();
     }
 
     public void teleopPeriodic() {
