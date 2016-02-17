@@ -28,8 +28,8 @@ public class Shooter extends Subsystem {
 	private final DigitalInput _minSwitch = new DigitalInput(RobotMap.PORT_SHOOTER_SWITCH_MIN_TILT);
 	private final DigitalInput _intakeHalt= new DigitalInput(RobotMap.PORT_LIMIT_SWITCH_INTAKE_HALT);
 	private double TiltMax = 1; //TODO: Find these values experimentally
-	private final double beta = 10, phi = 40;//TODO: Find these angles
-	private final double ANGLE_CONST_NUM = 20, ANGLE_CONST_DENOM = 20; //TODO: Find these constants
+	private final double beta = 54.7336, phi = 43.62;
+	private final double ANGLE_CONST_NUM = 0.091163234, ANGLE_CONST_DENOM = 0.0895807856;
 	
 	private double shootPower;
 	private double intakePower;
@@ -91,7 +91,7 @@ public class Shooter extends Subsystem {
 	}
 
 	public double getShooterAngle(){
-		return 180 - phi - beta - Math.acos((ANGLE_CONST_NUM - Math.pow(_stringPot.getLength(),2))/ANGLE_CONST_DENOM);
+		return 180 - phi - beta - Math.acos((ANGLE_CONST_NUM - (_stringPot.getLength() * _stringPot.getLength()))/ANGLE_CONST_DENOM);
 	}
 	
 	@Override
