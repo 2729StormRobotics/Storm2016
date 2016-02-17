@@ -3,14 +3,18 @@ package org.usfirst.frc.team2729.robot.subsystems;
 import java.util.Comparator;
 import java.util.Vector;
 
+import org.usfirst.frc.team2729.robot.crosshair;
 import org.usfirst.frc.team2729.robot.commands.Vision;
 
 import com.ni.vision.NIVision;
+import com.ni.vision.NIVision.DrawMode;
 import com.ni.vision.NIVision.Image;
 import com.ni.vision.NIVision.ImageType;
+import com.ni.vision.NIVision.ShapeMode;
 
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.vision.AxisCamera;
 
 public class VisionSystem extends Subsystem {
@@ -46,14 +50,16 @@ public class VisionSystem extends Subsystem {
 		double Aspect;
 	};
 				
-	//Session (for front-facing camera) and rear camera
+	//Session
 	int session;
-	AxisCamera camera;
 
 	//Images
 	Image frame;
 	Image binaryFrame;
 	int imaqError;
+	
+	//Crosshair
+	NIVision.Rect rect = new NIVision.Rect(590, 310, 100, 100);
 
 	//Constants
 	NIVision.Range TARGET_HUE_RANGE = new NIVision.Range(101, 64);	//Default hue range for target
@@ -75,9 +81,6 @@ public class VisionSystem extends Subsystem {
 		//The camera name (ex "cam0") can be found through the roborio web interface
 		session = NIVision.IMAQdxOpenCamera("cam1", NIVision.IMAQdxCameraControlMode.CameraControlModeController);
         NIVision.IMAQdxConfigureGrab(session);
-		
-        //add second camera
-        camera = new AxisCamera("10.27.29.11");
         
 		NIVision.IMAQdxStartAcquisition(session);
 	}
@@ -121,8 +124,7 @@ public class VisionSystem extends Subsystem {
 		//CameraServer.getInstance().setImage(frame);
 
 		//filter out small particles
-		float areaMin = (float)AREA_MINIMUM;
-		criteria[0].lower = areaMin;
+		criteria[0].lower = (float) AREA_MINIMUM;
 		imaqError = NIVision.imaqParticleFilter4(binaryFrame, binaryFrame, criteria, filterOptions, null);
 
 		//Send particle count after filtering to dashboard
@@ -145,7 +147,7 @@ public class VisionSystem extends Subsystem {
 				particles.add(par);
 			}
 			particles.sort(null);
-
+			
 			//Scores the largest particle
 			scores.Aspect = AspectScore(particles.elementAt(0));
 			//SmartDashboard.putNumber("Aspect", scores.Aspect);
@@ -160,14 +162,18 @@ public class VisionSystem extends Subsystem {
 			towerDistance = computeTowerDistance();
 
 			//Send distance and target status to dashboard. The bounding rect, particularly the horizontal center (left - right) may be useful for rotating/driving towards a target
-			//SmartDashboard.putBoolean("IsTarget", isTarget);
-			//SmartDashboard.putNumber("Distance", computeDistance(binaryFrame, particles.elementAt(0)));
+			//Send distance and target status to dashboard. The bounding rect, particularly the horizontal center (left - right) may be useful for rotating/driving towards a target
+			//SmartDashboard.putBoolean("Target Detected", targetDetected);
+			//SmartDashboard.putNumber("Distance to Target", targetDistance);
+			//SmartDashboard.putNumber("Horizontal Angle to Target", targetHorizontalAngle);
+			//SmartDashboard.putNumber("Vertical Angle to Target", targetVerticalAngle);
+			//SmartDashboard.putNumber("Distance to Tower", towerDistance);
 		} else {
 			targetDetected = false;
-			//SmartDashboard.putBoolean("IsTarget", false);
+			//SmartDashboard.putBoolean("Target Detected", targetDetected);
 		}
 	}
-	
+  	
 	//Comparator function for sorting particles. Returns true if particle 1 is larger
   	private static boolean CompareParticleSizes(ParticleReport particle1, ParticleReport particle2)
   	{
@@ -238,10 +244,5 @@ public class VisionSystem extends Subsystem {
   	
   	private double computeTowerDistance () {
   		return targetDistance * Math.cos(targetVerticalAngle);
-  	}
-  	
-  	public void outputRearImage() {
-  		camera.getImage(frame);
-  		CameraServer.getInstance().setImage(frame);
   	}
 }
