@@ -3,7 +3,6 @@ package org.usfirst.frc.team2729.robot.subsystems;
 import java.util.Comparator;
 import java.util.Vector;
 
-import org.usfirst.frc.team2729.robot.crosshair;
 import org.usfirst.frc.team2729.robot.commands.Vision;
 
 import com.ni.vision.NIVision;
@@ -14,8 +13,6 @@ import com.ni.vision.NIVision.ShapeMode;
 
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.command.Subsystem;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj.vision.AxisCamera;
 
 public class VisionSystem extends Subsystem {
 	
@@ -111,7 +108,7 @@ public class VisionSystem extends Subsystem {
 
 	public void detectTarget(){
 		NIVision.IMAQdxGrab(session, frame, 1);
-
+		 
 		//Threshold the image looking for green (retroreflective target color)
 		NIVision.imaqColorThreshold(binaryFrame, frame, 255, NIVision.ColorMode.HSV, TARGET_HUE_RANGE, TARGET_SAT_RANGE, TARGET_VAL_RANGE);
 
@@ -119,9 +116,14 @@ public class VisionSystem extends Subsystem {
 		int numParticles = NIVision.imaqCountParticles(binaryFrame, 1);
 		//SmartDashboard.putNumber("Masked particles", numParticles);
 
+		//Add crosshair
+		NIVision.imaqDrawShapeOnImage(frame, frame, rect, DrawMode.DRAW_VALUE, ShapeMode.SHAPE_OVAL, 0.0f);
+		
+		//Send image to dashboard to assist drivers
+		CameraServer.getInstance().setImage(frame);
+		
 		//Send masked image to dashboard to assist in tweaking mask
-		CameraServer.getInstance().setImage(binaryFrame);
-		//CameraServer.getInstance().setImage(frame);
+		//CameraServer.getInstance().setImage(binaryFrame);
 
 		//filter out small particles
 		criteria[0].lower = (float) AREA_MINIMUM;
@@ -173,7 +175,7 @@ public class VisionSystem extends Subsystem {
 			//SmartDashboard.putBoolean("Target Detected", targetDetected);
 		}
 	}
-  	
+
 	//Comparator function for sorting particles. Returns true if particle 1 is larger
   	private static boolean CompareParticleSizes(ParticleReport particle1, ParticleReport particle2)
   	{
