@@ -11,6 +11,7 @@ import com.ni.vision.NIVision.ImageType;
 
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.vision.AxisCamera;
 
 public class VisionSystem extends Subsystem {
 	
@@ -45,8 +46,9 @@ public class VisionSystem extends Subsystem {
 		double Aspect;
 	};
 				
-	//Session
+	//Session (for front-facing camera) and rear camera
 	int session;
+	AxisCamera camera;
 
 	//Images
 	Image frame;
@@ -74,6 +76,9 @@ public class VisionSystem extends Subsystem {
 		session = NIVision.IMAQdxOpenCamera("cam1", NIVision.IMAQdxCameraControlMode.CameraControlModeController);
         NIVision.IMAQdxConfigureGrab(session);
 		
+        //add second camera
+        camera = new AxisCamera("10.27.29.11");
+        
 		NIVision.IMAQdxStartAcquisition(session);
 	}
 	
@@ -233,5 +238,10 @@ public class VisionSystem extends Subsystem {
   	
   	private double computeTowerDistance () {
   		return targetDistance * Math.cos(targetVerticalAngle);
+  	}
+  	
+  	public void outputRearImage() {
+  		camera.getImage(frame);
+  		CameraServer.getInstance().setImage(frame);
   	}
 }
