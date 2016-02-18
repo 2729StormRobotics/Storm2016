@@ -10,9 +10,9 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class PositionCenterLeft extends CommandGroup {
 	public PositionCenterLeft(){
 		addSequential(new BreachDefenseAuto(700,5)); //TODO: Determine Experimentally
-		addSequential(new Turn(40));
-		addSequential(new ShootTiltToAngle(45));
-		addSequential(new Shoot());
+		addSequential(new Turn(40)); //TODO: Determine Experimentally
+		addSequential(new ShootTiltToAngle(45)); //TODO: Determine Experimentally
+		addSequential(new Shoot()); 
 
 	}
 	
