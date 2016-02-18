@@ -6,12 +6,17 @@ import edu.wpi.first.wpilibj.command.Command;
 
 public class Turn extends Command{
 	int _amount;
-	
+	double _power;
 	/**
 	 * + is right, - is left
 	 */
 	public Turn(int amount){
 		_amount = amount;
+		_power = 0.30;
+	}
+	public Turn(int amount, double speed){
+		_amount = amount;
+		_power = speed;
 	}
 	@Override
 	protected boolean isFinished() {return Math.abs(Robot.driveTrain.getLeftDistance()) >= Math.abs(_amount);}
@@ -23,7 +28,7 @@ public class Turn extends Command{
 		Robot.driveTrain.resetRightEnc();
 	}
 	@Override
-	protected void execute() {Robot.driveTrain.TankDrive(0.3 * (_amount>0 ? 1 :-1), 0.3 * (_amount>0 ? -1 : 1));}
+	protected void execute() {Robot.driveTrain.TankDrive(_power * (_amount>0 ? 1 :-1), 0.3 * (_amount>0 ? -1 : 1));}
 	@Override
 	protected void end() {Robot.driveTrain.halt();}
 }
