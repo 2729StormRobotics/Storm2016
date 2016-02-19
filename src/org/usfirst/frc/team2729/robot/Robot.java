@@ -25,7 +25,7 @@ public class Robot extends IterativeRobot {
 	public static IntakeSystem intake;
 	public static Shooter shoot;
 	public static HangingSystem hang;
-	public static VisionSystem vision;
+	//public static VisionSystem vision;
 	public static OI oi;
 	private Compressor compressor;
 	
@@ -41,15 +41,14 @@ public class Robot extends IterativeRobot {
 		shoot = new Shooter();
 		hang = new HangingSystem();
 		oi = new OI();
-		vision = new VisionSystem();
+		//vision = new VisionSystem();
 		compressor = new Compressor();
 		compressor.start();
         chooser = new SendableChooser();
         chooser.addDefault("Default Auto", new TankDrive());
 //        chooser.addObject("My Auto", new MyAutoCommand());
         
-		autoModeNames = new String[]{"Position Center Left", "Position Left", "Position Center", "Position Center Right", "Position Right", 
-				};
+		autoModeNames = new String[]{"Position Center Left", "Position Left", "Position Center", "Position Center Right", "Position Right", };
 		autoModes = new Command[]{};
 		
 		//configure and send the sendableChooser, which allows the modes
@@ -66,11 +65,17 @@ public class Robot extends IterativeRobot {
 	
 	public void disabledPeriodic() {
 		Scheduler.getInstance().run();
+        sendSensorData();
 	}
 
 	public void sendSensorData() {
 		SmartDashboard.putNumber("Right Encoder", driveTrain.getRightDistance());
 		SmartDashboard.putNumber("Left Encoder", driveTrain.getLeftDistance());
+		SmartDashboard.putNumber("Rot Pot", intake.getPot());
+		SmartDashboard.putNumber("Motor", intake.getTiltPower());
+		SmartDashboard.putNumber("Raw String Pot", Robot.shoot.getShooterPotRAW());
+		SmartDashboard.putNumber("String Pot Length", Robot.shoot.getShooterPotLength());
+		SmartDashboard.putNumber("String Pot Angle", Robot.shoot.getShooterAngle());
 	}
     public void autonomousInit() {
         autonomousCommand = (Command) chooser.getSelected();
@@ -92,6 +97,7 @@ public class Robot extends IterativeRobot {
 
     public void autonomousPeriodic() {
         Scheduler.getInstance().run();
+        sendSensorData();
     }
 
     public void teleopInit() {
@@ -100,6 +106,7 @@ public class Robot extends IterativeRobot {
 
     public void teleopPeriodic() {
         Scheduler.getInstance().run();
+        sendSensorData();
     }
     
     public void testPeriodic() {

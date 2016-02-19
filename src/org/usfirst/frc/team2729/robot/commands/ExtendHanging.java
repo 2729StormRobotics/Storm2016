@@ -13,7 +13,7 @@ public class ExtendHanging extends Command{
 	@Override
 	protected void execute() {
 		Robot.hang.setExtendPower(EXTEND_POWER * (out ? 1 : -1));
-		}
+	}
 	
 	protected void initialize() {		
 	}

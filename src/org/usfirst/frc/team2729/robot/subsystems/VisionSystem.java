@@ -76,6 +76,9 @@ public class VisionSystem extends Subsystem {
 		criteria[0] = new NIVision.ParticleFilterCriteria2(NIVision.MeasurementType.MT_AREA_BY_IMAGE_AREA, AREA_MINIMUM, 100.0, 0, 0);
 
 		//The camera name (ex "cam0") can be found through the roborio web interface
+		
+		//add catch exception
+		
 		session = NIVision.IMAQdxOpenCamera("cam1", NIVision.IMAQdxCameraControlMode.CameraControlModeController);
         NIVision.IMAQdxConfigureGrab(session);
         

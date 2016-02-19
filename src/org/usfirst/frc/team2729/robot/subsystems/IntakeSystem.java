@@ -4,6 +4,7 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -22,15 +23,16 @@ public class IntakeSystem extends Subsystem {
 	private final RotaryPot _pot = new RotaryPot(RobotMap.PORT_ROTATE_POT,1); //TODO: Determine max safe value
 	
 	//Feedback Loop Variables
-	private double target = 0;//TODO: Determine the top value
-	private double Kp = 0.0001;
+	private double target = 0.714;
+	private double Kp = 30;
 	
+	Timer _timer = new Timer();
 	public IntakeSystem(){
-		Timer _timer = new Timer();
 		_timer.schedule(new TimerTask() {
 			public void run() {
+				SmartDashboard.putNumber("Target Tilt", target);
 				double error = target - _pot.get();
-				_intakeTilt.set((Kp * error));
+				_intakeTilt.set(-(Kp * error));
 			}
 		}, 50, 50);
 	}
@@ -47,6 +49,9 @@ public class IntakeSystem extends Subsystem {
 	public void intakeDrive(double power) {
 		_intakeDrive.set(power);
 	}
+	public double getTiltPower(){
+		return _intakeTilt.get();
+	}
 	
 	public boolean isMax(){
 		return _pot.get() >= _pot.VAL_MAX_SAFE;
@@ -60,5 +65,8 @@ public class IntakeSystem extends Subsystem {
 	}
 	public double getTarget(){
 		return target;
+	}
+	public double getPot(){
+		return _pot.get();
 	}
 }
