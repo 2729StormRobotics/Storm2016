@@ -7,7 +7,7 @@ import edu.wpi.first.wpilibj.command.Command;
 public class Vision extends Command {
 
 	public Vision() {
-		requires(Robot.vision);
+		//requires(Robot.vision);
 	}
 	
 	@Override
@@ -17,7 +17,7 @@ public class Vision extends Command {
 
 	@Override
 	protected void execute() {
-		Robot.vision.detectTarget();
+		//Robot.vision.detectTarget();
 	}
 
 	@Override

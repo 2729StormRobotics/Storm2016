@@ -8,15 +8,16 @@ public class ShooterTilt extends Command{
 	
 	private double _tilt;
 	
-	public ShooterTilt(double tilt){
+	public ShooterTilt(){
 		requires(Robot.shoot);
 	}
-	
+
 	@Override
 	protected void initialize() {}
 	
 	@Override
 	protected void execute() {	
+		_tilt = Robot.oi.getShootTilt();
 		if (Robot.shoot.isMax() == true){
 			Robot.shoot.setTiltPower(0);
 			

@@ -5,6 +5,8 @@ import java.util.TimerTask;
 
 import org.usfirst.frc.team2729.robot.RobotMap;
 import org.usfirst.frc.team2729.robot.commands.ShooterSpinUp;
+import org.usfirst.frc.team2729.robot.commands.ShooterTilt;
+import org.usfirst.frc.team2729.robot.commands.TankDrive;
 
 import edu.wpi.first.wpilibj.AnalogPotentiometer;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
@@ -25,8 +27,8 @@ public class Shooter extends Subsystem {
 		   				_intake = new Talon(RobotMap.PORT_MOTOR_SHOOT_INTAKE);
 	
 	private final StringPot _stringPot = new StringPot(RobotMap.PORT_STRINGPOT, 1);
-	private final DigitalInput _minSwitch = new DigitalInput(RobotMap.PORT_SHOOTER_SWITCH_MIN_TILT);
-	private final DigitalInput _intakeHalt= new DigitalInput(RobotMap.PORT_LIMIT_SWITCH_INTAKE_HALT);
+	//private final DigitalInput _minSwitch = new DigitalInput(RobotMap.PORT_SHOOTER_SWITCH_MIN_TILT);
+	//private final DigitalInput _intakeHalt= new DigitalInput(RobotMap.PORT_LIMIT_SWITCH_INTAKE_HALT);
 	private double TiltMax = 1; //TODO: Find these values experimentally
 	private final double beta = 54.7336, phi = 43.62;
 	private final double ANGLE_CONST_NUM = 0.091163234, ANGLE_CONST_DENOM = 0.0895807856;
@@ -90,12 +92,21 @@ public class Shooter extends Subsystem {
 		return tiltPower;
 	}
 
+	public double getShooterPotRAW(){
+		return _stringPot.get();
+	}
+	
+	public double getShooterPotLength(){
+		return _stringPot.getLength();
+	}
+	
 	public double getShooterAngle(){
-		return 180 - phi - beta - Math.acos((ANGLE_CONST_NUM - (_stringPot.getLength() * _stringPot.getLength()))/ANGLE_CONST_DENOM);
+		return 180 - phi - beta - (Math.acos((ANGLE_CONST_NUM - (_stringPot.getLength() * _stringPot.getLength()))/ANGLE_CONST_DENOM) * (180/Math.PI));
 	}
 	
 	@Override
 	protected void initDefaultCommand() {
+		setDefaultCommand(new ShooterTilt());
 	}
 	
 	public boolean isMax(){
@@ -103,9 +114,11 @@ public class Shooter extends Subsystem {
 	}
 	
 	public boolean isMin(){
-		return _minSwitch.get();
+		//return _minSwitch.get();
+		return false;
 	}
 	public boolean getIntakeHalt(){
-		return _intakeHalt.get();
+		//return _intakeHalt.get();
+		return false;
 	}
 }

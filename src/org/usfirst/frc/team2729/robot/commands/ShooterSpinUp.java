@@ -19,7 +19,7 @@ public class ShooterSpinUp extends Command {
 	protected void execute() {}
 	@Override
 	protected boolean isFinished() {
-		return false;
+		return true;
 	}
 	@Override
 	protected void end() {}

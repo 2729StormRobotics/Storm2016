@@ -59,7 +59,7 @@ public class DriveTrain extends Subsystem {
 	}
 	
 	public double getRightDistance(){
-		return _rightEncoder.get();
+		return -_rightEncoder.get();
 	}
 	
 	public double getLeftSpeedEnc() {

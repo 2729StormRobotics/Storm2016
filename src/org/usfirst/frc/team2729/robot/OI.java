@@ -12,6 +12,7 @@ import org.usfirst.frc.team2729.robot.commands.IntakeTiltToPoint;
 import org.usfirst.frc.team2729.robot.commands.PIDDrive;
 import org.usfirst.frc.team2729.robot.commands.ActuatePTO;
 import org.usfirst.frc.team2729.robot.commands.Shift;
+import org.usfirst.frc.team2729.robot.commands.ShootTiltToAngle;
 import org.usfirst.frc.team2729.robot.commands.ShooterTilt;
 import org.usfirst.frc.team2729.robot.commands.ShooterSpinDown;
 import org.usfirst.frc.team2729.robot.commands.ShooterSpinUp;
@@ -81,9 +82,9 @@ public class OI {
 		hangingExtenderUp.whileHeld(new ExtendHanging(true));
 		hangingExtenderDown.whileHeld(new ExtendHanging(false));
 
-		IntakeSP1.whileHeld(new IntakeTiltToPoint(1));
-		IntakeSP2.whileHeld(new IntakeTiltToPoint(2));
-		IntakeSP3.whileHeld(new IntakeTiltToPoint(3));
+		IntakeSP1.whenPressed(new IntakeTiltToPoint(1));
+		IntakeSP2.whenPressed(new IntakeTiltToPoint(2));
+		IntakeSP3.whenPressed(new IntakeTiltToPoint(3));
 		
 		halveOne.whileHeld(new Command() {
 			@Override

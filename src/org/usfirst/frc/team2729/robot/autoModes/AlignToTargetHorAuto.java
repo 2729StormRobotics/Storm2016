@@ -19,7 +19,7 @@ public class AlignToTargetHorAuto extends Command {
 
 	@Override
 	protected void execute() {
-		if (Robot.vision.getTargetFound()){
+		/*if (Robot.vision.getTargetFound()){
 			
 			if (Robot.vision.getHorizontalAngle()>0){
 			double err = target - Robot.vision.getHorizontalAngle();
@@ -37,7 +37,7 @@ public class AlignToTargetHorAuto extends Command {
 		}
 		else {
 		Robot.driveTrain.TankDrive(0,0);
-		}
+		}*/
 	}
 
 	@Override

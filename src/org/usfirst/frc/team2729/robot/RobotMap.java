@@ -14,18 +14,18 @@ public class RobotMap {
 		JOYDRIVE_BUTTON_SHIFT_DRIVE_LOW    = 2,
 		JOYDRIVE_BUTTON_FORWARD			   = 10,
 		JOYDRIVE_BUTTON_BACKWARDS		   = 9,
-		JOYDRIVE_BUTTON_PTO_ON             = 0,
-		JOYDRIVE_BUTTON_PTO_OFF            = 0,
+		JOYDRIVE_BUTTON_PTO_ON             = 3,
+		JOYDRIVE_BUTTON_PTO_OFF            = 1,
 		JOYARM_BUTTON_EXTENDER_UP		   = 6,
 		JOYARM_BUTTON_EXTENDER_DOWN		   = 8,
 		JOYARM_BUTTON_SHOOTER_SPINUP	   = 5,
 		JOYARM_BUTTON_SHOOTER_SPINDOWN	   = 7,
-		JOYARM_BUTTON_BEAVER_SP1           = 0,
-		JOYARM_BUTTON_BEAVER_SP2           = 0,
-		JOYARM_BUTTON_BEAVER_SP3           = 0,
-		JOYARM_BUTTON_SHOOT                = 0,
-		JOYARM_BUTTON_WINCH_OUT            = 0,
-		JOYARM_BUTTON_WINCH_IN             = 0;		
+		JOYARM_BUTTON_BEAVER_SP1           = 1,
+		JOYARM_BUTTON_BEAVER_SP2           = 4,
+		JOYARM_BUTTON_BEAVER_SP3           = 3,
+		JOYARM_BUTTON_SHOOT                = 2,
+		JOYARM_BUTTON_WINCH_OUT            = 10,
+		JOYARM_BUTTON_WINCH_IN             = 9;		
 	
 	//Axes
 	public static final int
