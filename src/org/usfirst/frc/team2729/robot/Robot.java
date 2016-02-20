@@ -8,6 +8,11 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
 import org.usfirst.frc.team2729.robot.autoModes.BreachDefenseAuto;
+import org.usfirst.frc.team2729.robot.autoModes.PositionCenter;
+import org.usfirst.frc.team2729.robot.autoModes.PositionCenterLeft;
+import org.usfirst.frc.team2729.robot.autoModes.PositionCenterRight;
+import org.usfirst.frc.team2729.robot.autoModes.PositionLeft;
+import org.usfirst.frc.team2729.robot.autoModes.PositionRight;
 import org.usfirst.frc.team2729.robot.commands.ShooterSpinUp;
 import org.usfirst.frc.team2729.robot.commands.TankDrive;
 import org.usfirst.frc.team2729.robot.subsystems.DriveTrain;
@@ -48,8 +53,8 @@ public class Robot extends IterativeRobot {
         chooser.addDefault("Default Auto", new TankDrive());
 //        chooser.addObject("My Auto", new MyAutoCommand());
         
-		autoModeNames = new String[]{"Position Center Left", "Position Left", "Position Center", "Position Center Right", "Position Right", };
-		autoModes = new Command[]{};
+		autoModeNames = new String[]{"Position Center Left", "Position Left", "Position Center", "Position Center Right", "Position Right" };
+		autoModes = new Command[]{new PositionCenterLeft(), new PositionLeft(), new PositionCenter(), new PositionCenterRight(), new PositionRight()};
 		
 		//configure and send the sendableChooser, which allows the modes
 		//to be chosen via radio button on the SmartDashboard
