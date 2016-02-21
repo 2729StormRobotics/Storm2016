@@ -15,7 +15,11 @@ public class Shoot extends Command{
 	}
 	@Override
 	protected void execute() {
-		Robot.shoot.setIntake(1);
+		if(Robot.shoot.getTargetTicks() > 0){
+			Robot.shoot.setIntake(1);
+		} else {
+			Robot.shoot.setIntake(0);
+		}
 	}
 
 	@Override

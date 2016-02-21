@@ -57,6 +57,6 @@ public class PIDDrive extends Command{
 
 	@Override
 	protected void interrupted() {
-		end();
+		Robot.driveTrain.TankDrive(0, 0);
 	}
 }

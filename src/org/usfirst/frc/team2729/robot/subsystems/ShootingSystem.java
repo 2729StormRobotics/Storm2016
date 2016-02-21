@@ -3,6 +3,7 @@ package org.usfirst.frc.team2729.robot.subsystems;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import org.usfirst.frc.team2729.robot.Robot;
 import org.usfirst.frc.team2729.robot.RobotMap;
 import org.usfirst.frc.team2729.robot.commands.ShooterSpinUp;
 import org.usfirst.frc.team2729.robot.commands.ShooterTilt;
@@ -13,10 +14,12 @@ import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 import org.usfirst.frc.team2729.robot.util.StringPot;
 import edu.wpi.first.wpilibj.DigitalInput;
 
-public class Shooter extends Subsystem {
+public class ShootingSystem extends Subsystem {
 	
 	private final Encoder _leftShooter = new Encoder(RobotMap.PORT_ENCODER_SHOOT_LEFT_1, RobotMap.PORT_ENCODER_SHOOT_LEFT_2);
 	private final Encoder _rightShooter = new Encoder(RobotMap.PORT_ENCODER_SHOOT_RIGHT_1, RobotMap.PORT_ENCODER_SHOOT_RIGHT_2);
@@ -28,9 +31,10 @@ public class Shooter extends Subsystem {
 	
 	private final StringPot _stringPot = new StringPot(RobotMap.PORT_STRINGPOT, 1);
 	//private final DigitalInput _minSwitch = new DigitalInput(RobotMap.PORT_SHOOTER_SWITCH_MIN_TILT);
-	//private final DigitalInput _intakeHalt= new DigitalInput(RobotMap.PORT_LIMIT_SWITCH_INTAKE_HALT);
-	private double TiltMax = 1; //TODO: Find these values experimentally
-	private final double beta = 54.7336, phi = 43.62;
+	//private final DigitalInput _intakeHalt = new DigitalInput(RobotMap.PORT_LIMIT_SWITCH_INTAKE_HALT);
+	private double TiltMin = .549; //TODO: Find
+	private double TiltMax = .350; //TODO: Find these values experimentally
+	private final double beta = 35.2664, phi = 43.62;
 	private final double ANGLE_CONST_NUM = 0.091163234, ANGLE_CONST_DENOM = 0.0895807856;
 	
 	private double shootPower;
@@ -42,29 +46,42 @@ public class Shooter extends Subsystem {
 	private double IntErrorLeft = 0;
 	private double IntErrorRight = 0;
 	private double KiLeft = 0.000003;
-	private double KpLeft = 0.0003; //TODO: Tune this
+	private double KpLeft = 0.000; //TODO: Tune this
 	private double KiRight = 0.000003;
-	private double KpRight = 0.0003; //TODO: Tune this
+	private double KpRight = 0.000; //TODO: Tune this
 	private double errorL = 0, errorR = 0;
 
-	public Shooter(){
+	private double PIDtest = 0;
+	public ShootingSystem(){
 		targetTicks = 0;
 		Timer _timer = new Timer();
 		_timer.schedule(new TimerTask() {
 			public void run() {
-				errorL = targetTicks - _leftShooter.getRate();
+				/*errorL = targetTicks - _leftShooter.getRate();
 				errorR = targetTicks - _rightShooter.getRate();
 				IntErrorLeft += errorL;
 				IntErrorRight += errorR;
 				_right.set((KpRight * errorR) + (KiRight * IntErrorRight));
 				_left.set((KpLeft * errorL) + (KiLeft * IntErrorLeft));
+				PIDtest++;
+				SmartDashboard.putNumber("PID TEST", PIDtest);
+				*/
+				_right.set(targetTicks > 0 ? 1 : 0);
+				_left.set(targetTicks > 0 ? 1 : 0);
+				SmartDashboard.putNumber("Shoot Target Ticks", targetTicks);
+				SmartDashboard.putNumber("Shoot Actual Ticks LEFT", _leftShooter.getRate());
+				SmartDashboard.putNumber("Shoot Actual Ticks RIGHT", _rightShooter.getRate());
+				SmartDashboard.putNumber("Shoot Motor Power", _left.get());
+				SmartDashboard.putNumber("Shoot Integral Error", IntErrorLeft);
+				SmartDashboard.putNumber("PID Value", (KpLeft * errorL) + (KiLeft * IntErrorLeft));
 			}
 		}, 50, 50);
 	}
 
 	public void setTiltPower(double power){
+		//_tilt.set((Math.abs(power) > .30) ? ((power > 0) ? .30 : -.30) : power);
+		//tiltPower = ((Math.abs(power) > .30) ? ((power > 0) ? .30 : -.30) : power);
 		_tilt.set(power);
-		tiltPower = power;
 	}
 	
 	public void setTargetSpeed(double _target){
@@ -72,8 +89,9 @@ public class Shooter extends Subsystem {
 	}
 	
 	public void setIntake(double power){
-		_intake.set(0);
+		_intake.set(-power); //negated due to electrical setup
 	}
+	
 	public void haltSpin(){
 		targetTicks = 0;
 		_right.set(0);
@@ -101,6 +119,7 @@ public class Shooter extends Subsystem {
 	}
 	
 	public double getShooterAngle(){
+		SmartDashboard.putNumber("alpha",(Math.acos((ANGLE_CONST_NUM - (_stringPot.getLength() * _stringPot.getLength()))/ANGLE_CONST_DENOM) * (180/Math.PI)));
 		return 180 - phi - beta - (Math.acos((ANGLE_CONST_NUM - (_stringPot.getLength() * _stringPot.getLength()))/ANGLE_CONST_DENOM) * (180/Math.PI));
 	}
 	
@@ -110,15 +129,15 @@ public class Shooter extends Subsystem {
 	}
 	
 	public boolean isMax(){
-		return (_stringPot.get() > TiltMax);
+		return (_stringPot.get() <= TiltMax); //Inequality is flipped due to string pot polarity
 	}
 	
+	
 	public boolean isMin(){
-		//return _minSwitch.get();
-		return false;
+		return (_stringPot.get() >= TiltMin);//Inequality is flipped due to string pot polarity
 	}
 	public boolean getIntakeHalt(){
-		//return _intakeHalt.get();
+		//return !_intakeHalt.get(); //Returns true when the Boulder is present
 		return false;
 	}
 }

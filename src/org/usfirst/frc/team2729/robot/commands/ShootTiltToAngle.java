@@ -18,7 +18,7 @@ public class ShootTiltToAngle extends Command {
 	@Override
 	protected void execute() {
 		double err = target - Robot.shoot.getShooterAngle();
-		double Kp = .2;
+		double Kp = .004;
 		setTiltPower = Kp*err;
 		Robot.shoot.setTiltPower(setTiltPower);
 	}
@@ -36,6 +36,5 @@ public class ShootTiltToAngle extends Command {
 	@Override
 	protected void interrupted() {
 	Robot.shoot.setTiltPower(0);
-		
 	}
 }

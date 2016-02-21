@@ -23,8 +23,8 @@ public class IntakeSystem extends Subsystem {
 	private final RotaryPot _pot = new RotaryPot(RobotMap.PORT_ROTATE_POT,1); //TODO: Determine max safe value
 	
 	//Feedback Loop Variables
-	private double target = 0.714;
-	private double Kp = 30;
+	private double target = 0.667; //Default to high position
+	private double Kp = 20;
 	
 	Timer _timer = new Timer();
 	public IntakeSystem(){

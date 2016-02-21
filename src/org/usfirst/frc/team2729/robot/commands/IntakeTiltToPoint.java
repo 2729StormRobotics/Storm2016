@@ -15,11 +15,11 @@ public class IntakeTiltToPoint extends Command {
 	@Override
 	protected void execute() {		
 		switch(_setPoint){
-			case 1: Robot.intake.setTarget(0.714); //Top Position
+			case 1: Robot.intake.setTarget(0.667); //Top Position
 					break;
-			case 2: Robot.intake.setTarget(.454); //Mid Position
+			case 2: Robot.intake.setTarget(0.427); //Mid Position
 					break;
-			case 3: Robot.intake.setTarget(0.360);//Down Position
+			case 3: Robot.intake.setTarget(0.326);//Down Position
 					break;
 			default:Robot.intake.setTarget(Robot.intake.getTarget());
 					break;

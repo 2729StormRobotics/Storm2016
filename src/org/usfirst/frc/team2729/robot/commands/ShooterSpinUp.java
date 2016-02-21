@@ -6,17 +6,17 @@ import edu.wpi.first.wpilibj.command.Command;
 
 public class ShooterSpinUp extends Command {
 	private int DEFAULT_TARGET_SPEED = 22500;
-
+	private double _target;
 	public ShooterSpinUp(){
-		Robot.shoot.setTargetSpeed(DEFAULT_TARGET_SPEED);
+		_target = DEFAULT_TARGET_SPEED;
 	}
 	public ShooterSpinUp(double targetSpeed){
-		Robot.shoot.setTargetSpeed(targetSpeed);
+		_target = targetSpeed;
 	}
 	
 	@Override
 	protected void initialize() {}
-	protected void execute() {}
+	protected void execute() {Robot.shoot.setTargetSpeed(_target);}
 	@Override
 	protected boolean isFinished() {
 		return true;

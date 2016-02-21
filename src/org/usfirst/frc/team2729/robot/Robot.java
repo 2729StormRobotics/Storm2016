@@ -13,7 +13,7 @@ import org.usfirst.frc.team2729.robot.commands.TankDrive;
 import org.usfirst.frc.team2729.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team2729.robot.subsystems.HangingSystem;
 import org.usfirst.frc.team2729.robot.subsystems.IntakeSystem;
-import org.usfirst.frc.team2729.robot.subsystems.Shooter;
+import org.usfirst.frc.team2729.robot.subsystems.ShootingSystem;
 import org.usfirst.frc.team2729.robot.subsystems.VisionSystem;
 
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -23,7 +23,7 @@ public class Robot extends IterativeRobot {
 
 	public static DriveTrain driveTrain;
 	public static IntakeSystem intake;
-	public static Shooter shoot;
+	public static ShootingSystem shoot;
 	public static HangingSystem hang;
 	//public static VisionSystem vision;
 	public static OI oi;
@@ -38,7 +38,7 @@ public class Robot extends IterativeRobot {
 		Command[] autoModes;
 		driveTrain = new DriveTrain();
 		intake = new IntakeSystem();
-		shoot = new Shooter();
+		shoot = new ShootingSystem();
 		hang = new HangingSystem();
 		oi = new OI();
 		//vision = new VisionSystem();

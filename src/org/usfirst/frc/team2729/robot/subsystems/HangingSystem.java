@@ -7,22 +7,19 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class HangingSystem extends Subsystem {
 	
-	private final Talon _extenderLeft = new Talon(RobotMap.PORT_MOTOR_EXTENDER_LEFT),
-						_extenderRight = new Talon(RobotMap.PORT_MOTOR_EXTENDER_RIGHT);
+	private final Talon _extender = new Talon(RobotMap.PORT_MOTOR_EXTENDER);
 	private double winchPower = 0;
 	
 	@Override
 	protected void initDefaultCommand() {}
 	public void halt() {
-		_extenderLeft.set(0);
-		_extenderRight.set(0);
+		_extender.set(0);
 	}
 	public void setExtendPower(double power){
-		_extenderLeft.set(power);
-		_extenderRight.set(power);
+		_extender.set(power);
 	}
 	public double getExtendPower(){
-		return _extenderLeft.get();
+		return _extender.get();
 	}
 	public void setWinch(double power){
 		if(Robot.driveTrain.getPTO()){

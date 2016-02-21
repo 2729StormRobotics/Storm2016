@@ -34,7 +34,7 @@ public class OI {
 						 driveForward = new JoystickButton(driveJoystick, RobotMap.JOYDRIVE_BUTTON_FORWARD),
 						 driveBackward = new JoystickButton(driveJoystick, RobotMap.JOYDRIVE_BUTTON_BACKWARDS),
 						 togglePTOOn = new JoystickButton(driveJoystick, RobotMap.JOYDRIVE_BUTTON_PTO_ON),
-						 togglePTOFF = new JoystickButton(driveJoystick, RobotMap.JOYDRIVE_BUTTON_PTO_OFF),
+						 togglePTOOff = new JoystickButton(driveJoystick, RobotMap.JOYDRIVE_BUTTON_PTO_OFF),
 						 hangingExtenderUp = new JoystickButton(armJoystick, RobotMap.JOYARM_BUTTON_EXTENDER_UP),
 	 					 hangingExtenderDown = new JoystickButton(armJoystick, RobotMap.JOYARM_BUTTON_EXTENDER_DOWN),
 						 shooterSpinUP = new JoystickButton(armJoystick, RobotMap.JOYARM_BUTTON_SHOOTER_SPINUP),
@@ -68,7 +68,7 @@ public class OI {
 		shooterSpinDOWN.whenPressed(new ShooterSpinDown());
 		
 		togglePTOOn.whenPressed(new ActuatePTO(true));
-		togglePTOOn.whenPressed(new ActuatePTO(false));
+		togglePTOOff.whenPressed(new ActuatePTO(false));
 		
 		shiftHighDrive.whenPressed(new Shift(true));
 		shiftLowDrive.whenPressed(new Shift(false));
@@ -116,21 +116,21 @@ public class OI {
 		_timer.schedule(new TimerTask() {
 			public void run() {
 				switch(armJoystick.getPOV()){
-				case 1: (new ShooterSpinUp(25000)).start();
+				case 1: Robot.shoot.setTargetSpeed(22500);
 						break;
-				case 2: (new ShooterSpinUp(21875)).start();
+				case 2: Robot.shoot.setTargetSpeed(21875);
 						break;
-				case 3: (new ShooterSpinUp(18750)).start();
+				case 3: Robot.shoot.setTargetSpeed(18750);
 						break;
-				case 4:	(new ShooterSpinUp(15625)).start();
+				case 4:	Robot.shoot.setTargetSpeed(15625);
 						break;
-				case 5: (new ShooterSpinUp(12500)).start();
+				case 5: Robot.shoot.setTargetSpeed(12500);
 						break;
-				case 6: (new ShooterSpinUp(9375)).start();
+				case 6: Robot.shoot.setTargetSpeed(9375);
 						break;
-				case 7: (new ShooterSpinUp(6250)).start();
+				case 7: Robot.shoot.setTargetSpeed(6250);
 						break;
-				case 8:	(new ShooterSpinUp(3125)).start();
+				case 8:	Robot.shoot.setTargetSpeed(3125);
 						break;
 				};
 			}
