@@ -10,7 +10,7 @@ import org.usfirst.frc.team2729.robot.commands.Turn;
 public class PositionCenter extends CommandGroup{
 	public PositionCenter(){
 		addSequential(new BreachDefenseAuto(100, .20));
-		addSequential(new Turn(30));
+		addSequential(new Turn(0));
 		addSequential(new ShootTiltToAngle(45));
 		addSequential(new Shoot());
 	}
