@@ -10,7 +10,7 @@ public class ShooterSpinDown extends Command {
 	@Override
 	protected void initialize() {}
 
-	protected void execute() {Robot.shoot.setTargetSpeed(0);}	
+	protected void execute() {Robot.shoot.setTargetSpeed(0); Robot.shoot.haltSpin();}	
 	@Override
 	protected boolean isFinished() {
 		return true;

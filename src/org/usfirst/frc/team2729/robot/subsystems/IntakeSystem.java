@@ -17,13 +17,11 @@ public class IntakeSystem extends Subsystem {
 
 	private final Talon _intakeDrive = new Talon(RobotMap.PORT_MOTOR_INTAKE_DRIVE);
 	private final Talon _intakeTilt = new Talon(RobotMap.PORT_MOTOR_INTAKE_TILT);
-	
-	private final DigitalInput _switchBallin = new DigitalInput(RobotMap.PORT_LIMIT_SWITCH_INTAKE_HALT);
-	
+		
 	private final RotaryPot _pot = new RotaryPot(RobotMap.PORT_ROTATE_POT,1); //TODO: Determine max safe value
 	
 	//Feedback Loop Variables
-	private double target = 0.667; //Default to high position
+	private double target = _pot.get(); //Default to high position
 	private double Kp = 20;
 	
 	Timer _timer = new Timer();

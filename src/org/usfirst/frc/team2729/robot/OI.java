@@ -12,6 +12,7 @@ import org.usfirst.frc.team2729.robot.commands.IntakeTiltToPoint;
 import org.usfirst.frc.team2729.robot.commands.PIDDrive;
 import org.usfirst.frc.team2729.robot.commands.ActuatePTO;
 import org.usfirst.frc.team2729.robot.commands.Shift;
+import org.usfirst.frc.team2729.robot.commands.Shoot;
 import org.usfirst.frc.team2729.robot.commands.ShootTiltToAngle;
 import org.usfirst.frc.team2729.robot.commands.ShooterTilt;
 import org.usfirst.frc.team2729.robot.commands.ShooterSpinDown;
@@ -85,6 +86,8 @@ public class OI {
 		IntakeSP1.whenPressed(new IntakeTiltToPoint(1));
 		IntakeSP2.whenPressed(new IntakeTiltToPoint(2));
 		IntakeSP3.whenPressed(new IntakeTiltToPoint(3));
+		
+		ShootFire.whenPressed(new Shoot());
 		
 		halveOne.whileHeld(new Command() {
 			@Override

@@ -66,6 +66,7 @@ public class Robot extends IterativeRobot {
     }
 
     public void disabledInit(){
+    	Robot.shoot.setTargetSpeed(0);
     }
 	
 	public void disabledPeriodic() {
@@ -81,6 +82,7 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putNumber("Raw String Pot", Robot.shoot.getShooterPotRAW());
 		SmartDashboard.putNumber("String Pot Length", Robot.shoot.getShooterPotLength());
 		SmartDashboard.putNumber("String Pot Angle", Robot.shoot.getShooterAngle());
+		SmartDashboard.putBoolean("Is Shooter MAX", Robot.shoot.isMax());
 	}
     public void autonomousInit() {
         autonomousCommand = (Command) chooser.getSelected();

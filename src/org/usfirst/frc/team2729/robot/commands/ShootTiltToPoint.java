@@ -4,11 +4,11 @@ import org.usfirst.frc.team2729.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class ShootTiltToAngle extends Command {
+public class ShootTiltToPoint extends Command {
 	
 	private double target = 0;
 	private double setTiltPower;
-	public ShootTiltToAngle(double _target){
+	public ShootTiltToPoint(double _target){
 		target =  _target;
 	}
 	@Override
@@ -17,8 +17,8 @@ public class ShootTiltToAngle extends Command {
 
 	@Override
 	protected void execute() {
-		double err = target - Robot.shoot.getShooterAngle();
-		double Kp = .01;
+		double err = target - Robot.shoot.getShooterPotRAW();
+		double Kp = 1;
 		setTiltPower = Kp*err;
 		Robot.shoot.setTiltPower(setTiltPower);
 	}

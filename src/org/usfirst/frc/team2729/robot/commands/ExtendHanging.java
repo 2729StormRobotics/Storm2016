@@ -3,7 +3,7 @@ import org.usfirst.frc.team2729.robot.Robot;
 import edu.wpi.first.wpilibj.command.Command;
 
 public class ExtendHanging extends Command{
-	private final double EXTEND_POWER = 1;
+	private final double EXTEND_POWER = .5;
 	boolean out;
 	public ExtendHanging(boolean _out){
 		out = _out;

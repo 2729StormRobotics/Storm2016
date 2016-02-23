@@ -17,14 +17,7 @@ public class ShooterTilt extends Command{
 	
 	@Override
 	protected void execute() {	
-		_tilt = Robot.oi.getShootTilt();
-		if (Robot.shoot.isMax() == true && _tilt < 0){ //Inverted due to motor polarity
-			Robot.shoot.setTiltPower(0);
-		} else if (Robot.shoot.isMin() == true && _tilt > 0){ //Inverted due to motor polarity
-			Robot.shoot.setTiltPower(0);
-		} else {
-			Robot.shoot.setTiltPower(_tilt);
-		}
+		Robot.shoot.setTiltPower(Robot.oi.getShootTilt());
 	}
 
 	@Override

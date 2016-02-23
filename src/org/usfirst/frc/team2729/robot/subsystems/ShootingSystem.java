@@ -31,9 +31,9 @@ public class ShootingSystem extends Subsystem {
 	
 	private final StringPot _stringPot = new StringPot(RobotMap.PORT_STRINGPOT, 1);
 	//private final DigitalInput _minSwitch = new DigitalInput(RobotMap.PORT_SHOOTER_SWITCH_MIN_TILT);
-	//private final DigitalInput _intakeHalt = new DigitalInput(RobotMap.PORT_LIMIT_SWITCH_INTAKE_HALT);
-	private double TiltMin = .549; //TODO: Find
-	private double TiltMax = .350; //TODO: Find these values experimentally
+	private final DigitalInput _intakeHalt = new DigitalInput(RobotMap.PORT_LIMIT_SWITCH_INTAKE_HALT);
+	private double TiltMin = .562; //TODO: Find
+	private double TiltMax = .310; //TODO: Find these values experimentally
 	private final double beta = 35.2664, phi = 43.62;
 	private final double ANGLE_CONST_NUM = 0.091163234, ANGLE_CONST_DENOM = 0.0895807856;
 	
@@ -57,17 +57,17 @@ public class ShootingSystem extends Subsystem {
 		Timer _timer = new Timer();
 		_timer.schedule(new TimerTask() {
 			public void run() {
-				/*errorL = targetTicks - _leftShooter.getRate();
+				errorL = targetTicks - _leftShooter.getRate();
 				errorR = targetTicks - _rightShooter.getRate();
 				IntErrorLeft += errorL;
 				IntErrorRight += errorR;
-				_right.set((KpRight * errorR) + (KiRight * IntErrorRight));
+				//_right.set((KpRight * errorR) + (KiRight * IntErrorRight));
+				_right.set((KpLeft * errorL) + (KiLeft * IntErrorLeft));//Temporary fix to encoder problems
 				_left.set((KpLeft * errorL) + (KiLeft * IntErrorLeft));
 				PIDtest++;
 				SmartDashboard.putNumber("PID TEST", PIDtest);
-				*/
-				_right.set(targetTicks > 0 ? 1 : 0);
-				_left.set(targetTicks > 0 ? 1 : 0);
+				//_right.set(targetTicks > 0 ? 1 : 0);
+				//_left.set(targetTicks > 0 ? 1 : 0);
 				SmartDashboard.putNumber("Shoot Target Ticks", targetTicks);
 				SmartDashboard.putNumber("Shoot Actual Ticks LEFT", _leftShooter.getRate());
 				SmartDashboard.putNumber("Shoot Actual Ticks RIGHT", _rightShooter.getRate());
@@ -79,9 +79,13 @@ public class ShootingSystem extends Subsystem {
 	}
 
 	public void setTiltPower(double power){
-		//_tilt.set((Math.abs(power) > .30) ? ((power > 0) ? .30 : -.30) : power);
-		//tiltPower = ((Math.abs(power) > .30) ? ((power > 0) ? .30 : -.30) : power);
-		_tilt.set(power);
+		if (isMax() == true && power < 0){ //Inverted due to motor polarity
+			_tilt.set(0);
+		} else if (isMin() == true && power > 0){ //Inverted due to motor polarity
+			_tilt.set(0);
+		} else {
+			_tilt.set(power);
+		}
 	}
 	
 	public void setTargetSpeed(double _target){
@@ -94,6 +98,8 @@ public class ShootingSystem extends Subsystem {
 	
 	public void haltSpin(){
 		targetTicks = 0;
+		IntErrorLeft = 0;
+		IntErrorRight = 0;
 		_right.set(0);
 		_left.set(0);
 	}
@@ -131,13 +137,10 @@ public class ShootingSystem extends Subsystem {
 	public boolean isMax(){
 		return (_stringPot.get() <= TiltMax); //Inequality is flipped due to string pot polarity
 	}
-	
-	
 	public boolean isMin(){
 		return (_stringPot.get() >= TiltMin);//Inequality is flipped due to string pot polarity
 	}
 	public boolean getIntakeHalt(){
-		//return !_intakeHalt.get(); //Returns true when the Boulder is present
-		return false;
+		return !_intakeHalt.get(); //Returns true when the Boulder is present
 	}
 }
