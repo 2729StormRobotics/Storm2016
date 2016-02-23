@@ -32,7 +32,7 @@ public class ShootingSystem extends Subsystem {
 	private final StringPot _stringPot = new StringPot(RobotMap.PORT_STRINGPOT, 1);
 	//private final DigitalInput _minSwitch = new DigitalInput(RobotMap.PORT_SHOOTER_SWITCH_MIN_TILT);
 	private final DigitalInput _intakeHalt = new DigitalInput(RobotMap.PORT_LIMIT_SWITCH_INTAKE_HALT);
-	private double TiltMin = .562; //TODO: Find
+	private double TiltMin = .555; //TODO: Find
 	private double TiltMax = .310; //TODO: Find these values experimentally
 	private final double beta = 35.2664, phi = 43.62;
 	private final double ANGLE_CONST_NUM = 0.091163234, ANGLE_CONST_DENOM = 0.0895807856;
