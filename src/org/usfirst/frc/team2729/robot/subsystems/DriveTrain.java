@@ -48,8 +48,8 @@ public class DriveTrain extends Subsystem {
 	}
 	
 	public void TankDrive(double left, double right){
-		_left.set((left/3) + (_halfOne ? (left/3) : 0) + (_halfTwo ? (left/3) : 0));
-		_right.set((right/3) + (_halfOne ? (right/3) : 0) + (_halfTwo ? (right/3) : 0));
+		_left.set((left) - (_halfOne ? (left/3) : 0) - (_halfTwo ? (left/3) : 0));
+		_right.set((right) - (_halfOne ? (right/3) : 0) - (_halfTwo ? (right/3) : 0));
 	}
 
 	public double getLeftDistance(){

@@ -22,6 +22,8 @@ public class Shoot extends Command{
 				Robot.shoot.setIntake(0);
 			}
 		}
+		Robot.driveTrain.halt();
+		Robot.intake.halt();
 	}
 
 	@Override

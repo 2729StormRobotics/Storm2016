@@ -16,7 +16,10 @@ public class IntakeJoy extends Command {
 	@Override
 	protected void execute() {
 		Robot.intake.intakeDrive(Robot.oi.getIntake());
-		Robot.shoot.setIntake(!Robot.shoot.getIntakeHalt() ? Robot.oi.getIntake() : 0);
+		//When Boulder is not present drive the intake belt as usual
+		//when boulder is present, only drive the intake belt backwards
+		Robot.shoot.setIntake(!Robot.shoot.getIntakeHalt() ? Robot.oi.getIntake() : 
+								(Robot.oi.getIntake() > 0 ? Robot.oi.getIntake() : 0));
 	}
 
 	@Override

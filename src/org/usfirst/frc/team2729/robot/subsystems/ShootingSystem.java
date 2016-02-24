@@ -32,8 +32,12 @@ public class ShootingSystem extends Subsystem {
 	private final StringPot _stringPot = new StringPot(RobotMap.PORT_STRINGPOT, 1);
 	//private final DigitalInput _minSwitch = new DigitalInput(RobotMap.PORT_SHOOTER_SWITCH_MIN_TILT);
 	private final DigitalInput _intakeHalt = new DigitalInput(RobotMap.PORT_LIMIT_SWITCH_INTAKE_HALT);
-	private double TiltMin = .555; //TODO: Find
-	private double TiltMax = .310; //TODO: Find these values experimentally
+	private double TiltMin = .564;
+	private double TiltMax = .315;
+	private double TiltSpinMin = .510;
+	private double TiltIntakePoint = 0.388;
+	private double TiltMediumShot = 0.352;
+	private double TiltHighShot = 0.329;
 	private final double beta = 35.2664, phi = 43.62;
 	private final double ANGLE_CONST_NUM = 0.091163234, ANGLE_CONST_DENOM = 0.0895807856;
 	
@@ -74,10 +78,12 @@ public class ShootingSystem extends Subsystem {
 				SmartDashboard.putNumber("Shoot Motor Power", _left.get());
 				SmartDashboard.putNumber("Shoot Integral Error", IntErrorLeft);
 				SmartDashboard.putNumber("PID Value", (KpLeft * errorL) + (KiLeft * IntErrorLeft));
+				if(_stringPot.get() > TiltSpinMin){
+					haltSpin();
+				}
 			}
 		}, 50, 50);
 	}
-
 	public void setTiltPower(double power){
 		if (isMax() == true && power < 0){ //Inverted due to motor polarity
 			_tilt.set(0);
@@ -87,15 +93,12 @@ public class ShootingSystem extends Subsystem {
 			_tilt.set(power);
 		}
 	}
-	
 	public void setTargetSpeed(double _target){
 		targetTicks = _target;
 	}
-	
 	public void setIntake(double power){
 		_intake.set(-power); //negated due to electrical setup
 	}
-	
 	public void haltSpin(){
 		targetTicks = 0;
 		IntErrorLeft = 0;
@@ -103,37 +106,39 @@ public class ShootingSystem extends Subsystem {
 		_right.set(0);
 		_left.set(0);
 	}
-	
 	public double getTargetTicks(){
 		return targetTicks;
 	}
-	
 	public double getShooterTilt(){
 		return _stringPot.get();
 	}
-	
 	public double getTiltPower(){
 		return tiltPower;
 	}
-
 	public double getShooterPotRAW(){
 		return _stringPot.get();
 	}
-	
 	public double getShooterPotLength(){
 		return _stringPot.getLength();
 	}
-	
 	public double getShooterAngle(){
 		SmartDashboard.putNumber("alpha",(Math.acos((ANGLE_CONST_NUM - (_stringPot.getLength() * _stringPot.getLength()))/ANGLE_CONST_DENOM) * (180/Math.PI)));
 		return 180 - phi - beta - (Math.acos((ANGLE_CONST_NUM - (_stringPot.getLength() * _stringPot.getLength()))/ANGLE_CONST_DENOM) * (180/Math.PI));
 	}
-	
+	public double getShooterAngleLSLR(){
+		double x = _stringPot.get();
+		SmartDashboard.putNumber("alpha LSLR", (-211.52*x) + 122.56);
+		return (-211.52*x) + 122.56;
+	}
+	public double getShooterAnglePR(){
+		double x = _stringPot.get();
+		SmartDashboard.putNumber("alpha PR", (-72.993 * Math.pow(x, 2)) - (149.28 * x) + 109.77);
+		return (-72.993 * Math.pow(x, 2)) - (149.28 * x) + 109.77;
+	}
 	@Override
 	protected void initDefaultCommand() {
 		setDefaultCommand(new ShooterTilt());
 	}
-	
 	public boolean isMax(){
 		return (_stringPot.get() <= TiltMax); //Inequality is flipped due to string pot polarity
 	}

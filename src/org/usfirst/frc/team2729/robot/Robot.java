@@ -53,8 +53,8 @@ public class Robot extends IterativeRobot {
         chooser.addDefault("Default Auto", new TankDrive());
 //        chooser.addObject("My Auto", new MyAutoCommand());
         
-		autoModeNames = new String[]{"Position Center Left", "Position Left", "Position Center", "Position Center Right", "Position Right" };
-		autoModes = new Command[]{new PositionCenterLeft(), new PositionLeft(), new PositionCenter(), new PositionCenterRight(), new PositionRight()};
+		autoModeNames = new String[]{"Drive To Defense","Position Center Left", "Position Left", "Position Center", "Position Center Right", "Position Right" };
+		autoModes = new Command[]{new BreachDefenseAuto(3000,.4), new PositionCenterLeft(), new PositionLeft(), new PositionCenter(), new PositionCenterRight(), new PositionRight()};
 		
 		//configure and send the sendableChooser, which allows the modes
 		//to be chosen via radio button on the SmartDashboard
@@ -83,6 +83,8 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putNumber("String Pot Length", Robot.shoot.getShooterPotLength());
 		SmartDashboard.putNumber("String Pot Angle", Robot.shoot.getShooterAngle());
 		SmartDashboard.putBoolean("Is Shooter MAX", Robot.shoot.isMax());
+		Robot.shoot.getShooterAngleLSLR();
+		Robot.shoot.getShooterAnglePR();
 	}
     public void autonomousInit() {
         autonomousCommand = (Command) chooser.getSelected();
