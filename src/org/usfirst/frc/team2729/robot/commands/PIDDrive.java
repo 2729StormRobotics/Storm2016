@@ -27,6 +27,9 @@ public class PIDDrive extends Command{
 			   diff = err*gain,
 			   left = _power + diff/2,
 			   right= _power - diff/2;
+		double testL = left;
+		double testR = right;
+
 		if(right < -1){
 			left -= right+1;
 			right = -1;
@@ -43,6 +46,13 @@ public class PIDDrive extends Command{
 		}
 		Robot.driveTrain.TankDrive(Math.max(-1, Math.min(1, left)), 
 								-Math.max(-1, Math.min(1, right)));
+		
+		SmartDashboard.putNumber("PID DRIVE Left TEST val", testL);
+		SmartDashboard.putNumber("PID DRIVE Right TEST val", testR);
+		SmartDashboard.putNumber("PID DRIVE Left OUTPUT val", left);
+		SmartDashboard.putNumber("PID DRIVE Right OUTPUT val", right);
+		SmartDashboard.putNumber("PID DRIVE Left Drive", Math.max(-1, Math.min(1, left)));
+		SmartDashboard.putNumber("PID DRIVE Right Drive", -Math.max(-1, Math.min(1, right)));
 	}
 
 	@Override
