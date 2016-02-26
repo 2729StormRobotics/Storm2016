@@ -6,7 +6,6 @@ import java.util.TimerTask;
 import org.usfirst.frc.team2729.robot.Robot;
 import org.usfirst.frc.team2729.robot.RobotMap;
 import org.usfirst.frc.team2729.robot.commands.ShooterSpinUp;
-import org.usfirst.frc.team2729.robot.commands.ShooterTilt;
 import org.usfirst.frc.team2729.robot.commands.TankDrive;
 
 import edu.wpi.first.wpilibj.AnalogPotentiometer;
@@ -30,22 +29,19 @@ public class ShootingSystem extends Subsystem {
 		   				_intake = new Talon(RobotMap.PORT_MOTOR_SHOOT_INTAKE);
 	
 	private final StringPot _stringPot = new StringPot(RobotMap.PORT_STRINGPOT, 1);
-	//private final DigitalInput _minSwitch = new DigitalInput(RobotMap.PORT_SHOOTER_SWITCH_MIN_TILT);
 	private final DigitalInput _intakeHalt = new DigitalInput(RobotMap.PORT_LIMIT_SWITCH_INTAKE_HALT);
-	private double TiltMin = .564;
-	private double TiltMax = .315;
+	public final double TiltMin = .564;
+	public final double TiltMax = .315;
 	private double TiltSpinMin = .510;
-	private double TiltIntakePoint = 0.388;
-	private double TiltMediumShot = 0.352;
-	private double TiltHighShot = 0.329;
+	public final double TiltIntakePoint = 0.388;
+	public final double TiltMediumShot = 0.352;
+	public final double TiltHighShot = 0.329;
+	public final double TiltLowShot = 0.4; //TODO: Determine
+	
 	private final double beta = 35.2664, phi = 43.62;
 	private final double ANGLE_CONST_NUM = 0.091163234, ANGLE_CONST_DENOM = 0.0895807856;
 	
-	private double shootPower;
-	private double intakePower;
-	private double tiltPower;
-
-	//Integral Control Variables
+	//Shooter Control Variables
 	private double targetTicks = 0;
 	private double IntErrorLeft = 0;
 	private double IntErrorRight = 0;
@@ -54,8 +50,12 @@ public class ShootingSystem extends Subsystem {
 	private double KiRight = 0.000003;
 	private double KpRight = 0.000; //TODO: Tune this
 	private double errorL = 0, errorR = 0;
-
-	private double PIDtest = 0;
+	
+	//Tilter Control Variables
+	private double targetString = _stringPot.get();
+	private double KpShoot = 1;
+	private double errorShoot = 0;
+	
 	public ShootingSystem(){
 		targetTicks = 0;
 		Timer _timer = new Timer();
@@ -68,8 +68,6 @@ public class ShootingSystem extends Subsystem {
 				//_right.set((KpRight * errorR) + (KiRight * IntErrorRight));
 				_right.set((KpLeft * errorL) + (KiLeft * IntErrorLeft));//Temporary fix to encoder problems
 				_left.set((KpLeft * errorL) + (KiLeft * IntErrorLeft));
-				PIDtest++;
-				SmartDashboard.putNumber("PID TEST", PIDtest);
 				//_right.set(targetTicks > 0 ? 1 : 0);
 				//_left.set(targetTicks > 0 ? 1 : 0);
 				SmartDashboard.putNumber("Shoot Target Ticks", targetTicks);
@@ -81,9 +79,17 @@ public class ShootingSystem extends Subsystem {
 				if(_stringPot.get() > TiltSpinMin){
 					haltSpin();
 				}
+				
+				errorShoot = targetString - _stringPot.get();
+				setTiltPower(errorShoot * KpShoot);
+				SmartDashboard.putNumber("Shoot Tilt Target", targetString);
+				SmartDashboard.putNumber("Shoot Tilt PID", errorShoot * KpShoot);
 			}
 		}, 50, 50);
 	}
+	@Override
+	protected void initDefaultCommand() {}
+	
 	public void setTiltPower(double power){
 		if (isMax() == true && power < 0){ //Inverted due to motor polarity
 			_tilt.set(0);
@@ -92,6 +98,12 @@ public class ShootingSystem extends Subsystem {
 		} else {
 			_tilt.set(power);
 		}
+	}
+	public void setTargetTilt(double _target){
+		targetString = _target;
+	}
+	public double getTargetTilt(){
+		return targetString;
 	}
 	public void setTargetSpeed(double _target){
 		targetTicks = _target;
@@ -113,7 +125,7 @@ public class ShootingSystem extends Subsystem {
 		return _stringPot.get();
 	}
 	public double getTiltPower(){
-		return tiltPower;
+		return _tilt.get();
 	}
 	public double getShooterPotRAW(){
 		return _stringPot.get();
@@ -134,10 +146,6 @@ public class ShootingSystem extends Subsystem {
 		double x = _stringPot.get();
 		SmartDashboard.putNumber("alpha PR", (-72.993 * Math.pow(x, 2)) - (149.28 * x) + 109.77);
 		return (-72.993 * Math.pow(x, 2)) - (149.28 * x) + 109.77;
-	}
-	@Override
-	protected void initDefaultCommand() {
-		setDefaultCommand(new ShooterTilt());
 	}
 	public boolean isMax(){
 		return (_stringPot.get() <= TiltMax); //Inequality is flipped due to string pot polarity

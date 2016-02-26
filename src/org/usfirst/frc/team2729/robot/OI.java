@@ -13,8 +13,7 @@ import org.usfirst.frc.team2729.robot.commands.PIDDrive;
 import org.usfirst.frc.team2729.robot.commands.ActuatePTO;
 import org.usfirst.frc.team2729.robot.commands.Shift;
 import org.usfirst.frc.team2729.robot.commands.Shoot;
-import org.usfirst.frc.team2729.robot.commands.ShootTiltToAngle;
-import org.usfirst.frc.team2729.robot.commands.ShooterTilt;
+import org.usfirst.frc.team2729.robot.commands.ShooterSetTilt;
 import org.usfirst.frc.team2729.robot.commands.ShooterSpinDown;
 import org.usfirst.frc.team2729.robot.commands.ShooterSpinUp;
 import org.usfirst.frc.team2729.robot.commands.TankDrive;
@@ -36,12 +35,11 @@ public class OI {
 						 driveBackward = new JoystickButton(driveJoystick, RobotMap.JOYDRIVE_BUTTON_BACKWARDS),
 						 togglePTOOn = new JoystickButton(driveJoystick, RobotMap.JOYDRIVE_BUTTON_PTO_ON),
 						 togglePTOOff = new JoystickButton(driveJoystick, RobotMap.JOYDRIVE_BUTTON_PTO_OFF),
-						 hangingExtenderUp = new JoystickButton(armJoystick, RobotMap.JOYARM_BUTTON_EXTENDER_UP),
-	 					 hangingExtenderDown = new JoystickButton(armJoystick, RobotMap.JOYARM_BUTTON_EXTENDER_DOWN),
+						 
+						 shooterTiltMax = new JoystickButton(armJoystick, RobotMap.JOYARM_BUTTON_SHOOT_MAX),
+						 shooterTiltMin = new JoystickButton(armJoystick, RobotMap.JOYARM_BUTTON_SHOOT_MIN),
 						 shooterSpinUP = new JoystickButton(armJoystick, RobotMap.JOYARM_BUTTON_SHOOTER_SPINUP),
 						 shooterSpinDOWN = new JoystickButton(armJoystick, RobotMap.JOYARM_BUTTON_SHOOTER_SPINDOWN),
-						 winchIN = new JoystickButton(armJoystick, RobotMap.JOYARM_BUTTON_WINCH_IN),
-						 winchOUT = new JoystickButton(armJoystick, RobotMap.JOYARM_BUTTON_WINCH_OUT),
 						 IntakeSP1 = new JoystickButton(armJoystick, RobotMap.JOYARM_BUTTON_BEAVER_SP1),
 						 IntakeSP2 = new JoystickButton(armJoystick, RobotMap.JOYARM_BUTTON_BEAVER_SP2),
 						 IntakeSP3 = new JoystickButton(armJoystick, RobotMap.JOYARM_BUTTON_BEAVER_SP3),
@@ -59,15 +57,12 @@ public class OI {
 	public double getIntake(){
 		return _zeroDeadzone(armJoystick.getRawAxis(RobotMap.JOYARM_AXIS_INTAKE), 0.15);	
 	}
-	public double getShootTilt(){
-		return _zeroDeadzone(armJoystick.getRawAxis(RobotMap.JOYARM_AXIS_SHOOT_TILT), 0.15);
+	public double getHangExt(){
+		return _zeroDeadzone(armJoystick.getRawAxis(RobotMap.JOYARM_AXIS_HANGING_EXTENDER), 0.15);
 	}
 	
 	public OI(){
-		
-		shooterSpinUP.whenPressed(new ShooterSpinUp());
-		shooterSpinDOWN.whenPressed(new ShooterSpinDown());
-		
+		//Driver Commands
 		togglePTOOn.whenPressed(new ActuatePTO(true));
 		togglePTOOff.whenPressed(new ActuatePTO(false));
 		
@@ -77,18 +72,20 @@ public class OI {
 		driveForward.whileHeld(new PIDDrive(0.8));
 		driveBackward.whileHeld(new PIDDrive(-0.8));
 		
-		winchIN.whileHeld(new Winch(true));
-		winchOUT.whileHeld(new Winch(false));
+		//Operator Commands
+		shooterSpinUP.whenPressed(new ShooterSpinUp());
+		shooterSpinDOWN.whenPressed(new ShooterSpinDown());
 		
-		hangingExtenderUp.whileHeld(new ExtendHanging(true));
-		hangingExtenderDown.whileHeld(new ExtendHanging(false));
-
 		IntakeSP1.whenPressed(new IntakeTiltToPoint(1));
 		IntakeSP2.whenPressed(new IntakeTiltToPoint(2));
 		IntakeSP3.whenPressed(new IntakeTiltToPoint(3));
 		
 		ShootFire.whenPressed(new Shoot());
 		
+		shooterTiltMax.whenPressed(new ShooterSetTilt(Robot.shoot.TiltMax));
+		shooterTiltMin.whenPressed(new ShooterSetTilt(Robot.shoot.TiltMin));
+		
+		//Special Commands
 		halveOne.whileHeld(new Command() {
 			@Override
 			protected void initialize() { Robot.driveTrain.halveOne(true); }
@@ -119,21 +116,13 @@ public class OI {
 		_timer.schedule(new TimerTask() {
 			public void run() {
 				switch(armJoystick.getPOV()){
-				case 1: Robot.shoot.setTargetSpeed(22500);
+				case 0: Robot.shoot.setTargetTilt(Robot.shoot.TiltHighShot);
 						break;
-				case 2: Robot.shoot.setTargetSpeed(21875);
+				case 90:Robot.shoot.setTargetTilt(Robot.shoot.TiltIntakePoint);
 						break;
-				case 3: Robot.shoot.setTargetSpeed(18750);
+				case 180:Robot.shoot.setTargetTilt(Robot.shoot.TiltLowShot);
 						break;
-				case 4:	Robot.shoot.setTargetSpeed(15625);
-						break;
-				case 5: Robot.shoot.setTargetSpeed(12500);
-						break;
-				case 6: Robot.shoot.setTargetSpeed(9375);
-						break;
-				case 7: Robot.shoot.setTargetSpeed(6250);
-						break;
-				case 8:	Robot.shoot.setTargetSpeed(3125);
+				case 270:Robot.shoot.setTargetTilt(Robot.shoot.TiltMediumShot);
 						break;
 				};
 			}
