@@ -46,7 +46,7 @@ public class PIDDriveAuto extends Command{
 			right -= left-1;
 			left = 1;
 		}
-		Robot.driveTrain.TankDrive(Math.max(-1, Math.min(1, left)), 
+		Robot.driveTrain.tankDrive(Math.max(-1, Math.min(1, left)), 
 								-Math.max(-1, Math.min(1, right)));
 	}
 
@@ -60,7 +60,7 @@ public class PIDDriveAuto extends Command{
 
 	@Override
 	protected void end() {
-		Robot.driveTrain.TankDrive(0, 0);
+		Robot.driveTrain.tankDrive(0, 0);
 	}
 
 	@Override

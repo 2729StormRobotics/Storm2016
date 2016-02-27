@@ -17,7 +17,7 @@ public class TankDrive extends Command {
     protected void execute() {
     	double left = Robot.oi.getLeftDrive(),
  			   right = Robot.oi.getRightDrive();
- 		Robot.driveTrain.TankDrive(left, right);
+ 		Robot.driveTrain.tankDrive(left, right);
     }
 
     protected boolean isFinished() {

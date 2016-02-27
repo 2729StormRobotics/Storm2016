@@ -44,7 +44,7 @@ public class PIDDrive extends Command{
 			right -= left-1;
 			left = 1;
 		}
-		Robot.driveTrain.TankDrive(Math.max(-1, Math.min(1, left)), 
+		Robot.driveTrain.tankDrive(Math.max(-1, Math.min(1, left)), 
 								-Math.max(-1, Math.min(1, right)));
 		
 		SmartDashboard.putNumber("PID DRIVE Left TEST val", testL);
@@ -62,11 +62,11 @@ public class PIDDrive extends Command{
 
 	@Override
 	protected void end() {
-		Robot.driveTrain.TankDrive(0, 0);
+		Robot.driveTrain.tankDrive(0, 0);
 	}
 
 	@Override
 	protected void interrupted() {
-		Robot.driveTrain.TankDrive(0, 0);
+		Robot.driveTrain.tankDrive(0, 0);
 	}
 }

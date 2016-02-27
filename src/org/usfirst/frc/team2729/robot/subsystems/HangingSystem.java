@@ -30,7 +30,7 @@ public class HangingSystem extends Subsystem {
 	public void setWinch(double power){
 		if(Robot.driveTrain.getPTO()){
 			winchPower = power;
-			Robot.driveTrain.TankDrive(power, power);
+			Robot.driveTrain.tankDrive(power, power);
 		} else {
 			winchPower = 0;
 		}

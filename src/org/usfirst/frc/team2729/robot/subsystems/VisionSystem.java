@@ -15,6 +15,7 @@ import com.ni.vision.NIVision.ShapeMode;
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.Preferences;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.vision.AxisCamera;
 
@@ -73,9 +74,9 @@ public class VisionSystem extends Subsystem {
 	double proximity[] = {0,0,0,0};
 	
 	//Ideal values
-	double IDEAL_DISTANCE = 4;
-	double IDEAL_HORIZONTAL_ANGLE = 0;
-	double IDEAL_VERTICAL_ANGLE = 0;	
+	double IDEAL_DISTANCE[] = {4, 4, 4};
+	double IDEAL_HORIZONTAL_ANGLE[] = {0, 0, 0};
+	double IDEAL_VERTICAL_ANGLE[] = {0, 0, 0};	
 
 	//Constants
 	NIVision.Range TARGET_HUE_RANGE = new NIVision.Range(70, 90);	//Default hue range for target //50 140
@@ -91,6 +92,9 @@ public class VisionSystem extends Subsystem {
 	//Robot preferences
 	Preferences prefs;
 	
+	//SendableChooser
+	SendableChooser chooser;
+	
 	public VisionSystem(){
 		//Create images
     	frame = NIVision.imaqCreateImage(ImageType.IMAGE_RGB, 0);
@@ -101,6 +105,7 @@ public class VisionSystem extends Subsystem {
     	//The camera name (ex "cam0") can be found through the roborio web interface
     	session = NIVision.IMAQdxOpenCamera("cam0", NIVision.IMAQdxCameraControlMode.CameraControlModeController);
     	NIVision.IMAQdxConfigureGrab(session);
+    	NIVision.IMAQdxStartAcquisition(session);
     	
     	//switch cameras with button
     	//camera = new AxisCamera("axis-camera.local");
@@ -145,7 +150,12 @@ public class VisionSystem extends Subsystem {
 		crosshairRight[3].y = (int) prefs.getDouble("Crosshair 3 Y", 240);
 		*/
     	
-    	NIVision.IMAQdxStartAcquisition(session);
+    	//add chooser
+    	chooser = new SendableChooser();
+    	chooser.addDefault("Crosshair 1", 1);
+        chooser.addObject("Crosshair 2", 2);
+        chooser.addObject("Crosshair 3", 3);
+        SmartDashboard.putData("Crosshair", chooser);
 	}
 	
 	protected void initDefaultCommand() {
@@ -172,7 +182,7 @@ public class VisionSystem extends Subsystem {
 		return targetHorizontalAngle;
 	}
 	
-	public void detectTarget(){
+	public void processImage(){
 		NIVision.IMAQdxGrab(session, frame, 1);
     	//camera.getImage(frame);
 
@@ -198,39 +208,9 @@ public class VisionSystem extends Subsystem {
 			NIVision.imaqDrawLineOnImage(frame, frame, DrawMode.DRAW_VALUE, new Point(crosshairLeft[i].x, crosshairLeft[i].y+1), new Point(crosshairRight[i].x, crosshairRight[i].y+1), 255f);
 			NIVision.imaqDrawLineOnImage(frame, frame, DrawMode.DRAW_VALUE, new Point(crosshairLeft[i].x, crosshairLeft[i].y-1), new Point(crosshairRight[i].x, crosshairRight[i].y-1), 255f);
 		}
-				
-		/*
-		NIVision.imaqDrawLineOnImage(frame, frame, DrawMode.DRAW_VALUE, crosshairTop[0], crosshairBottom[0], 0f);
-		NIVision.imaqDrawLineOnImage(frame, frame, DrawMode.DRAW_VALUE, new Point(crosshairTop[0].x+1, crosshairTop[0].y+1), new Point(crosshairBottom[0].x+1, crosshairBottom[0].y+1), 0f);
-		NIVision.imaqDrawLineOnImage(frame, frame, DrawMode.DRAW_VALUE, new Point(crosshairTop[0].x-1, crosshairTop[0].y-1), new Point(crosshairBottom[0].x-1, crosshairBottom[0].y-1), 0f);
-		NIVision.imaqDrawLineOnImage(frame, frame, DrawMode.DRAW_VALUE, crosshairLeft[0], crosshairRight[0], 0f);
-		NIVision.imaqDrawLineOnImage(frame, frame, DrawMode.DRAW_VALUE, new Point(crosshairLeft[0].x+1, crosshairLeft[0].y+1), new Point(crosshairRight[0].x+1, crosshairRight[0].y+1), 0f);
-		NIVision.imaqDrawLineOnImage(frame, frame, DrawMode.DRAW_VALUE, new Point(crosshairLeft[0].x-1, crosshairLeft[0].y-1), new Point(crosshairRight[0].x-1, crosshairRight[0].y-1), 0f);
-				
-		NIVision.imaqDrawLineOnImage(frame, frame, DrawMode.DRAW_VALUE, crosshairTop[1], crosshairBottom[1], 25f);
-		NIVision.imaqDrawLineOnImage(frame, frame, DrawMode.DRAW_VALUE, new Point(crosshairTop[1].x+1, crosshairTop[1].y+1), new Point(crosshairBottom[1].x+1, crosshairBottom[1].y+1), 25f);
-		NIVision.imaqDrawLineOnImage(frame, frame, DrawMode.DRAW_VALUE, new Point(crosshairTop[1].x-1, crosshairTop[1].y-1), new Point(crosshairBottom[1].x-1, crosshairBottom[1].y-1), 25f);
-		NIVision.imaqDrawLineOnImage(frame, frame, DrawMode.DRAW_VALUE, crosshairLeft[1], crosshairRight[1], 25f);
-		NIVision.imaqDrawLineOnImage(frame, frame, DrawMode.DRAW_VALUE, new Point(crosshairLeft[1].x+1, crosshairLeft[1].y+1), new Point(crosshairRight[1].x+1, crosshairRight[1].y+1), 25f);
-		NIVision.imaqDrawLineOnImage(frame, frame, DrawMode.DRAW_VALUE, new Point(crosshairLeft[1].x-1, crosshairLeft[1].y-1), new Point(crosshairRight[1].x-1, crosshairRight[1].y-1), 25f);
-
-		NIVision.imaqDrawLineOnImage(frame, frame, DrawMode.DRAW_VALUE, crosshairTop[2], crosshairBottom[2], 50f);
-		NIVision.imaqDrawLineOnImage(frame, frame, DrawMode.DRAW_VALUE, new Point(crosshairTop[2].x+1, crosshairTop[2].y+1), new Point(crosshairBottom[2].x+1, crosshairBottom[2].y+1), 50f);
-		NIVision.imaqDrawLineOnImage(frame, frame, DrawMode.DRAW_VALUE, new Point(crosshairTop[2].x-1, crosshairTop[2].y-1), new Point(crosshairBottom[2].x-1, crosshairBottom[2].y-1), 50f);
-		NIVision.imaqDrawLineOnImage(frame, frame, DrawMode.DRAW_VALUE, crosshairLeft[2], crosshairRight[2], 50f);
-		NIVision.imaqDrawLineOnImage(frame, frame, DrawMode.DRAW_VALUE, new Point(crosshairLeft[2].x+1, crosshairLeft[2].y+1), new Point(crosshairRight[2].x+1, crosshairRight[2].y+1), 50f);
-		NIVision.imaqDrawLineOnImage(frame, frame, DrawMode.DRAW_VALUE, new Point(crosshairLeft[2].x-1, crosshairLeft[2].y-1), new Point(crosshairRight[2].x-1, crosshairRight[2].y-1), 50f);
-				
-		NIVision.imaqDrawLineOnImage(frame, frame, DrawMode.DRAW_VALUE, crosshairTop[3], crosshairBottom[3], 50f);
-		NIVision.imaqDrawLineOnImage(frame, frame, DrawMode.DRAW_VALUE, new Point(crosshairTop[3].x+1, crosshairTop[3].y+1), new Point(crosshairBottom[3].x+1, crosshairBottom[3].y+1), 50f);
-		NIVision.imaqDrawLineOnImage(frame, frame, DrawMode.DRAW_VALUE, new Point(crosshairTop[3].x-1, crosshairTop[3].y-1), new Point(crosshairBottom[3].x-1, crosshairBottom[3].y-1), 50f);
-		NIVision.imaqDrawLineOnImage(frame, frame, DrawMode.DRAW_VALUE, crosshairLeft[3], crosshairRight[3], 50f);
-		NIVision.imaqDrawLineOnImage(frame, frame, DrawMode.DRAW_VALUE, new Point(crosshairLeft[3].x+1, crosshairLeft[3].y+1), new Point(crosshairRight[3].x+1, crosshairRight[3].y+1), 50f);
-		NIVision.imaqDrawLineOnImage(frame, frame, DrawMode.DRAW_VALUE, new Point(crosshairLeft[3].x-1, crosshairLeft[3].y-1), new Point(crosshairRight[3].x-1, crosshairRight[3].y-1), 50f);
-		*/
 		
 		//Send image to dashboard to assist drivers
-		CameraServer.getInstance().setImage(frame);
+		//CameraServer.getInstance().setImage(frame);
 		
 		//Send masked image to dashboard to assist in tweaking mask
 		//CameraServer.getInstance().setImage(binaryFrame);
@@ -288,9 +268,10 @@ public class VisionSystem extends Subsystem {
 				towerDistance = computeTowerDistance();
 				for(int i=0; i<4; i++) {proximity[i] = computeProximity(particles.elementAt(0), i);}
 				
+				NIVision.imaqDrawShapeOnImage(testFrame, testFrame, new NIVision.Rect((int) particles.elementAt(0).BoundingRectTop, (int) particles.elementAt(0).BoundingRectLeft, (int) (particles.elementAt(0).BoundingRectBottom-particles.elementAt(0).BoundingRectTop), (int) (particles.elementAt(0).BoundingRectRight-particles.elementAt(0).BoundingRectLeft)), DrawMode.DRAW_VALUE, ShapeMode.SHAPE_OVAL, 500f);
+				
 				//TESTING
-				//show identified target
-				NIVision.imaqDrawShapeOnImage(testFrame, testFrame, new NIVision.Rect((int) particles.elementAt(0).BoundingRectTop, (int) particles.elementAt(0).BoundingRectLeft, 100, 100), DrawMode.DRAW_VALUE, ShapeMode.SHAPE_OVAL, 500f);
+				NIVision.imaqDrawShapeOnImage(testFrame, testFrame, new NIVision.Rect((int) particles.elementAt(0).BoundingRectTop, (int) particles.elementAt(0).BoundingRectLeft, (int) (particles.elementAt(0).BoundingRectBottom-particles.elementAt(0).BoundingRectTop), (int) (particles.elementAt(0).BoundingRectRight-particles.elementAt(0).BoundingRectLeft)), DrawMode.DRAW_VALUE, ShapeMode.SHAPE_OVAL, 500f);	
 				SmartDashboard.putNumber("Target pixel width", particles.elementAt(0).BoundingRectRight - particles.elementAt(0).BoundingRectLeft);
 				SmartDashboard.putNumber("Target aspect", (12)*(particles.elementAt(0).BoundingRectRight-particles.elementAt(0).BoundingRectLeft)/(particles.elementAt(0).BoundingRectBottom-particles.elementAt(0).BoundingRectTop));
 			}
@@ -308,22 +289,21 @@ public class VisionSystem extends Subsystem {
 			SmartDashboard.putNumber("Distance to Crosshair 1", proximity[1]);
 			SmartDashboard.putNumber("Distance to Crosshair 2", proximity[2]);
 			SmartDashboard.putNumber("Distance to Crosshair 3", proximity[3]);
-			/*
-			if(targetDistance > (IDEAL_DISTANCE - 0.5) && targetDistance < (IDEAL_DISTANCE + 0.5)){
+			
+			if(targetDistance > (IDEAL_DISTANCE[(int) chooser.getSelected()] - 0.5) && targetDistance < (IDEAL_DISTANCE[(int) chooser.getSelected()] + 0.5)){
 				SmartDashboard.putString("Drive instruction", "POSITION OPTIMAL");
-			} else if(targetDistance > IDEAL_DISTANCE) {
+			} else if(targetDistance > IDEAL_DISTANCE[(int) chooser.getSelected()]) {
 				SmartDashboard.putString("Drive instruction", "MOVE FORWARD");
-			} else if(targetDistance < IDEAL_DISTANCE) {
+			} else if(targetDistance < IDEAL_DISTANCE[(int) chooser.getSelected()]) {
 				SmartDashboard.putString("Drive instruction", "MOVE BACK");
 			}
-			if(targetHorizontalAngle > (IDEAL_HORIZONTAL_ANGLE - 10) && targetHorizontalAngle < (IDEAL_HORIZONTAL_ANGLE + 10)){
+			if(targetHorizontalAngle > (IDEAL_HORIZONTAL_ANGLE[(int) chooser.getSelected()] - 7.5) && targetHorizontalAngle < (IDEAL_HORIZONTAL_ANGLE[(int) chooser.getSelected()] + 7.5)){
 				SmartDashboard.putString("Aim instruction", "AIM OPTIMAL");
-			} else if(targetHorizontalAngle > IDEAL_HORIZONTAL_ANGLE) {
+			} else if(targetHorizontalAngle > IDEAL_HORIZONTAL_ANGLE[(int) chooser.getSelected()]) {
 				SmartDashboard.putString("Aim instruction", "SHIFT LEFT");
-			} else if(targetHorizontalAngle < IDEAL_HORIZONTAL_ANGLE) {
+			} else if(targetHorizontalAngle < IDEAL_HORIZONTAL_ANGLE[(int) chooser.getSelected()]) {
 				SmartDashboard.putString("Aim instruction", "SHIFT RIGHT");
 			}
-			*/
 		} else {
 			targetDetected = false;
 			SmartDashboard.putBoolean("Target Detected", targetDetected);
@@ -331,6 +311,9 @@ public class VisionSystem extends Subsystem {
 		
 		//Send masked image to dashboard to assist in tweaking mask
 		//CameraServer.getInstance().setImage(testFrame);
+		
+		//Send image to dashboard to assist drivers
+		CameraServer.getInstance().setImage(frame);
 	}
 
 	//Comparator function for sorting particles. Returns true if particle 1 is larger
@@ -411,6 +394,6 @@ public class VisionSystem extends Subsystem {
   		SmartDashboard.putNumber("Particle Center X", particleCenterX);
   		SmartDashboard.putNumber("Particle Center Y", particleCenterY);
   		
-  		return Math.sqrt((Math.pow(particleCenterX - (crosshairRight[crosshairNum].x-crosshairLeft[crosshairNum].x)/2, 2) + Math.pow(particleCenterY - crosshairLeft[crosshairNum].y, 2)));
+  		return Math.sqrt((Math.pow(particleCenterX - ((double) (crosshairRight[crosshairNum].x-crosshairLeft[crosshairNum].x))/2, 2) + Math.pow(particleCenterY - crosshairLeft[crosshairNum].y, 2)));
   	}
 }
