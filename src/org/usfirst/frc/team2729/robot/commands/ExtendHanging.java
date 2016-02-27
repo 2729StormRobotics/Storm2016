@@ -3,6 +3,11 @@ import org.usfirst.frc.team2729.robot.Robot;
 import edu.wpi.first.wpilibj.command.Command;
 
 public class ExtendHanging extends Command{
+	
+	public ExtendHanging() {
+		requires(Robot.hang);
+	}
+	
 	@Override
 	protected void execute() {
 		Robot.hang.setExtendPower(Robot.oi.getHangExt()); //Inverted due to motor polarity

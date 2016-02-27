@@ -63,12 +63,11 @@ public class VisionSystem extends Subsystem {
 	Image testFrame;
 	int imaqError;
 	
-	//Shapes
-	NIVision.Rect rect = new NIVision.Rect(270, 190, 100, 100);
-	
 	//Crosshair
-	Point crosshairTop[] = {new Point(320,240-50), new Point(390,225-50), new Point(400,330-50), new Point(420,390-50)};
-	Point crosshairBottom[] = {new Point(320,240+50), new Point(390,225+50), new Point(400,330+50), new Point(420,390+50)};
+	Point crosshairTopLeft[] = {new Point(320-50,240-50), new Point(390-50,225-50), new Point(400-50,330-50), new Point(420-50,390-50)};
+	Point crosshairBottomLeft[] = {new Point(320-50,240), new Point(390-50,225), new Point(400-50,330), new Point(420-50,390)};
+	Point crosshairTopRight[] = {new Point(320+50,240-50), new Point(390+50,225-50), new Point(400+50,330-50), new Point(420+50,390-50)};
+	Point crosshairBottomRight[] = {new Point(320+50,240), new Point(390+50,225), new Point(400+50,330), new Point(420+50,390)};
 	Point crosshairLeft[] = {new Point(320-50,240), new Point(390-50,225), new Point(400-50,330), new Point(420-50,390)};
 	Point crosshairRight[] = {new Point(320+50,240), new Point(390+50,225), new Point(400+50,330), new Point(420+50,390)};
 	double proximity[] = {0,0,0,0};
@@ -172,7 +171,7 @@ public class VisionSystem extends Subsystem {
 	public double getHorizontalAngle(){
 		return targetHorizontalAngle;
 	}
-
+	
 	public void detectTarget(){
 		NIVision.IMAQdxGrab(session, frame, 1);
     	//camera.getImage(frame);
@@ -186,18 +185,20 @@ public class VisionSystem extends Subsystem {
 		//Send particle count to dashboard
 		int numParticles = NIVision.imaqCountParticles(binaryFrame, 1);
 		//SmartDashboard.putNumber("Masked particles", numParticles);
-
-		//Add crosshairs
-		//NIVision.imaqDrawShapeOnImage(frame, frame, rect, DrawMode.DRAW_VALUE, ShapeMode.SHAPE_OVAL, 0.2f);
-		for(int i=0; i<4; i++){
-			NIVision.imaqDrawLineOnImage(frame, frame, DrawMode.DRAW_VALUE, crosshairTop[i], crosshairBottom[i], i*50f);
-			NIVision.imaqDrawLineOnImage(frame, frame, DrawMode.DRAW_VALUE, new Point(crosshairTop[i].x+1, crosshairTop[i].y+1), new Point(crosshairBottom[i].x+1, crosshairBottom[i].y+1), i*50f);
-			NIVision.imaqDrawLineOnImage(frame, frame, DrawMode.DRAW_VALUE, new Point(crosshairTop[i].x-1, crosshairTop[i].y-1), new Point(crosshairBottom[i].x-1, crosshairBottom[i].y-1), i*50f);
-			NIVision.imaqDrawLineOnImage(frame, frame, DrawMode.DRAW_VALUE, crosshairLeft[i], crosshairRight[0], i*50f);
-			NIVision.imaqDrawLineOnImage(frame, frame, DrawMode.DRAW_VALUE, new Point(crosshairLeft[i].x+1, crosshairLeft[i].y+1), new Point(crosshairRight[i].x+1, crosshairRight[i].y+1), i*50f);
-			NIVision.imaqDrawLineOnImage(frame, frame, DrawMode.DRAW_VALUE, new Point(crosshairLeft[i].x-1, crosshairLeft[i].y-1), new Point(crosshairRight[i].x-1, crosshairRight[i].y-1), i*50f);
-		}
 		
+		//Add crosshairs
+		for(int i=0; i<4; i++){
+			NIVision.imaqDrawLineOnImage(frame, frame, DrawMode.DRAW_VALUE, crosshairTopLeft[i], crosshairBottomLeft[i], 255f);
+			NIVision.imaqDrawLineOnImage(frame, frame, DrawMode.DRAW_VALUE, new Point(crosshairTopLeft[i].x+1, crosshairTopLeft[i].y), new Point(crosshairBottomLeft[i].x+1, crosshairBottomLeft[i].y), 255f);
+			NIVision.imaqDrawLineOnImage(frame, frame, DrawMode.DRAW_VALUE, new Point(crosshairTopLeft[i].x-1, crosshairTopLeft[i].y), new Point(crosshairBottomLeft[i].x-1, crosshairBottomLeft[i].y), 255f);
+			NIVision.imaqDrawLineOnImage(frame, frame, DrawMode.DRAW_VALUE, crosshairTopRight[i], crosshairBottomRight[i], 255f);
+			NIVision.imaqDrawLineOnImage(frame, frame, DrawMode.DRAW_VALUE, new Point(crosshairTopRight[i].x+1, crosshairTopRight[i].y), new Point(crosshairBottomRight[i].x+1, crosshairBottomRight[i].y), 255f);
+			NIVision.imaqDrawLineOnImage(frame, frame, DrawMode.DRAW_VALUE, new Point(crosshairTopRight[i].x-1, crosshairTopRight[i].y), new Point(crosshairBottomRight[i].x-1, crosshairBottomRight[i].y), 255f);
+			NIVision.imaqDrawLineOnImage(frame, frame, DrawMode.DRAW_VALUE, crosshairLeft[i], crosshairRight[i], 255f);
+			NIVision.imaqDrawLineOnImage(frame, frame, DrawMode.DRAW_VALUE, new Point(crosshairLeft[i].x, crosshairLeft[i].y+1), new Point(crosshairRight[i].x, crosshairRight[i].y+1), 255f);
+			NIVision.imaqDrawLineOnImage(frame, frame, DrawMode.DRAW_VALUE, new Point(crosshairLeft[i].x, crosshairLeft[i].y-1), new Point(crosshairRight[i].x, crosshairRight[i].y-1), 255f);
+		}
+				
 		/*
 		NIVision.imaqDrawLineOnImage(frame, frame, DrawMode.DRAW_VALUE, crosshairTop[0], crosshairBottom[0], 0f);
 		NIVision.imaqDrawLineOnImage(frame, frame, DrawMode.DRAW_VALUE, new Point(crosshairTop[0].x+1, crosshairTop[0].y+1), new Point(crosshairBottom[0].x+1, crosshairBottom[0].y+1), 0f);
@@ -205,7 +206,7 @@ public class VisionSystem extends Subsystem {
 		NIVision.imaqDrawLineOnImage(frame, frame, DrawMode.DRAW_VALUE, crosshairLeft[0], crosshairRight[0], 0f);
 		NIVision.imaqDrawLineOnImage(frame, frame, DrawMode.DRAW_VALUE, new Point(crosshairLeft[0].x+1, crosshairLeft[0].y+1), new Point(crosshairRight[0].x+1, crosshairRight[0].y+1), 0f);
 		NIVision.imaqDrawLineOnImage(frame, frame, DrawMode.DRAW_VALUE, new Point(crosshairLeft[0].x-1, crosshairLeft[0].y-1), new Point(crosshairRight[0].x-1, crosshairRight[0].y-1), 0f);
-		
+				
 		NIVision.imaqDrawLineOnImage(frame, frame, DrawMode.DRAW_VALUE, crosshairTop[1], crosshairBottom[1], 25f);
 		NIVision.imaqDrawLineOnImage(frame, frame, DrawMode.DRAW_VALUE, new Point(crosshairTop[1].x+1, crosshairTop[1].y+1), new Point(crosshairBottom[1].x+1, crosshairBottom[1].y+1), 25f);
 		NIVision.imaqDrawLineOnImage(frame, frame, DrawMode.DRAW_VALUE, new Point(crosshairTop[1].x-1, crosshairTop[1].y-1), new Point(crosshairBottom[1].x-1, crosshairBottom[1].y-1), 25f);
@@ -219,7 +220,7 @@ public class VisionSystem extends Subsystem {
 		NIVision.imaqDrawLineOnImage(frame, frame, DrawMode.DRAW_VALUE, crosshairLeft[2], crosshairRight[2], 50f);
 		NIVision.imaqDrawLineOnImage(frame, frame, DrawMode.DRAW_VALUE, new Point(crosshairLeft[2].x+1, crosshairLeft[2].y+1), new Point(crosshairRight[2].x+1, crosshairRight[2].y+1), 50f);
 		NIVision.imaqDrawLineOnImage(frame, frame, DrawMode.DRAW_VALUE, new Point(crosshairLeft[2].x-1, crosshairLeft[2].y-1), new Point(crosshairRight[2].x-1, crosshairRight[2].y-1), 50f);
-		
+				
 		NIVision.imaqDrawLineOnImage(frame, frame, DrawMode.DRAW_VALUE, crosshairTop[3], crosshairBottom[3], 50f);
 		NIVision.imaqDrawLineOnImage(frame, frame, DrawMode.DRAW_VALUE, new Point(crosshairTop[3].x+1, crosshairTop[3].y+1), new Point(crosshairBottom[3].x+1, crosshairBottom[3].y+1), 50f);
 		NIVision.imaqDrawLineOnImage(frame, frame, DrawMode.DRAW_VALUE, new Point(crosshairTop[3].x-1, crosshairTop[3].y-1), new Point(crosshairBottom[3].x-1, crosshairBottom[3].y-1), 50f);
@@ -410,6 +411,6 @@ public class VisionSystem extends Subsystem {
   		SmartDashboard.putNumber("Particle Center X", particleCenterX);
   		SmartDashboard.putNumber("Particle Center Y", particleCenterY);
   		
-  		return Math.sqrt((Math.pow(particleCenterX - crosshairTop[crosshairNum].x, 2) + Math.pow(particleCenterY - crosshairLeft[crosshairNum].y, 2)));
+  		return Math.sqrt((Math.pow(particleCenterX - (crosshairRight[crosshairNum].x-crosshairLeft[crosshairNum].x)/2, 2) + Math.pow(particleCenterY - crosshairLeft[crosshairNum].y, 2)));
   	}
 }

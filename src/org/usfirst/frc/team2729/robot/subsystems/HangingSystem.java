@@ -14,7 +14,10 @@ public class HangingSystem extends Subsystem {
 	private double winchPower = 0;
 	
 	@Override
-	protected void initDefaultCommand() {setDefaultCommand(new ExtendHanging());}
+	protected void initDefaultCommand() {
+		setDefaultCommand(new ExtendHanging());
+	}
+	
 	public void halt() {
 		_extender.set(0);
 	}
