@@ -36,7 +36,7 @@ public class ShootingSystem extends Subsystem {
 	public final double TiltIntakePoint = 0.388;
 	public final double TiltMediumShot = 0.352;
 	public final double TiltHighShot = 0.329;
-	public final double TiltLowShot = 0.4; //TODO: Determine
+	public final double TiltLowShot = 0.55; //TODO: Determine
 	
 	private final double beta = 35.2664, phi = 43.62;
 	private final double ANGLE_CONST_NUM = 0.091163234, ANGLE_CONST_DENOM = 0.0895807856;
@@ -53,8 +53,10 @@ public class ShootingSystem extends Subsystem {
 	
 	//Tilter Control Variables
 	private double targetString = _stringPot.get();
-	private double KpShoot = 1;
+	private double KpShoot = 12;
 	private double errorShoot = 0;
+	private double KiShoot = 0.001;
+	private double intErrorShoot = 0;
 	
 	public ShootingSystem(){
 		targetTicks = 0;
@@ -81,9 +83,11 @@ public class ShootingSystem extends Subsystem {
 				}
 				
 				errorShoot = targetString - _stringPot.get();
-				setTiltPower(errorShoot * KpShoot);
+				intErrorShoot += errorShoot;
+				setTiltPower((errorShoot * KpShoot) + (intErrorShoot * KiShoot));
 				SmartDashboard.putNumber("Shoot Tilt Target", targetString);
-				SmartDashboard.putNumber("Shoot Tilt PID", errorShoot * KpShoot);
+				SmartDashboard.putNumber("Shoot Tilt Int Error", intErrorShoot);
+				SmartDashboard.putNumber("Shoot Tilt PID", (errorShoot * KpShoot) + (intErrorShoot * KiShoot));
 			}
 		}, 50, 50);
 	}
@@ -101,6 +105,7 @@ public class ShootingSystem extends Subsystem {
 	}
 	public void setTargetTilt(double _target){
 		targetString = _target;
+		intErrorShoot = 0;
 	}
 	public double getTargetTilt(){
 		return targetString;
