@@ -30,7 +30,7 @@ public class Robot extends IterativeRobot {
 	public static IntakeSystem intake;
 	public static ShootingSystem shoot;
 	public static HangingSystem hang;
-	//public static VisionSystem vision;
+	public static VisionSystem vision;
 	public static OI oi;
 	private Compressor compressor;
 	
@@ -46,7 +46,7 @@ public class Robot extends IterativeRobot {
 		shoot = new ShootingSystem();
 		hang = new HangingSystem();
 		oi = new OI();
-		//vision = new VisionSystem();
+		vision = new VisionSystem();
 		compressor = new Compressor();
 		compressor.start();
         chooser = new SendableChooser();
