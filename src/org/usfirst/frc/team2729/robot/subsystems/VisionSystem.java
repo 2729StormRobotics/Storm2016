@@ -74,7 +74,7 @@ public class VisionSystem extends Subsystem {
 	double proximity[] = {0,0,0,0};
 	
 	//Ideal values
-	double IDEAL_DISTANCE[] = {4, 4, 4};
+	double IDEAL_DISTANCE[] = {4, 4, 4}; //86
 	double IDEAL_HORIZONTAL_ANGLE[] = {0, 0, 0};
 	double IDEAL_VERTICAL_ANGLE[] = {0, 0, 0};	
 
@@ -182,6 +182,36 @@ public class VisionSystem extends Subsystem {
 		return targetHorizontalAngle;
 	}
 	
+	public void addCrosshairs(){
+		NIVision.IMAQdxGrab(session, frame, 1);
+		
+		//Add crosshairs
+		NIVision.imaqDrawLineOnImage(frame, frame, DrawMode.DRAW_VALUE, crosshairTopLeft[0], crosshairBottomLeft[0], 0f);
+		NIVision.imaqDrawLineOnImage(frame, frame, DrawMode.DRAW_VALUE, new Point(crosshairTopLeft[0].x+1, crosshairTopLeft[0].y), new Point(crosshairBottomLeft[0].x+1, crosshairBottomLeft[0].y), 0f);
+		NIVision.imaqDrawLineOnImage(frame, frame, DrawMode.DRAW_VALUE, new Point(crosshairTopLeft[0].x-1, crosshairTopLeft[0].y), new Point(crosshairBottomLeft[0].x-1, crosshairBottomLeft[0].y), 0f);
+		NIVision.imaqDrawLineOnImage(frame, frame, DrawMode.DRAW_VALUE, crosshairTopRight[0], crosshairBottomRight[0], 0f);
+		NIVision.imaqDrawLineOnImage(frame, frame, DrawMode.DRAW_VALUE, new Point(crosshairTopRight[0].x+1, crosshairTopRight[0].y), new Point(crosshairBottomRight[0].x+1, crosshairBottomRight[0].y), 0f);
+		NIVision.imaqDrawLineOnImage(frame, frame, DrawMode.DRAW_VALUE, new Point(crosshairTopRight[0].x-1, crosshairTopRight[0].y), new Point(crosshairBottomRight[0].x-1, crosshairBottomRight[0].y), 0f);
+		NIVision.imaqDrawLineOnImage(frame, frame, DrawMode.DRAW_VALUE, crosshairLeft[0], crosshairRight[0], 0f);
+		NIVision.imaqDrawLineOnImage(frame, frame, DrawMode.DRAW_VALUE, new Point(crosshairLeft[0].x, crosshairLeft[0].y+1), new Point(crosshairRight[0].x, crosshairRight[0].y+1), 0f);
+		NIVision.imaqDrawLineOnImage(frame, frame, DrawMode.DRAW_VALUE, new Point(crosshairLeft[0].x, crosshairLeft[0].y-1), new Point(crosshairRight[0].x, crosshairRight[0].y-1), 0f);
+		
+		for(int i=1; i<4; i++){
+			NIVision.imaqDrawLineOnImage(frame, frame, DrawMode.DRAW_VALUE, crosshairTopLeft[i], crosshairBottomLeft[i], 255f);
+			NIVision.imaqDrawLineOnImage(frame, frame, DrawMode.DRAW_VALUE, new Point(crosshairTopLeft[i].x+1, crosshairTopLeft[i].y), new Point(crosshairBottomLeft[i].x+1, crosshairBottomLeft[i].y), 255f);
+			NIVision.imaqDrawLineOnImage(frame, frame, DrawMode.DRAW_VALUE, new Point(crosshairTopLeft[i].x-1, crosshairTopLeft[i].y), new Point(crosshairBottomLeft[i].x-1, crosshairBottomLeft[i].y), 255f);
+			NIVision.imaqDrawLineOnImage(frame, frame, DrawMode.DRAW_VALUE, crosshairTopRight[i], crosshairBottomRight[i], 255f);
+			NIVision.imaqDrawLineOnImage(frame, frame, DrawMode.DRAW_VALUE, new Point(crosshairTopRight[i].x+1, crosshairTopRight[i].y), new Point(crosshairBottomRight[i].x+1, crosshairBottomRight[i].y), 255f);
+			NIVision.imaqDrawLineOnImage(frame, frame, DrawMode.DRAW_VALUE, new Point(crosshairTopRight[i].x-1, crosshairTopRight[i].y), new Point(crosshairBottomRight[i].x-1, crosshairBottomRight[i].y), 255f);
+			NIVision.imaqDrawLineOnImage(frame, frame, DrawMode.DRAW_VALUE, crosshairLeft[i], crosshairRight[i], 255f);
+			NIVision.imaqDrawLineOnImage(frame, frame, DrawMode.DRAW_VALUE, new Point(crosshairLeft[i].x, crosshairLeft[i].y+1), new Point(crosshairRight[i].x, crosshairRight[i].y+1), 255f);
+			NIVision.imaqDrawLineOnImage(frame, frame, DrawMode.DRAW_VALUE, new Point(crosshairLeft[i].x, crosshairLeft[i].y-1), new Point(crosshairRight[i].x, crosshairRight[i].y-1), 255f);
+		}
+		
+		//Send image to dashboard to assist drivers
+		CameraServer.getInstance().setImage(frame);
+	}
+	
 	public void processImage(){
 		NIVision.IMAQdxGrab(session, frame, 1);
     	//camera.getImage(frame);
@@ -190,14 +220,24 @@ public class VisionSystem extends Subsystem {
 		NIVision.imaqColorThreshold(binaryFrame, frame, 255, NIVision.ColorMode.HSV, TARGET_HUE_RANGE, TARGET_SAT_RANGE, TARGET_VAL_RANGE);
 		
 		//TESTING
-		NIVision.imaqColorThreshold(testFrame, frame, 255, NIVision.ColorMode.HSV, TARGET_HUE_RANGE, TARGET_SAT_RANGE, TARGET_VAL_RANGE);
+		//NIVision.imaqColorThreshold(testFrame, frame, 255, NIVision.ColorMode.HSV, TARGET_HUE_RANGE, TARGET_SAT_RANGE, TARGET_VAL_RANGE);
 
 		//Send particle count to dashboard
 		int numParticles = NIVision.imaqCountParticles(binaryFrame, 1);
 		//SmartDashboard.putNumber("Masked particles", numParticles);
 		
 		//Add crosshairs
-		for(int i=0; i<4; i++){
+		NIVision.imaqDrawLineOnImage(frame, frame, DrawMode.DRAW_VALUE, crosshairTopLeft[0], crosshairBottomLeft[0], 0f);
+		NIVision.imaqDrawLineOnImage(frame, frame, DrawMode.DRAW_VALUE, new Point(crosshairTopLeft[0].x+1, crosshairTopLeft[0].y), new Point(crosshairBottomLeft[0].x+1, crosshairBottomLeft[0].y), 0f);
+		NIVision.imaqDrawLineOnImage(frame, frame, DrawMode.DRAW_VALUE, new Point(crosshairTopLeft[0].x-1, crosshairTopLeft[0].y), new Point(crosshairBottomLeft[0].x-1, crosshairBottomLeft[0].y), 0f);
+		NIVision.imaqDrawLineOnImage(frame, frame, DrawMode.DRAW_VALUE, crosshairTopRight[0], crosshairBottomRight[0], 0f);
+		NIVision.imaqDrawLineOnImage(frame, frame, DrawMode.DRAW_VALUE, new Point(crosshairTopRight[0].x+1, crosshairTopRight[0].y), new Point(crosshairBottomRight[0].x+1, crosshairBottomRight[0].y), 0f);
+		NIVision.imaqDrawLineOnImage(frame, frame, DrawMode.DRAW_VALUE, new Point(crosshairTopRight[0].x-1, crosshairTopRight[0].y), new Point(crosshairBottomRight[0].x-1, crosshairBottomRight[0].y), 0f);
+		NIVision.imaqDrawLineOnImage(frame, frame, DrawMode.DRAW_VALUE, crosshairLeft[0], crosshairRight[0], 0f);
+		NIVision.imaqDrawLineOnImage(frame, frame, DrawMode.DRAW_VALUE, new Point(crosshairLeft[0].x, crosshairLeft[0].y+1), new Point(crosshairRight[0].x, crosshairRight[0].y+1), 0f);
+		NIVision.imaqDrawLineOnImage(frame, frame, DrawMode.DRAW_VALUE, new Point(crosshairLeft[0].x, crosshairLeft[0].y-1), new Point(crosshairRight[0].x, crosshairRight[0].y-1), 0f);
+		
+		for(int i=1; i<4; i++){
 			NIVision.imaqDrawLineOnImage(frame, frame, DrawMode.DRAW_VALUE, crosshairTopLeft[i], crosshairBottomLeft[i], 255f);
 			NIVision.imaqDrawLineOnImage(frame, frame, DrawMode.DRAW_VALUE, new Point(crosshairTopLeft[i].x+1, crosshairTopLeft[i].y), new Point(crosshairBottomLeft[i].x+1, crosshairBottomLeft[i].y), 255f);
 			NIVision.imaqDrawLineOnImage(frame, frame, DrawMode.DRAW_VALUE, new Point(crosshairTopLeft[i].x-1, crosshairTopLeft[i].y), new Point(crosshairBottomLeft[i].x-1, crosshairBottomLeft[i].y), 255f);
@@ -223,12 +263,12 @@ public class VisionSystem extends Subsystem {
 		//Send particle count after filtering to dashboard
 		numParticles = NIVision.imaqCountParticles(binaryFrame, 1);
 		//SmartDashboard.putNumber("Filtered particles", numParticles);
-
-		int topWidthIndex = 0;
+		
 		if(numParticles > 0)
 		{
 			//Measure particles and sort by particle size
 			Vector<ParticleReport> particles = new Vector<ParticleReport>();
+			int topWidthIndex = 0;
 			for(int particleIndex = 0; particleIndex < numParticles; particleIndex++)
 			{
 				ParticleReport par = new ParticleReport();
@@ -268,12 +308,10 @@ public class VisionSystem extends Subsystem {
 				towerDistance = computeTowerDistance();
 				for(int i=0; i<4; i++) {proximity[i] = computeProximity(particles.elementAt(0), i);}
 				
-				NIVision.imaqDrawShapeOnImage(testFrame, testFrame, new NIVision.Rect((int) particles.elementAt(0).BoundingRectTop, (int) particles.elementAt(0).BoundingRectLeft, (int) (particles.elementAt(0).BoundingRectBottom-particles.elementAt(0).BoundingRectTop), (int) (particles.elementAt(0).BoundingRectRight-particles.elementAt(0).BoundingRectLeft)), DrawMode.DRAW_VALUE, ShapeMode.SHAPE_OVAL, 500f);
-				
 				//TESTING
-				NIVision.imaqDrawShapeOnImage(testFrame, testFrame, new NIVision.Rect((int) particles.elementAt(0).BoundingRectTop, (int) particles.elementAt(0).BoundingRectLeft, (int) (particles.elementAt(0).BoundingRectBottom-particles.elementAt(0).BoundingRectTop), (int) (particles.elementAt(0).BoundingRectRight-particles.elementAt(0).BoundingRectLeft)), DrawMode.DRAW_VALUE, ShapeMode.SHAPE_OVAL, 500f);	
-				SmartDashboard.putNumber("Target pixel width", particles.elementAt(0).BoundingRectRight - particles.elementAt(0).BoundingRectLeft);
-				SmartDashboard.putNumber("Target aspect", (12)*(particles.elementAt(0).BoundingRectRight-particles.elementAt(0).BoundingRectLeft)/(particles.elementAt(0).BoundingRectBottom-particles.elementAt(0).BoundingRectTop));
+				//NIVision.imaqDrawShapeOnImage(testFrame, testFrame, new NIVision.Rect((int) particles.elementAt(0).BoundingRectTop, (int) particles.elementAt(0).BoundingRectLeft, (int) (particles.elementAt(0).BoundingRectBottom-particles.elementAt(0).BoundingRectTop), (int) (particles.elementAt(0).BoundingRectRight-particles.elementAt(0).BoundingRectLeft)), DrawMode.DRAW_VALUE, ShapeMode.SHAPE_OVAL, 500f);	
+				//SmartDashboard.putNumber("Target pixel width", particles.elementAt(0).BoundingRectRight - particles.elementAt(0).BoundingRectLeft);
+				//SmartDashboard.putNumber("Target aspect", (12)*(particles.elementAt(0).BoundingRectRight-particles.elementAt(0).BoundingRectLeft)/(particles.elementAt(0).BoundingRectBottom-particles.elementAt(0).BoundingRectTop));
 			}
 			
 			//Send distance and target status to dashboard. The bounding rect, particularly the horizontal center (left - right) may be useful for rotating/driving towards a target
