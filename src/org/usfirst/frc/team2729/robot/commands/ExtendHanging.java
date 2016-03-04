@@ -10,7 +10,7 @@ public class ExtendHanging extends Command{
 	
 	@Override
 	protected void execute() {
-		Robot.hang.setExtendPower(Robot.oi.getHangExt()); //Inverted due to motor polarity
+		Robot.hang.setExtendPower(Robot.hang.isEnabled() ? Robot.oi.getHangExt() : 0); //Inverted due to motor polarity
 	}
 	
 	protected void initialize() {		

@@ -89,6 +89,9 @@ public class DriveTrain extends Subsystem {
 		_shifter.set(enabled ? DoubleSolenoid.Value.kReverse
 				: DoubleSolenoid.Value.kForward);
 	}
+	public boolean getHighGear(){
+		return _isHighGear;
+	}
 	public void setPTO(boolean enabled){
 		_isPTOEnabled = enabled;
 		_pto.set(enabled ? DoubleSolenoid.Value.kReverse

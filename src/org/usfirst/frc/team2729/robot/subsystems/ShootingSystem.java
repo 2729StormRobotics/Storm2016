@@ -75,9 +75,9 @@ public class ShootingSystem extends Subsystem {
 				SmartDashboard.putNumber("Shoot Target Ticks", targetTicks);
 				SmartDashboard.putNumber("Shoot Actual Ticks LEFT", _leftShooter.getRate());
 				SmartDashboard.putNumber("Shoot Actual Ticks RIGHT", _rightShooter.getRate());
-				SmartDashboard.putNumber("Shoot Motor Power", _left.get());
-				SmartDashboard.putNumber("Shoot Integral Error", IntErrorLeft);
-				SmartDashboard.putNumber("PID Value", (KpLeft * errorL) + (KiLeft * IntErrorLeft));
+				//SmartDashboard.putNumber("Shoot Motor Power", _left.get());
+				//SmartDashboard.putNumber("Shoot Integral Error", IntErrorLeft);
+				//SmartDashboard.putNumber("PID Value", (KpLeft * errorL) + (KiLeft * IntErrorLeft));
 				if(_stringPot.get() > TiltSpinMin){
 					haltSpin();
 				}
@@ -86,8 +86,8 @@ public class ShootingSystem extends Subsystem {
 				intErrorShoot += errorShoot;
 				setTiltPower((errorShoot * KpShoot) + (intErrorShoot * KiShoot));
 				SmartDashboard.putNumber("Shoot Tilt Target", targetString);
-				SmartDashboard.putNumber("Shoot Tilt Int Error", intErrorShoot);
-				SmartDashboard.putNumber("Shoot Tilt PID", (errorShoot * KpShoot) + (intErrorShoot * KiShoot));
+				//SmartDashboard.putNumber("Shoot Tilt Int Error", intErrorShoot);
+				//SmartDashboard.putNumber("Shoot Tilt PID", (errorShoot * KpShoot) + (intErrorShoot * KiShoot));
 			}
 		}, 50, 50);
 	}

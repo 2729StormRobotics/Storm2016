@@ -46,7 +46,7 @@ public class Robot extends IterativeRobot {
 		shoot = new ShootingSystem();
 		hang = new HangingSystem();
 		oi = new OI();
-		vision = new VisionSystem();
+		//vision = new VisionSystem();
 		compressor = new Compressor();
 		compressor.start();
         chooser = new SendableChooser();
@@ -80,13 +80,15 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putNumber("Right Encoder", driveTrain.getRightDistance());
 		SmartDashboard.putNumber("Left Encoder", driveTrain.getLeftDistance());
 		SmartDashboard.putNumber("Rot Pot", intake.getPot());
-		SmartDashboard.putNumber("Motor", intake.getTiltPower());
+		//SmartDashboard.putNumber("Motor", intake.getTiltPower());
 		SmartDashboard.putNumber("Raw String Pot", Robot.shoot.getShooterPotRAW());
-		SmartDashboard.putNumber("String Pot Length", Robot.shoot.getShooterPotLength());
-		SmartDashboard.putNumber("String Pot Angle", Robot.shoot.getShooterAngle());
+		//SmartDashboard.putNumber("String Pot Length", Robot.shoot.getShooterPotLength());
+		//SmartDashboard.putNumber("String Pot Angle", Robot.shoot.getShooterAngle());
 		SmartDashboard.putBoolean("Is Shooter MAX", Robot.shoot.isMax());
 		Robot.shoot.getShooterAngleLSLR();
-		Robot.shoot.getShooterAnglePR();
+		//Robot.shoot.getShooterAnglePR();
+		SmartDashboard.putBoolean("High Gear", Robot.driveTrain.getHighGear());
+		SmartDashboard.putBoolean("PTO On", Robot.driveTrain.getPTO());
 	}
     public void autonomousInit() {
         autonomousCommand = (Command) chooser.getSelected();

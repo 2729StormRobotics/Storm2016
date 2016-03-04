@@ -12,6 +12,7 @@ public class HangingSystem extends Subsystem {
 	
 	private final Talon _extender = new Talon(RobotMap.PORT_MOTOR_EXTENDER);
 	private double winchPower = 0;
+	private boolean enabled = false;
 	
 	@Override
 	protected void initDefaultCommand() {
@@ -37,5 +38,11 @@ public class HangingSystem extends Subsystem {
 	}
 	public double getWinch(){
 		return winchPower;
+	}
+	public boolean isEnabled(){
+		return enabled;
+	}
+	public void setEnabled(boolean _enabled){
+		enabled = _enabled;
 	}
 }

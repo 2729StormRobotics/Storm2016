@@ -11,6 +11,7 @@ import org.usfirst.frc.team2729.robot.commands.ExtendHanging;
 import org.usfirst.frc.team2729.robot.commands.IntakeTiltToPoint;
 import org.usfirst.frc.team2729.robot.commands.PIDDrive;
 import org.usfirst.frc.team2729.robot.commands.ActuatePTO;
+import org.usfirst.frc.team2729.robot.commands.EnableHanging;
 import org.usfirst.frc.team2729.robot.commands.Shift;
 import org.usfirst.frc.team2729.robot.commands.Shoot;
 import org.usfirst.frc.team2729.robot.commands.ShooterSetTilt;
@@ -44,7 +45,8 @@ public class OI {
 						 IntakeSP1 = new JoystickButton(armJoystick, RobotMap.JOYARM_BUTTON_BEAVER_SP1),
 						 IntakeSP2 = new JoystickButton(armJoystick, RobotMap.JOYARM_BUTTON_BEAVER_SP2),
 						 IntakeSP3 = new JoystickButton(armJoystick, RobotMap.JOYARM_BUTTON_BEAVER_SP3),
-						 ShootFire = new JoystickButton(armJoystick, RobotMap.JOYARM_BUTTON_SHOOT);
+						 ShootFire = new JoystickButton(armJoystick, RobotMap.JOYARM_BUTTON_SHOOT),
+						 HangSafety = new JoystickButton(armJoystick, RobotMap.JOYARM_BUTTON_HANG_SAFETY);
 	
 	private double _zeroDeadzone(double joyValue,double dead) {
         return Math.abs(joyValue) > dead ? joyValue : 0;
@@ -85,6 +87,8 @@ public class OI {
 		
 		shooterTiltMax.whenPressed(new ShooterSetTilt(Robot.shoot.TiltMax));
 		shooterTiltMin.whenPressed(new ShooterSetTilt(Robot.shoot.TiltMin));
+		
+		HangSafety.whileHeld(new EnableHanging());
 		
 		//Special Commands
 		halveOne.whileHeld(new Command() {
