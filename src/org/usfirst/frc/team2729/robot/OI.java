@@ -18,7 +18,7 @@ import org.usfirst.frc.team2729.robot.commands.ShooterSetTilt;
 import org.usfirst.frc.team2729.robot.commands.ShooterSpinDown;
 import org.usfirst.frc.team2729.robot.commands.ShooterSpinUp;
 import org.usfirst.frc.team2729.robot.commands.TankDrive;
-import org.usfirst.frc.team2729.robot.commands.Vision;
+import org.usfirst.frc.team2729.robot.commands.VisionTeleOp;
 import org.usfirst.frc.team2729.robot.commands.Winch;
 
 import java.util.Timer;

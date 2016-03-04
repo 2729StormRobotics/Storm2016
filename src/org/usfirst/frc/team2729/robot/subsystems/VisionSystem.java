@@ -3,7 +3,7 @@ package org.usfirst.frc.team2729.robot.subsystems;
 import java.util.Comparator;
 import java.util.Vector;
 
-import org.usfirst.frc.team2729.robot.commands.Vision;
+import org.usfirst.frc.team2729.robot.commands.VisionTeleOp;
 
 import com.ni.vision.NIVision;
 import com.ni.vision.NIVision.DrawMode;
@@ -159,7 +159,7 @@ public class VisionSystem extends Subsystem {
 	}
 	
 	protected void initDefaultCommand() {
-		setDefaultCommand(new Vision());
+		
 	}
 	
 	public boolean getTargetFound(){

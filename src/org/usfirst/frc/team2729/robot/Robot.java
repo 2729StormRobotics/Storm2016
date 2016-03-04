@@ -46,7 +46,7 @@ public class Robot extends IterativeRobot {
 		shoot = new ShootingSystem();
 		hang = new HangingSystem();
 		oi = new OI();
-		//vision = new VisionSystem();
+		vision = new VisionSystem();
 		compressor = new Compressor();
 		compressor.start();
         chooser = new SendableChooser();
@@ -74,6 +74,7 @@ public class Robot extends IterativeRobot {
 		Scheduler.getInstance().run();
         sendSensorData();
     	Robot.shoot.setTargetTilt(Robot.shoot.getShooterPotRAW());
+        Robot.vision.addCrosshairs();
 	}
 
 	public void sendSensorData() {
@@ -111,6 +112,7 @@ public class Robot extends IterativeRobot {
     public void autonomousPeriodic() {
         Scheduler.getInstance().run();
         sendSensorData();
+        Robot.vision.addCrosshairs();
     }
 
     public void teleopInit() {
@@ -120,9 +122,11 @@ public class Robot extends IterativeRobot {
     public void teleopPeriodic() {
         Scheduler.getInstance().run();
         sendSensorData();
+        Robot.vision.addCrosshairs();
     }
     
     public void testPeriodic() {
         LiveWindow.run();
+        Robot.vision.addCrosshairs();
     }
 }
