@@ -30,7 +30,8 @@ public class ShootingSystem extends Subsystem {
 	
 	private final StringPot _stringPot = new StringPot(RobotMap.PORT_STRINGPOT, 1);
 	private final DigitalInput _intakeHalt = new DigitalInput(RobotMap.PORT_LIMIT_SWITCH_INTAKE_HALT);
-	public final double TiltMin = .575;
+	private final DigitalInput _maxSwitch = new DigitalInput(RobotMap.PORT_SHOOTER_SWITCH_MAX_TILT);
+	public final double TiltMin = .573;
 	public final double TiltMax = .320;
 	private double TiltSpinMin = .510;
 	public final double TiltIntakePoint = 0.388;
@@ -88,6 +89,9 @@ public class ShootingSystem extends Subsystem {
 				SmartDashboard.putNumber("Shoot Tilt Target", targetString);
 				//SmartDashboard.putNumber("Shoot Tilt Int Error", intErrorShoot);
 				//SmartDashboard.putNumber("Shoot Tilt PID", (errorShoot * KpShoot) + (intErrorShoot * KiShoot));
+				if(isMax() || isMin()){
+					intErrorShoot = 0;
+				}
 			}
 		}, 50, 50);
 	}
@@ -95,12 +99,16 @@ public class ShootingSystem extends Subsystem {
 	protected void initDefaultCommand() {}
 	
 	public void setTiltPower(double power){
-		if ((isMax() == true && power < 0)){ //Inverted due to motor polarity
-			_tilt.set(0);
-		} else if (isMin() == true && power > 0){ //Inverted due to motor polarity
-			_tilt.set(0);
+		if(!Double.isNaN(power)){
+			if (((isMax() == true || !_maxSwitch.get()) && power < 0)){ //Inverted due to motor polarity
+				_tilt.set(0);
+			} else if (isMin() == true && power > 0){ //Inverted due to motor polarity
+				_tilt.set(0);
+			} else {
+				_tilt.set(power);
+			}
 		} else {
-			_tilt.set(power);
+			_tilt.set(0);
 		}
 	}
 	public void setTargetTilt(double _target){

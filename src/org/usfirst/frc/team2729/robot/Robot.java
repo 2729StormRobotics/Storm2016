@@ -87,6 +87,7 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putBoolean("Is Shooter MAX", Robot.shoot.isMax());
 		Robot.shoot.getShooterAngleLSLR();
 		//Robot.shoot.getShooterAnglePR();
+		SmartDashboard.putNumber("Robot.shoot.TiltPower()",Robot.shoot.getTiltPower());
 		SmartDashboard.putBoolean("Intake Halt", Robot.shoot.getIntakeHalt());
 		SmartDashboard.putBoolean("High Gear", Robot.driveTrain.getHighGear());
 		SmartDashboard.putBoolean("PTO On", Robot.driveTrain.getPTO());
