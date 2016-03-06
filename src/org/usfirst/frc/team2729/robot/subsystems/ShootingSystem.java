@@ -30,8 +30,8 @@ public class ShootingSystem extends Subsystem {
 	
 	private final StringPot _stringPot = new StringPot(RobotMap.PORT_STRINGPOT, 1);
 	private final DigitalInput _intakeHalt = new DigitalInput(RobotMap.PORT_LIMIT_SWITCH_INTAKE_HALT);
-	public final double TiltMin = .564;
-	public final double TiltMax = .315;
+	public final double TiltMin = .575;
+	public final double TiltMax = .320;
 	private double TiltSpinMin = .510;
 	public final double TiltIntakePoint = 0.388;
 	public final double TiltMediumShot = 0.352;
@@ -95,7 +95,7 @@ public class ShootingSystem extends Subsystem {
 	protected void initDefaultCommand() {}
 	
 	public void setTiltPower(double power){
-		if (isMax() == true && power < 0){ //Inverted due to motor polarity
+		if ((isMax() == true && power < 0)){ //Inverted due to motor polarity
 			_tilt.set(0);
 		} else if (isMin() == true && power > 0){ //Inverted due to motor polarity
 			_tilt.set(0);

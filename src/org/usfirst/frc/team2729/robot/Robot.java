@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
 import org.usfirst.frc.team2729.robot.autoModes.BreachDefenseAuto;
+import org.usfirst.frc.team2729.robot.autoModes.DoNothing;
 import org.usfirst.frc.team2729.robot.autoModes.PositionCenter;
 import org.usfirst.frc.team2729.robot.autoModes.PositionCenterLeft;
 import org.usfirst.frc.team2729.robot.autoModes.PositionCenterRight;
@@ -50,11 +51,9 @@ public class Robot extends IterativeRobot {
 		compressor = new Compressor();
 		compressor.start();
         chooser = new SendableChooser();
-        chooser.addDefault("Default Auto", new TankDrive());
-//        chooser.addObject("My Auto", new MyAutoCommand());
         
-		autoModeNames = new String[]{"Drive To Defense","Position Center Left", "Position Left", "Position Center", "Position Center Right", "Position Right" };
-		autoModes = new Command[]{new BreachDefenseAuto(3000,.4), new PositionCenterLeft(), new PositionLeft(), new PositionCenter(), new PositionCenterRight(), new PositionRight()};
+		autoModeNames = new String[]{"Do Nothing","Drive To Defense", "Drive to Defense Backwards","Position Center Left", "Position Left", "Position Center", "Position Center Right", "Position Right" };
+		autoModes = new Command[]{new DoNothing(), new BreachDefenseAuto(3000,.4), new BreachDefenseAuto(-3000, .4), new PositionCenterLeft(), new PositionLeft(), new PositionCenter(), new PositionCenterRight(), new PositionRight()};
 		
 		//configure and send the sendableChooser, which allows the modes
 		//to be chosen via radio button on the SmartDashboard
@@ -88,8 +87,19 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putBoolean("Is Shooter MAX", Robot.shoot.isMax());
 		Robot.shoot.getShooterAngleLSLR();
 		//Robot.shoot.getShooterAnglePR();
+		SmartDashboard.putBoolean("Intake Halt", Robot.shoot.getIntakeHalt());
 		SmartDashboard.putBoolean("High Gear", Robot.driveTrain.getHighGear());
 		SmartDashboard.putBoolean("PTO On", Robot.driveTrain.getPTO());
+		SmartDashboard.putBoolean("Intake Top", (Robot.intake.getPot()<0.850 && Robot.intake.getPot()>0.775 ? true : false));
+		SmartDashboard.putBoolean("Intake Mid", (Robot.intake.getPot()<0.500 && Robot.intake.getPot()>0.490 ? true : false));
+		SmartDashboard.putBoolean("Intake Bottom", (Robot.intake.getPot()<0.411 && Robot.intake.getPot()>0.401 ? true : false));
+		SmartDashboard.putBoolean("Tilt Max", (Robot.shoot.getShooterTilt()<.320 && Robot.shoot.getShooterTilt()>.310 ? true : false));
+		SmartDashboard.putBoolean("Tilt High", (Robot.shoot.getShooterTilt()<.334 && Robot.shoot.getShooterTilt()>.324 ? true : false));
+		SmartDashboard.putBoolean("Tilt Medium", (Robot.shoot.getShooterTilt()<.357 && Robot.shoot.getShooterTilt()>.347 ? true : false));
+		SmartDashboard.putBoolean("Tilt Intake", (Robot.shoot.getShooterTilt()<.393 && Robot.shoot.getShooterTilt()>.383 ? true : false));
+		SmartDashboard.putBoolean("Tilt Low", (Robot.shoot.getShooterTilt()<.560 && Robot.shoot.getShooterTilt()>.550 ? true : false));
+		SmartDashboard.putBoolean("Tilt Min", (Robot.shoot.getShooterTilt()<.569 && Robot.shoot.getShooterTilt()>.559 ? true : false));
+		SmartDashboard.putBoolean("Transitioning", (Robot.shoot.getTiltPower()>.01 ? true : false));
 	}
     public void autonomousInit() {
         autonomousCommand = (Command) chooser.getSelected();
