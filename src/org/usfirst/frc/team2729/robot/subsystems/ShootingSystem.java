@@ -59,15 +59,17 @@ public class ShootingSystem extends Subsystem {
 	//Tilter Control Variables
 	private double targetString = _stringPot.get();
 	private double KpShoot = 8;
-	private double errorShoot = 0;
 	private double KiShoot = 0.0005;
+	private double errorShoot = 0;
 	private double intErrorShoot = 0;
+	private boolean targetStringReached = true;
 	
 	public ShootingSystem(){
 		targetTicks = 0;
 		Timer _timer = new Timer();
 		_timer.schedule(new TimerTask() {
 			public void run() {
+				//Shooter Wheel PID Calculations
 				errorL = targetTicks - _leftShooter.getRate();
 				errorR = targetTicks - _rightShooter.getRate();
 				IntErrorLeft += errorL;
@@ -75,34 +77,39 @@ public class ShootingSystem extends Subsystem {
 				//_right.set((KpRight * errorR) + (KiRight * IntErrorRight));
 				_right.set((KpLeft * errorL) + (KiLeft * IntErrorLeft));//Temporary fix to encoder problems
 				_left.set((KpLeft * errorL) + (KiLeft * IntErrorLeft));
-				//_right.set(targetTicks > 0 ? 1 : 0);
-				//_left.set(targetTicks > 0 ? 1 : 0);
-				SmartDashboard.putNumber("Shoot Target Ticks", targetTicks);
-				SmartDashboard.putNumber("Shoot Actual Ticks LEFT", _leftShooter.getRate());
-				SmartDashboard.putNumber("Shoot Actual Ticks RIGHT", _rightShooter.getRate());
-				//SmartDashboard.putNumber("Shoot Motor Power", _left.get());
-				//SmartDashboard.putNumber("Shoot Integral Error", IntErrorLeft);
-				//SmartDashboard.putNumber("PID Value", (KpLeft * errorL) + (KiLeft * IntErrorLeft));
 				if(_stringPot.get() > TiltSpinMin){
 					haltSpin();
 				}
+				SmartDashboard.putNumber("Shoot Target Ticks", targetTicks);
+				SmartDashboard.putNumber("Shoot Actual Ticks LEFT", _leftShooter.getRate());
+				SmartDashboard.putNumber("Shoot Actual Ticks RIGHT", _rightShooter.getRate());
 				
-				errorShoot = targetString - _stringPot.get();
-				intErrorShoot += errorShoot;
-				setTiltPower((errorShoot * KpShoot) + (intErrorShoot * KiShoot));
-				SmartDashboard.putNumber("Shoot Tilt Target", targetString);
-				//SmartDashboard.putNumber("Shoot Tilt Int Error", intErrorShoot);
-				//SmartDashboard.putNumber("Shoot Tilt PID", (errorShoot * KpShoot) + (intErrorShoot * KiShoot));
+				//Shooter Tilt PID Calculations
+				if(!targetStringReached){
+					errorShoot = targetString - _stringPot.get();
+					intErrorShoot += errorShoot;
+					if(Math.abs((errorShoot * KpShoot) + (intErrorShoot * KiShoot)) > 0.005){
+						setTiltPower((errorShoot * KpShoot) + (intErrorShoot * KiShoot));
+						targetStringReached = (getTiltPower() == 0);
+					} else {
+						targetStringReached = true;
+					}
+				} else {
+					intErrorShoot = 0;
+				}
+				
 				if(isMax() || isMin()){
 					intErrorShoot = 0;
 				}
+				
+				SmartDashboard.putNumber("Shoot Tilt Target", targetString);
 			}
 		}, 50, 50);
-		_timer.schedule(new TimerTask(){
+		_timer.schedule(new TimerTask(){ //Stall Detection
 			public void run(){
 				if(!tiltEStopped){
 					if(prevString != -1){
-						tiltEStopped = Math.abs(prevString - _stringPot.get()) < 0.001 && Math.abs(_tilt.get()) > .01;
+						tiltEStopped = (Math.abs(prevString - _stringPot.get()) < 0.002 && Math.abs(_tilt.get()) > .01);
 						/*if((_stringPot.get() - prevString != 0) && (_tilt.get() != 0)){ //Checks Motor Polarity
 							if((_stringPot.get() - prevString)/Math.abs(_stringPot.get() - prevString) == _tilt.get()/Math.abs(_tilt.get())){
 								tiltEStopped = true;
@@ -135,6 +142,7 @@ public class ShootingSystem extends Subsystem {
 	public void setTargetTilt(double _target){
 		targetString = _target;
 		intErrorShoot = 0;
+		targetStringReached = false;
 	}
 	public double getTargetTilt(){
 		return targetString;
@@ -198,5 +206,11 @@ public class ShootingSystem extends Subsystem {
 	}
 	public void unStall(){
 		tiltEStopped = false;
+	}
+	public void setTargetReached(boolean _reached){
+		targetStringReached = _reached;
+	}
+	public boolean getTargetReached(){
+		return targetStringReached;
 	}
 }
