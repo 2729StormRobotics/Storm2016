@@ -91,6 +91,9 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putBoolean("Intake Halt", Robot.shoot.getIntakeHalt());
 		SmartDashboard.putBoolean("High Gear", Robot.driveTrain.getHighGear());
 		SmartDashboard.putBoolean("PTO On", Robot.driveTrain.getPTO());
+		SmartDashboard.putBoolean("Max Tilt", Robot.shoot.isMax());
+		SmartDashboard.putBoolean("Tilt Stalled", Robot.shoot.isStalled());
+		SmartDashboard.putBoolean("Tilt Out of Bounds", Robot.shoot.isOutBounds());
 		SmartDashboard.putBoolean("Intake Top", (Robot.intake.getPot()<0.850 && Robot.intake.getPot()>0.775 ? true : false));
 		SmartDashboard.putBoolean("Intake Mid", (Robot.intake.getPot()<0.500 && Robot.intake.getPot()>0.490 ? true : false));
 		SmartDashboard.putBoolean("Intake Bottom", (Robot.intake.getPot()<0.411 && Robot.intake.getPot()>0.401 ? true : false));
@@ -128,6 +131,7 @@ public class Robot extends IterativeRobot {
 
     public void teleopInit() {
         if (autonomousCommand != null) autonomousCommand.cancel();
+        Robot.shoot.unStall();
     }
 
     public void teleopPeriodic() {

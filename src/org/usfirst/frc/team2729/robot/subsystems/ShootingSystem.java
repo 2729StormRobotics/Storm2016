@@ -28,6 +28,10 @@ public class ShootingSystem extends Subsystem {
 		   				_tilt = new Talon(RobotMap.PORT_MOTOR_SHOOT_TILT),
 		   				_intake = new Talon(RobotMap.PORT_MOTOR_SHOOT_INTAKE);
 	
+	private double prevString = -1; //For first run through
+	private int stallTimeStep = 250;
+	private boolean tiltEStopped = false;
+	
 	private final StringPot _stringPot = new StringPot(RobotMap.PORT_STRINGPOT, 1);
 	private final DigitalInput _intakeHalt = new DigitalInput(RobotMap.PORT_LIMIT_SWITCH_INTAKE_HALT);
 	private final DigitalInput _maxSwitch = new DigitalInput(RobotMap.PORT_SHOOTER_SWITCH_MAX_TILT);
@@ -54,9 +58,9 @@ public class ShootingSystem extends Subsystem {
 	
 	//Tilter Control Variables
 	private double targetString = _stringPot.get();
-	private double KpShoot = 12;
+	private double KpShoot = 8;
 	private double errorShoot = 0;
-	private double KiShoot = 0.001;
+	private double KiShoot = 0.0005;
 	private double intErrorShoot = 0;
 	
 	public ShootingSystem(){
@@ -94,13 +98,30 @@ public class ShootingSystem extends Subsystem {
 				}
 			}
 		}, 50, 50);
+		_timer.schedule(new TimerTask(){
+			public void run(){
+				if(!tiltEStopped){
+					if(prevString != -1){
+						tiltEStopped = Math.abs(prevString - _stringPot.get()) < 0.001 && Math.abs(_tilt.get()) > .01;
+						/*if((_stringPot.get() - prevString != 0) && (_tilt.get() != 0)){ //Checks Motor Polarity
+							if((_stringPot.get() - prevString)/Math.abs(_stringPot.get() - prevString) == _tilt.get()/Math.abs(_tilt.get())){
+								tiltEStopped = true;
+							}
+						}*/
+						prevString = _stringPot.get();
+					} else {
+						prevString = _stringPot.get();
+					}
+				}
+			}
+		}, stallTimeStep, stallTimeStep);
 	}
 	@Override
 	protected void initDefaultCommand() {}
 	
 	public void setTiltPower(double power){
-		if(!Double.isNaN(power)){
-			if (((isMax() == true || !_maxSwitch.get()) && power < 0)){ //Inverted due to motor polarity
+		if(!Double.isNaN(power) && !isOutBounds() && !tiltEStopped){
+			if ((isMax() == true  && power < 0)){ //Inverted due to motor polarity
 				_tilt.set(0);
 			} else if (isMin() == true && power > 0){ //Inverted due to motor polarity
 				_tilt.set(0);
@@ -161,12 +182,21 @@ public class ShootingSystem extends Subsystem {
 		return (-72.993 * Math.pow(x, 2)) - (149.28 * x) + 109.77;
 	}
 	public boolean isMax(){
-		return (_stringPot.get() <= TiltMax); //Inequality is flipped due to string pot polarity
+		return (_stringPot.get() <= TiltMax || !_maxSwitch.get()); //Inequality is flipped due to string pot polarity, switch as well
 	}
 	public boolean isMin(){
 		return (_stringPot.get() >= TiltMin);//Inequality is flipped due to string pot polarity
 	}
 	public boolean getIntakeHalt(){
 		return !_intakeHalt.get(); //Returns true when the Boulder is present
+	}
+	public boolean isOutBounds(){
+		return (_stringPot.get() < TiltMax - .030) || (_stringPot.get() > TiltMin + .030) ? true : false;
+	}
+	public boolean isStalled(){
+		return tiltEStopped;
+	}
+	public void unStall(){
+		tiltEStopped = false;
 	}
 }
