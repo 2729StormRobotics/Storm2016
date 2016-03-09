@@ -84,7 +84,7 @@ public class OI {
 		
 		ShootFire.whenPressed(new Shoot());
 		
-		//shooterTiltMax.whenPressed(new ShooterSetTilt(Robot.shoot.TiltMax));
+		shooterTiltMax.whenPressed(new ShooterSetTilt(Robot.shoot.TiltMax));
 		shooterTiltMin.whenPressed(new ShooterSetTilt(Robot.shoot.TiltMin));
 		
 		HangSafety.whileHeld(new EnableHanging());

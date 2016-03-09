@@ -104,6 +104,7 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putBoolean("Tilt Low", (Robot.shoot.getShooterTilt()<.560 && Robot.shoot.getShooterTilt()>.550 ? true : false));
 		SmartDashboard.putBoolean("Tilt Min", (Robot.shoot.getShooterTilt()<.569 && Robot.shoot.getShooterTilt()>.559 ? true : false));
 		SmartDashboard.putBoolean("Transitioning", (Robot.shoot.getTiltPower()>.01 ? true : false));
+		SmartDashboard.putBoolean("String Target Point", Robot.shoot.getTargetReached());
 	}
     public void autonomousInit() {
         autonomousCommand = (Command) chooser.getSelected();

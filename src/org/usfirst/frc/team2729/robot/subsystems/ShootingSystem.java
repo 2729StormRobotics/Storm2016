@@ -35,6 +35,7 @@ public class ShootingSystem extends Subsystem {
 	private final StringPot _stringPot = new StringPot(RobotMap.PORT_STRINGPOT, 1);
 	private final DigitalInput _intakeHalt = new DigitalInput(RobotMap.PORT_LIMIT_SWITCH_INTAKE_HALT);
 	private final DigitalInput _maxSwitch = new DigitalInput(RobotMap.PORT_SHOOTER_SWITCH_MAX_TILT);
+	//Off robot simulation variables
 	public final double TiltMin = .573;
 	public final double TiltMax = .320;
 	private double TiltSpinMin = .510;
@@ -58,8 +59,8 @@ public class ShootingSystem extends Subsystem {
 	
 	//Tilter Control Variables
 	private double targetString = _stringPot.get();
-	private double KpShoot = 8;
-	private double KiShoot = 0.0005;
+	private double KpShoot = 10;
+	private double KiShoot = 0.06;
 	private double errorShoot = 0;
 	private double intErrorShoot = 0;
 	private boolean targetStringReached = true;
@@ -88,14 +89,17 @@ public class ShootingSystem extends Subsystem {
 				if(!targetStringReached){
 					errorShoot = targetString - _stringPot.get();
 					intErrorShoot += errorShoot;
-					if(Math.abs((errorShoot * KpShoot) + (intErrorShoot * KiShoot)) > 0.005){
+					if(Math.abs((errorShoot * KpShoot) + (intErrorShoot * KiShoot)) > 0 && Math.abs(errorShoot) > 0.002){
 						setTiltPower((errorShoot * KpShoot) + (intErrorShoot * KiShoot));
+						SmartDashboard.putNumber("PID SHOOT TILT", (errorShoot * KpShoot) + (intErrorShoot * KiShoot));
 						targetStringReached = (getTiltPower() == 0);
 					} else {
 						targetStringReached = true;
+						setTiltPower(0);
 					}
 				} else {
 					intErrorShoot = 0;
+					setTiltPower(0);
 				}
 				
 				if(isMax() || isMin()){
@@ -109,7 +113,7 @@ public class ShootingSystem extends Subsystem {
 			public void run(){
 				if(!tiltEStopped){
 					if(prevString != -1){
-						tiltEStopped = (Math.abs(prevString - _stringPot.get()) < 0.002 && Math.abs(_tilt.get()) > .01);
+						tiltEStopped = (Math.abs(prevString - _stringPot.get()) < 0.001 && Math.abs(_tilt.get()) > 0.12);
 						/*if((_stringPot.get() - prevString != 0) && (_tilt.get() != 0)){ //Checks Motor Polarity
 							if((_stringPot.get() - prevString)/Math.abs(_stringPot.get() - prevString) == _tilt.get()/Math.abs(_tilt.get())){
 								tiltEStopped = true;
@@ -151,7 +155,7 @@ public class ShootingSystem extends Subsystem {
 		targetTicks = _target;
 	}
 	public void setIntake(double power){
-		_intake.set(-power); //negated due to electrical setup
+		_intake.set(power); //negated due to electrical setup
 	}
 	public void haltSpin(){
 		targetTicks = 0;
