@@ -20,6 +20,10 @@ public class IntakeSystem extends Subsystem {
 		
 	private final RotaryPot _pot = new RotaryPot(RobotMap.PORT_ROTATE_POT,1); //TODO: Determine max safe value
 	
+	public final static double TILT_TARGET_MAX = 0.750;
+	public final static double TILT_TARGET_MID = 0.522;
+	public final static double TILT_TARGET_LOW = 0.420;
+	
 	//Feedback Loop Variables
 	private double target = _pot.get(); //Default to high position
 	private double Kp = 20;

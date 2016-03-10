@@ -36,13 +36,13 @@ public class ShootingSystem extends Subsystem {
 	private final DigitalInput _intakeHalt = new DigitalInput(RobotMap.PORT_LIMIT_SWITCH_INTAKE_HALT);
 	private final DigitalInput _maxSwitch = new DigitalInput(RobotMap.PORT_SHOOTER_SWITCH_MAX_TILT);
 	//Off robot simulation variables
-	public final double TiltMin = .573;
-	public final double TiltMax = .320;
+	public final double TILT_TARGET_MIN = .573;
+	public final double TILT_TARGET_MAX = .320;
 	private double TiltSpinMin = .510;
-	public final double TiltIntakePoint = 0.388;
-	public final double TiltMediumShot = 0.352;
-	public final double TiltHighShot = 0.329;
-	public final double TiltLowShot = 0.55; //TODO: Determine
+	public final double TILT_TARGET_INTAKE = 0.388;
+	public final double TILT_TARGET_MED = 0.352;
+	public final double TILT_TARGET_HIGH = 0.329;
+	public final double TILT_TARGET_LOW = 0.45; //TODO: Determine
 	
 	private final double beta = 35.2664, phi = 43.62;
 	private final double ANGLE_CONST_NUM = 0.091163234, ANGLE_CONST_DENOM = 0.0895807856;
@@ -194,16 +194,16 @@ public class ShootingSystem extends Subsystem {
 		return (-72.993 * Math.pow(x, 2)) - (149.28 * x) + 109.77;
 	}
 	public boolean isMax(){
-		return (_stringPot.get() <= TiltMax || !_maxSwitch.get()); //Inequality is flipped due to string pot polarity, switch as well
+		return (_stringPot.get() <= TILT_TARGET_MAX || !_maxSwitch.get()); //Inequality is flipped due to string pot polarity, switch as well
 	}
 	public boolean isMin(){
-		return (_stringPot.get() >= TiltMin);//Inequality is flipped due to string pot polarity
+		return (_stringPot.get() >= TILT_TARGET_MIN);//Inequality is flipped due to string pot polarity
 	}
 	public boolean getIntakeHalt(){
 		return !_intakeHalt.get(); //Returns true when the Boulder is present
 	}
 	public boolean isOutBounds(){
-		return (_stringPot.get() < TiltMax - .030) || (_stringPot.get() > TiltMin + .030) ? true : false;
+		return (_stringPot.get() < TILT_TARGET_MAX - .030) || (_stringPot.get() > TILT_TARGET_MIN + .030) ? true : false;
 	}
 	public boolean isStalled(){
 		return tiltEStopped;

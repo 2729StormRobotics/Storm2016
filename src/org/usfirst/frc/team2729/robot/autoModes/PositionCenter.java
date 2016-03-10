@@ -15,10 +15,10 @@ public class PositionCenter extends CommandGroup{
 	public PositionCenter(){
 		addSequential(new BreachDefenseAuto(100, .20));
 		addSequential(new Turn(0));
-		addSequential(new ShooterSetTilt(Robot.shoot.TiltMax));
+		addSequential(new ShooterSetTilt(Robot.shoot.TILT_TARGET_MAX));
 		addSequential(new ShooterSpinUp());
 		addSequential(new Shoot());
-		addSequential(new ShooterSetTilt(Robot.shoot.TiltMin));
+		addSequential(new ShooterSetTilt(Robot.shoot.TILT_TARGET_MIN));
 		addSequential(new ShooterSpinDown());
 	}
 }

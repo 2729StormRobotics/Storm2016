@@ -84,8 +84,8 @@ public class OI {
 		
 		ShootFire.whenPressed(new Shoot());
 		
-		shooterTiltMax.whenPressed(new ShooterSetTilt(Robot.shoot.TiltMax));
-		shooterTiltMin.whenPressed(new ShooterSetTilt(Robot.shoot.TiltMin));
+		shooterTiltMax.whenPressed(new ShooterSetTilt(Robot.shoot.TILT_TARGET_MAX));
+		shooterTiltMin.whenPressed(new ShooterSetTilt(Robot.shoot.TILT_TARGET_MIN));
 		
 		HangSafety.whileHeld(new EnableHanging());
 		
@@ -120,13 +120,13 @@ public class OI {
 		_timer.schedule(new TimerTask() {
 			public void run() {
 				switch(armJoystick.getPOV()){
-				case 0: Robot.shoot.setTargetTilt(Robot.shoot.TiltHighShot);
+				case 0: Robot.shoot.setTargetTilt(Robot.shoot.TILT_TARGET_HIGH);
 						break;
-				case 90:Robot.shoot.setTargetTilt(Robot.shoot.TiltIntakePoint);
+				case 90:Robot.shoot.setTargetTilt(Robot.shoot.TILT_TARGET_INTAKE);
 						break;
-				case 180:Robot.shoot.setTargetTilt(Robot.shoot.TiltLowShot);
+				case 180:Robot.shoot.setTargetTilt(Robot.shoot.TILT_TARGET_LOW);
 						break;
-				case 270:Robot.shoot.setTargetTilt(Robot.shoot.TiltMediumShot);
+				case 270:Robot.shoot.setTargetTilt(Robot.shoot.TILT_TARGET_MED);
 						break;
 				};
 			}

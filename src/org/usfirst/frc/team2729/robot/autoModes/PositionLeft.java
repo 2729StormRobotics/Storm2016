@@ -14,10 +14,10 @@ public class PositionLeft extends CommandGroup {
 	public PositionLeft(){
 		addSequential(new BreachDefenseAuto(700,5)); //TODO: Determine Experimentally
 		addSequential(new Turn(70)); //TODO: Determine Experimentally
-		addSequential(new ShooterSetTilt(Robot.shoot.TiltMax)); //TODO: Determine Experimentally
+		addSequential(new ShooterSetTilt(Robot.shoot.TILT_TARGET_MAX)); //TODO: Determine Experimentally
 		addSequential(new ShooterSpinUp());
 		addSequential(new Shoot());
-		addSequential(new ShooterSetTilt(Robot.shoot.TiltMin));
+		addSequential(new ShooterSetTilt(Robot.shoot.TILT_TARGET_MIN));
 		addSequential(new ShooterSpinDown());
 	}
 }
