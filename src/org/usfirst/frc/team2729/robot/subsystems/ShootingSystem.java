@@ -29,7 +29,7 @@ public class ShootingSystem extends Subsystem {
 		   				_intake = new Talon(RobotMap.PORT_MOTOR_SHOOT_INTAKE);
 	
 	private double prevString = -1; //For first run through
-	private int stallTimeStep = 250;
+	private int stallTimeStep = 100;
 	private boolean tiltEStopped = false;
 	
 	private final StringPot _stringPot = new StringPot(RobotMap.PORT_STRINGPOT, 1);
