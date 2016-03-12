@@ -18,9 +18,8 @@ public class RobotMap {
 		JOYDRIVE_BUTTON_PTO_OFF            = 1,
 		JOYARM_BUTTON_SHOOTER_SPINUP	   = 6,
 		JOYARM_BUTTON_SHOOTER_SPINDOWN	   = 8,
-		JOYARM_BUTTON_BEAVER_SP1           = 4,
-		JOYARM_BUTTON_BEAVER_SP2           = 3,
-		JOYARM_BUTTON_BEAVER_SP3           = 2,
+		JOYARM_BUTTON_BEAVER_UP     	   = 4,
+		JOYARM_BUTTON_BEAVER_DOWN          = 2,
 		JOYARM_BUTTON_SHOOT                = 1,
 		JOYARM_BUTTON_SHOOT_MAX			   = 5,
 		JOYARM_BUTTON_SHOOT_MIN            = 7,
@@ -47,8 +46,7 @@ public class RobotMap {
 		PORT_MOTOR_EXTENDER				= 8;
 	
 	// Analog ports
-    public static final int PORT_ROTATE_POT		  = 1,
-    		                PORT_STRINGPOT		  = 0;
+    public static final int  PORT_STRINGPOT		  = 0;
 	
 	//Digital I/O Ports
 	public static final int
@@ -71,5 +69,10 @@ public class RobotMap {
 		PORT_SHIFT_DRIVE_HIGH	  		= 0,
 		PORT_SHIFT_DRIVE_LOW			= 1,
 		PORT_SHIFT_HANG_ON		 	 	= 2,
-		PORT_SHIFT_HANG_OFF				= 3;
+		PORT_SHIFT_HANG_OFF				= 3,
+		PORT_INTAKE_IN_LEFT				= 4,
+		PORT_INTAKE_OUT_LEFT			= 5,
+		PORT_INTAKE_IN_RIGHT			= 6,
+		PORT_INTAKE_OUT_RIGHT			= 7;
+			
 }

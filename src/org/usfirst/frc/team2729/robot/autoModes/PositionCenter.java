@@ -14,7 +14,33 @@ import org.usfirst.frc.team2729.robot.commands.Turn;
 public class PositionCenter extends CommandGroup{
 	public PositionCenter(){
 		addSequential(new BreachDefenseAuto(100, .20));
-		addSequential(new Turn(0));
+		addSequential(new Command(){
+			@Override
+			protected void initialize() {
+				// TODO Auto-generated method stub
+				
+			}
+			@Override
+			protected void execute() {
+				// TODO Auto-generated method stub
+				new Turn(Robot.vision.findCrosshairHorizontalAngle(2));
+			}
+			@Override
+			protected boolean isFinished() {
+				// TODO Auto-generated method stub
+				return Math.abs(Robot.vision.findCrosshairHorizontalAngle(2)) < 2;
+			}
+			@Override
+			protected void end() {
+				// TODO Auto-generated method stub
+				
+			}
+			@Override
+			protected void interrupted() {
+				// TODO Auto-generated method stub
+				end();
+			}
+		});
 		addSequential(new ShooterSetTilt(Robot.shoot.TILT_TARGET_MAX));
 		addSequential(new ShooterSpinUp());
 		addSequential(new Shoot());

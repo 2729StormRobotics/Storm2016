@@ -4,9 +4,11 @@ import org.usfirst.frc.team2729.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class Turn extends Command{
+public class Turn extends Command{ 
 	int _amount;
 	double _power;
+	double _angle;
+	double ANGLE_TICKS_RATIO;
 	/**
 	 * + is right, - is left
 	 */
@@ -17,6 +19,10 @@ public class Turn extends Command{
 	public Turn(int amount, double speed){
 		_amount = amount;
 		_power = speed;
+	}
+	public Turn(double angle){
+		_amount = (int) (angle * ANGLE_TICKS_RATIO);
+		_power = 0.30;
 	}
 	@Override
 	protected boolean isFinished() {return Math.abs(Robot.driveTrain.getLeftDistance()) >= Math.abs(_amount);}

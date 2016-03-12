@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import org.usfirst.frc.team2729.robot.RobotMap;
 import org.usfirst.frc.team2729.robot.commands.ExtendHanging;
-import org.usfirst.frc.team2729.robot.commands.IntakeTiltToPoint;
+import org.usfirst.frc.team2729.robot.commands.IntakeTilt;
 import org.usfirst.frc.team2729.robot.commands.PIDDrive;
 import org.usfirst.frc.team2729.robot.commands.ActuatePTO;
 import org.usfirst.frc.team2729.robot.commands.EnableHanging;
@@ -41,9 +41,8 @@ public class OI {
 						 shooterTiltMin = new JoystickButton(armJoystick, RobotMap.JOYARM_BUTTON_SHOOT_MIN),
 						 shooterSpinUP = new JoystickButton(armJoystick, RobotMap.JOYARM_BUTTON_SHOOTER_SPINUP),
 						 shooterSpinDOWN = new JoystickButton(armJoystick, RobotMap.JOYARM_BUTTON_SHOOTER_SPINDOWN),
-						 IntakeSP1 = new JoystickButton(armJoystick, RobotMap.JOYARM_BUTTON_BEAVER_SP1),
-						 IntakeSP2 = new JoystickButton(armJoystick, RobotMap.JOYARM_BUTTON_BEAVER_SP2),
-						 IntakeSP3 = new JoystickButton(armJoystick, RobotMap.JOYARM_BUTTON_BEAVER_SP3),
+						 IntakeUP = new JoystickButton(armJoystick, RobotMap.JOYARM_BUTTON_BEAVER_UP),
+						 IntakeDOWN = new JoystickButton(armJoystick, RobotMap.JOYARM_BUTTON_BEAVER_DOWN),
 						 ShootFire = new JoystickButton(armJoystick, RobotMap.JOYARM_BUTTON_SHOOT),
 						 HangSafety = new JoystickButton(armJoystick, RobotMap.JOYARM_BUTTON_HANG_SAFETY);
 	
@@ -78,9 +77,8 @@ public class OI {
 		shooterSpinUP.whenPressed(new ShooterSpinUp());
 		shooterSpinDOWN.whenPressed(new ShooterSpinDown());
 		
-		IntakeSP1.whenPressed(new IntakeTiltToPoint(1));
-		IntakeSP2.whenPressed(new IntakeTiltToPoint(2));
-		IntakeSP3.whenPressed(new IntakeTiltToPoint(3));
+		IntakeUP.whenPressed(new IntakeTilt(true));
+		IntakeDOWN.whenPressed(new IntakeTilt(false));
 		
 		ShootFire.whenPressed(new Shoot());
 		
