@@ -79,7 +79,7 @@ public class Robot extends IterativeRobot {
 	public void sendSensorData() {
 		SmartDashboard.putNumber("Right Encoder", driveTrain.getRightDistance());
 		SmartDashboard.putNumber("Left Encoder", driveTrain.getLeftDistance());
-		SmartDashboard.putNumber("Rot Pot", intake.getPot());
+		//SmartDashboard.putNumber("Rot Pot", intake.getPot());
 		//SmartDashboard.putNumber("Motor", intake.getTiltPower());
 		SmartDashboard.putNumber("Raw String Pot", Robot.shoot.getShooterPotRAW());
 		//SmartDashboard.putNumber("String Pot Length", Robot.shoot.getShooterPotLength());
@@ -94,9 +94,9 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putBoolean("Max Tilt", Robot.shoot.isMax());
 		SmartDashboard.putBoolean("Tilt Stalled", Robot.shoot.isStalled());
 		SmartDashboard.putBoolean("Tilt Out of Bounds", Robot.shoot.isOutBounds());
-		SmartDashboard.putBoolean("Intake Top", (Robot.intake.getPot()<0.850 && Robot.intake.getPot()>0.775 ? true : false));
-		SmartDashboard.putBoolean("Intake Mid", (Robot.intake.getPot()<0.500 && Robot.intake.getPot()>0.490 ? true : false));
-		SmartDashboard.putBoolean("Intake Bottom", (Robot.intake.getPot()<0.411 && Robot.intake.getPot()>0.401 ? true : false));
+		//SmartDashboard.putBoolean("Intake Top", (Robot.intake.getPot()<0.850 && Robot.intake.getPot()>0.775 ? true : false));
+		//SmartDashboard.putBoolean("Intake Mid", (Robot.intake.getPot()<0.500 && Robot.intake.getPot()>0.490 ? true : false));
+		//SmartDashboard.putBoolean("Intake Bottom", (Robot.intake.getPot()<0.411 && Robot.intake.getPot()>0.401 ? true : false));
 		SmartDashboard.putBoolean("Tilt Max", (Robot.shoot.getShooterTilt()<.320 && Robot.shoot.getShooterTilt()>.310 ? true : false));
 		SmartDashboard.putBoolean("Tilt High", (Robot.shoot.getShooterTilt()<.334 && Robot.shoot.getShooterTilt()>.324 ? true : false));
 		SmartDashboard.putBoolean("Tilt Medium", (Robot.shoot.getShooterTilt()<.357 && Robot.shoot.getShooterTilt()>.347 ? true : false));

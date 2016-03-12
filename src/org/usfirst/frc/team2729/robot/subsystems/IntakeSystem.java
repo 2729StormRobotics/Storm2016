@@ -1,6 +1,7 @@
 package org.usfirst.frc.team2729.robot.subsystems;
 
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -17,26 +18,17 @@ public class IntakeSystem extends Subsystem {
 
 	private final Talon _intakeDrive = new Talon(RobotMap.PORT_MOTOR_INTAKE_DRIVE);
 	private final Talon _intakeTilt = new Talon(RobotMap.PORT_MOTOR_INTAKE_TILT);
+	private final DoubleSolenoid _intakeLeft = new DoubleSolenoid(RobotMap.PORT_INTAKE_IN_LEFT, RobotMap.PORT_INTAKE_OUT_LEFT);
+	private final DoubleSolenoid _intakeRight = new DoubleSolenoid(RobotMap.PORT_INTAKE_IN_RIGHT, RobotMap.PORT_INTAKE_OUT_RIGHT);	
+	
 		
-	private final RotaryPot _pot = new RotaryPot(RobotMap.PORT_ROTATE_POT,1); //TODO: Determine max safe value
+
+	private boolean _isTopPosition = false;
 	
-	public final static double TILT_TARGET_MAX = 0.750;
-	public final static double TILT_TARGET_MID = 0.522;
-	public final static double TILT_TARGET_LOW = 0.420;
-	
-	//Feedback Loop Variables
-	private double target = _pot.get(); //Default to high position
-	private double Kp = 20;
-	
-	Timer _timer = new Timer();
+
 	public IntakeSystem(){
-		_timer.schedule(new TimerTask() {
-			public void run() {
-				SmartDashboard.putNumber("Target Tilt", target);
-				double error = target - _pot.get();
-				_intakeTilt.set(-(Kp * error));
-			}
-		}, 50, 50);
+		_intakeLeft.set(DoubleSolenoid.Value.kForward);
+		_intakeRight.set(DoubleSolenoid.Value.kForward);
 	}
 	
 	protected void initDefaultCommand() {
@@ -51,24 +43,20 @@ public class IntakeSystem extends Subsystem {
 	public void intakeDrive(double power) {
 		_intakeDrive.set(power);
 	}
+	
 	public double getTiltPower(){
 		return _intakeTilt.get();
 	}
 	
-	public boolean isMax(){
-		return _pot.get() >= _pot.VAL_MAX_SAFE;
+	
+	public void setIntakeTilt(boolean top){
+		_isTopPosition  = top;
+		_intakeLeft.set(top ? DoubleSolenoid.Value.kReverse
+				: DoubleSolenoid.Value.kForward);
+		_intakeRight.set(top ? DoubleSolenoid.Value.kReverse
+				: DoubleSolenoid.Value.kForward);
 	}
 	
-	public boolean isMin(){
-		return _pot.get() >= _pot.VAL_MAX_SAFE;	
-	}
-	public void setTarget(double _target){
-		target = _target;
-	}
-	public double getTarget(){
-		return target;
-	}
-	public double getPot(){
-		return _pot.get();
-	}
+	
+
 }
