@@ -43,13 +43,13 @@ public class ShootingSystem extends Subsystem {
 	private final DigitalInput _maxSwitch = new DigitalInput(RobotMap.PORT_SHOOTER_SWITCH_MAX_TILT);
 	
 	// Off robot simulation variables
-	public final double TILT_TARGET_MIN = .418;
-	public final double TILT_TARGET_MAX = .153;
-	private double TiltSpinMin = .510;
-	public final double TILT_TARGET_INTAKE = 0.225;
-	public final double TILT_TARGET_MED = 0.250;
-	public final double TILT_TARGET_HIGH = 0.200;
-	public final double TILT_TARGET_LOW = 0.350; // TODO: Determine
+	public final double TILT_TARGET_MIN = .536;
+	public final double TILT_TARGET_MAX = .317;
+	private double TiltSpinMin = .467;
+	public final double TILT_TARGET_INTAKE = 0.363;
+	public final double TILT_TARGET_MED = 0.378;
+	public final double TILT_TARGET_HIGH = 0.327;
+	public final double TILT_TARGET_LOW = 0.395; // TODO: Determine
 
 	private final double beta = 35.2664, phi = 43.62;
 	private final double ANGLE_CONST_NUM = 0.091163234, ANGLE_CONST_DENOM = 0.0895807856;
