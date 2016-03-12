@@ -1,4 +1,3 @@
-
 package org.usfirst.frc.team2729.robot;
 
 import edu.wpi.first.wpilibj.Compressor;
@@ -31,7 +30,7 @@ public class Robot extends IterativeRobot {
 	public static IntakeSystem intake;
 	public static ShootingSystem shoot;
 	public static HangingSystem hang;
-	public static VisionSystem vision;
+	//public static VisionSystem vision;
 	public static OI oi;
 	private Compressor compressor;
 	
@@ -47,7 +46,7 @@ public class Robot extends IterativeRobot {
 		shoot = new ShootingSystem();
 		hang = new HangingSystem();
 		oi = new OI();
-		vision = new VisionSystem();
+		//vision = new VisionSystem();
 		compressor = new Compressor();
 		compressor.start();
         chooser = new SendableChooser();
@@ -73,7 +72,7 @@ public class Robot extends IterativeRobot {
 		Scheduler.getInstance().run();
         sendSensorData();
     	Robot.shoot.setTargetTilt(Robot.shoot.getShooterPotRAW());
-        Robot.vision.addCrosshairs();
+        //Robot.vision.addCrosshairs();
 	}
 
 	public void sendSensorData() {
@@ -93,6 +92,7 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putBoolean("PTO On", Robot.driveTrain.getPTO());
 		SmartDashboard.putBoolean("Max Tilt", Robot.shoot.isMax());
 		SmartDashboard.putBoolean("Tilt Stalled", Robot.shoot.isStalled());
+		SmartDashboard.putBoolean("Tilt E-Stopped", Robot.shoot.isTiltEStopped());
 		SmartDashboard.putBoolean("Tilt Out of Bounds", Robot.shoot.isOutBounds());
 		//SmartDashboard.putBoolean("Intake Top", (Robot.intake.getPot()<0.850 && Robot.intake.getPot()>0.775 ? true : false));
 		//SmartDashboard.putBoolean("Intake Mid", (Robot.intake.getPot()<0.500 && Robot.intake.getPot()>0.490 ? true : false));
@@ -127,22 +127,23 @@ public class Robot extends IterativeRobot {
     public void autonomousPeriodic() {
         Scheduler.getInstance().run();
         sendSensorData();
-        Robot.vision.addCrosshairs();
+        //Robot.vision.addCrosshairs();
     }
 
     public void teleopInit() {
         if (autonomousCommand != null) autonomousCommand.cancel();
         Robot.shoot.unStall();
+        Robot.shoot.setTiltEStopped(false);
     }
 
     public void teleopPeriodic() {
         Scheduler.getInstance().run();
         sendSensorData();
-        Robot.vision.addCrosshairs();
+        //Robot.vision.addCrosshairs();
     }
     
     public void testPeriodic() {
         LiveWindow.run();
-        Robot.vision.addCrosshairs();
+        ///Robot.vision.addCrosshairs();
     }
 }
