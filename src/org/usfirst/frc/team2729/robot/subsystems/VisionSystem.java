@@ -22,6 +22,7 @@ public class VisionSystem extends Subsystem {
 	boolean targetDetected;
 	double targetDistance, towerDistance;
 	double targetVerticalAngle, targetHorizontalAngle;
+	double crosshairHorizontalAngle; //angle from target to crosshair
 	
 	//A structure to hold measurements of a particle
 	public class ParticleReport implements Comparator<ParticleReport>, Comparable<ParticleReport>{
@@ -51,9 +52,6 @@ public class VisionSystem extends Subsystem {
 				
 	//Session
 	int session;
-	
-	//Camera
-	AxisCamera camera;
 
 	//Images
 	Image frame;
@@ -103,9 +101,6 @@ public class VisionSystem extends Subsystem {
     	session = NIVision.IMAQdxOpenCamera("cam0", NIVision.IMAQdxCameraControlMode.CameraControlModeController);
     	NIVision.IMAQdxConfigureGrab(session);
     	NIVision.IMAQdxStartAcquisition(session);
-    	
-    	//switch cameras with button
-    	//camera = new AxisCamera("axis-camera.local");
     	
     	//TESTING
     	/*
@@ -211,7 +206,6 @@ public class VisionSystem extends Subsystem {
 	
 	public void processImage(){
 		NIVision.IMAQdxGrab(session, frame, 1);
-    	//camera.getImage(frame);
 
 		//Threshold the image looking for green (retroreflective target color)
 		NIVision.imaqColorThreshold(binaryFrame, frame, 255, NIVision.ColorMode.HSV, TARGET_HUE_RANGE, TARGET_SAT_RANGE, TARGET_VAL_RANGE);
@@ -289,6 +283,7 @@ public class VisionSystem extends Subsystem {
 			
 			if(particles.size()>0){
 				particles.set(0, particles.elementAt(topWidthIndex));
+				
 				//Scores the largest particle
 				scores.Aspect = AspectScore(particles.elementAt(0));
 				//SmartDashboard.putNumber("Aspect", scores.Aspect);
@@ -349,6 +344,66 @@ public class VisionSystem extends Subsystem {
 		
 		//Send image to dashboard to assist drivers
 		CameraServer.getInstance().setImage(frame);
+	}
+	
+	/**
+	 * Returns horizontal angle from the target to specified crosshair.
+	 * <p>
+	 * A positive angle means the target is to the right of the crosshair, <br>
+	 * and a negative angle means the target is to the left of the crosshair.
+	 * <p>
+	 * A value of 10113 means the target has not been found (error code A113).
+	 *
+	 * @param  crosshairNum  the number of the crosshair to which the robot is aligning
+	 */
+	public double findCrosshairHorizontalAngle(int crosshairNum){		
+		NIVision.IMAQdxGrab(session, frame, 1);
+
+		//Threshold the image looking for green (retroreflective target color)
+		NIVision.imaqColorThreshold(binaryFrame, frame, 255, NIVision.ColorMode.HSV, TARGET_HUE_RANGE, TARGET_SAT_RANGE, TARGET_VAL_RANGE);
+
+		//filter out small particles
+		float areaMin = (float)AREA_MINIMUM;
+		criteria[0].lower = areaMin;
+		imaqError = NIVision.imaqParticleFilter4(binaryFrame, binaryFrame, criteria, filterOptions, null);
+
+		//Send particle count after filtering to dashboard
+		int numParticles = NIVision.imaqCountParticles(binaryFrame, 1);
+		
+		if(numParticles > 0)
+		{
+			//Measure particles and sort by particle size
+			Vector<ParticleReport> particles = new Vector<ParticleReport>();
+			int topWidthIndex = 0;
+			for(int particleIndex = 0; particleIndex < numParticles; particleIndex++)
+			{
+				ParticleReport par = new ParticleReport();
+				par.PercentAreaToImageArea = NIVision.imaqMeasureParticle(binaryFrame, particleIndex, 0, NIVision.MeasurementType.MT_AREA_BY_IMAGE_AREA);
+				par.Area = NIVision.imaqMeasureParticle(binaryFrame, particleIndex, 0, NIVision.MeasurementType.MT_AREA);
+				par.BoundingRectTop = NIVision.imaqMeasureParticle(binaryFrame, particleIndex, 0, NIVision.MeasurementType.MT_BOUNDING_RECT_TOP);
+				par.BoundingRectLeft = NIVision.imaqMeasureParticle(binaryFrame, particleIndex, 0, NIVision.MeasurementType.MT_BOUNDING_RECT_LEFT);
+				par.BoundingRectBottom = NIVision.imaqMeasureParticle(binaryFrame, particleIndex, 0, NIVision.MeasurementType.MT_BOUNDING_RECT_BOTTOM);
+				par.BoundingRectRight = NIVision.imaqMeasureParticle(binaryFrame, particleIndex, 0, NIVision.MeasurementType.MT_BOUNDING_RECT_RIGHT);
+				if(AreaScore(par) > 70 && (par.BoundingRectRight-par.BoundingRectLeft) > 100) {
+					particles.add(par); //if(par.BoundingRectTop>480)	
+					if((par.BoundingRectRight - par.BoundingRectLeft) > (particles.elementAt(topWidthIndex).BoundingRectRight - particles.elementAt(topWidthIndex).BoundingRectLeft)) {
+						topWidthIndex = particles.size()-1;
+					}
+				}
+			}
+			//particles.sort(null);
+			
+			if(particles.size()>0){
+				particles.set(0, particles.elementAt(topWidthIndex));
+				
+				targetHorizontalAngle = computeHorizontalAngle(binaryFrame, particles.elementAt(0));
+				crosshairHorizontalAngle = computeCrosshairHorizontalAngle(binaryFrame, targetHorizontalAngle, crosshairNum);
+			}
+		} else {
+			return 10113; //target not detected (error A-113)
+		}
+
+		return crosshairHorizontalAngle;
 	}
 
 	//Comparator function for sorting particles. Returns true if particle 1 is larger
@@ -430,5 +485,12 @@ public class VisionSystem extends Subsystem {
   		SmartDashboard.putNumber("Particle Center Y", particleCenterY);
   		
   		return Math.sqrt((Math.pow(particleCenterX - ((double) (crosshairRight[crosshairNum].x-crosshairLeft[crosshairNum].x))/2, 2) + Math.pow(particleCenterY - crosshairLeft[crosshairNum].y, 2)));
+  	}
+  	
+  	private double computeCrosshairHorizontalAngle(Image image, double targetHorizontalAngle, int crosshairNum){  	
+  		NIVision.GetImageSizeResult size;
+		size = NIVision.imaqGetImageSize(image);
+		
+  		return ((crosshairLeft[crosshairNum].x + (crosshairRight[crosshairNum].x - crosshairLeft[crosshairNum].x)/2)/size.width * VIEW_ANGLE - 30) - targetHorizontalAngle;
   	}
 }
