@@ -18,7 +18,6 @@ public class DriveTrain extends Subsystem {
 	private final Encoder _leftEncoder = new Encoder(RobotMap.PORT_ENCODER_DRIVE_LEFT_1, RobotMap.PORT_ENCODER_DRIVE_LEFT_2),
 						  _rightEncoder = new Encoder(RobotMap.PORT_ENCODER_DRIVE_RIGHT_1, RobotMap.PORT_ENCODER_DRIVE_RIGHT_2);;
 	private final DoubleSolenoid _shifter = new DoubleSolenoid(RobotMap.PORT_SHIFT_DRIVE_HIGH, RobotMap.PORT_SHIFT_DRIVE_LOW);
-	private final DoubleSolenoid _pto = new DoubleSolenoid(RobotMap.PORT_SHIFT_HANG_ON, RobotMap.PORT_SHIFT_HANG_OFF);
 	
 	private boolean _halfOne = false, _halfTwo = false;
 	private boolean _isHighGear = false;
@@ -26,7 +25,6 @@ public class DriveTrain extends Subsystem {
 	
 	public DriveTrain(){
 		_shifter.set(DoubleSolenoid.Value.kForward);
-		_pto.set(DoubleSolenoid.Value.kForward);
 		_isHighGear = false;
 	}
 	
@@ -92,11 +90,7 @@ public class DriveTrain extends Subsystem {
 	public boolean getHighGear(){
 		return _isHighGear;
 	}
-	public void setPTO(boolean enabled){
-		_isPTOEnabled = enabled;
-		_pto.set(enabled ? DoubleSolenoid.Value.kReverse
-				: DoubleSolenoid.Value.kForward);
-	}
+	
 	public boolean getPTO(){
 		return _isPTOEnabled;
 	}

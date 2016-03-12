@@ -10,7 +10,6 @@ import org.usfirst.frc.team2729.robot.RobotMap;
 import org.usfirst.frc.team2729.robot.commands.ExtendHanging;
 import org.usfirst.frc.team2729.robot.commands.IntakeTilt;
 import org.usfirst.frc.team2729.robot.commands.PIDDrive;
-import org.usfirst.frc.team2729.robot.commands.ActuatePTO;
 import org.usfirst.frc.team2729.robot.commands.EnableHanging;
 import org.usfirst.frc.team2729.robot.commands.Shift;
 import org.usfirst.frc.team2729.robot.commands.Shoot;
@@ -64,8 +63,6 @@ public class OI {
 	
 	public OI(){
 		//Driver Commands
-		togglePTOOn.whenPressed(new ActuatePTO(true));
-		togglePTOOff.whenPressed(new ActuatePTO(false));
 		
 		shiftHighDrive.whenPressed(new Shift(true));
 		shiftLowDrive.whenPressed(new Shift(false));

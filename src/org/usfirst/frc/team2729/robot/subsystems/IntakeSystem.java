@@ -18,8 +18,7 @@ public class IntakeSystem extends Subsystem {
 
 	private final Talon _intakeDrive = new Talon(RobotMap.PORT_MOTOR_INTAKE_DRIVE);
 	private final Talon _intakeTilt = new Talon(RobotMap.PORT_MOTOR_INTAKE_TILT);
-	private final DoubleSolenoid _intakeLeft = new DoubleSolenoid(RobotMap.PORT_INTAKE_IN_LEFT, RobotMap.PORT_INTAKE_OUT_LEFT);
-	private final DoubleSolenoid _intakeRight = new DoubleSolenoid(RobotMap.PORT_INTAKE_IN_RIGHT, RobotMap.PORT_INTAKE_OUT_RIGHT);	
+	private final DoubleSolenoid _intake = new DoubleSolenoid(RobotMap.PORT_SHIFT_HANG_ON, RobotMap.PORT_SHIFT_HANG_OFF);
 	
 		
 
@@ -27,8 +26,7 @@ public class IntakeSystem extends Subsystem {
 	
 
 	public IntakeSystem(){
-		_intakeLeft.set(DoubleSolenoid.Value.kForward);
-		_intakeRight.set(DoubleSolenoid.Value.kForward);
+		_intake.set(DoubleSolenoid.Value.kForward);
 	}
 	
 	protected void initDefaultCommand() {
@@ -51,9 +49,7 @@ public class IntakeSystem extends Subsystem {
 	
 	public void setIntakeTilt(boolean top){
 		_isTopPosition  = top;
-		_intakeLeft.set(top ? DoubleSolenoid.Value.kReverse
-				: DoubleSolenoid.Value.kForward);
-		_intakeRight.set(top ? DoubleSolenoid.Value.kReverse
+		_intake.set(top ? DoubleSolenoid.Value.kReverse
 				: DoubleSolenoid.Value.kForward);
 	}
 	

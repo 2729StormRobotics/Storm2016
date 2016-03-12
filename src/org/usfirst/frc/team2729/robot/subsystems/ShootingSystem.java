@@ -43,7 +43,7 @@ public class ShootingSystem extends Subsystem {
 	private final DigitalInput _maxSwitch = new DigitalInput(RobotMap.PORT_SHOOTER_SWITCH_MAX_TILT);
 	
 	// Off robot simulation variables
-	public final double TILT_TARGET_MIN = .536;
+	public final double TILT_TARGET_MIN = .530;
 	public final double TILT_TARGET_MAX = .317;
 	private double TiltSpinMin = .467;
 	public final double TILT_TARGET_INTAKE = 0.363;
@@ -67,7 +67,7 @@ public class ShootingSystem extends Subsystem {
 	// Tilter Control Variables
 	private double targetString = _stringPot.get();
 	private double KpShoot = 10;
-	private double KiShoot = 0.06;
+	private double KiShoot = 0.1;
 	private double errorShoot = 0;
 	private double intErrorShoot = 0;
 	private boolean targetStringReached = true;
@@ -127,7 +127,7 @@ public class ShootingSystem extends Subsystem {
 						} else {
 							stallFailCount = 0;
 						}
-						if (stallFailCount == STALL_FAILED_LIMIT) {// If 2 consecutive errors occur, set stall to true
+						if (stallFailCount == STALL_FAILED_LIMIT) {// If consecutive errors occur, set stall to true
 							tiltStalled = true;
 							stallFailCount = 0;
 						}
