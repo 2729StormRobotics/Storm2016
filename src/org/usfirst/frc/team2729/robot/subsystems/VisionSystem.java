@@ -346,7 +346,17 @@ public class VisionSystem extends Subsystem {
 		CameraServer.getInstance().setImage(frame);
 	}
 	
-	public double findCrosshairHorizontalAngle(int crosshairNum){
+	/**
+	 * Returns horizontal angle from the target to specified crosshair.
+	 * <p>
+	 * A positive angle means the target is to the right of the crosshair, <br>
+	 * and a negative angle means the target is to the left of the crosshair.
+	 * <p>
+	 * A value of 10113 means the target has not been found (error code A113).
+	 *
+	 * @param  crosshairNum  the number of the crosshair to which the robot is aligning
+	 */
+	public double findCrosshairHorizontalAngle(int crosshairNum){		
 		NIVision.IMAQdxGrab(session, frame, 1);
 
 		//Threshold the image looking for green (retroreflective target color)
@@ -481,6 +491,6 @@ public class VisionSystem extends Subsystem {
   		NIVision.GetImageSizeResult size;
 		size = NIVision.imaqGetImageSize(image);
 		
-  		return targetHorizontalAngle - ((crosshairLeft[crosshairNum].x + (crosshairRight[crosshairNum].x - crosshairLeft[crosshairNum].x)/2)/size.width * VIEW_ANGLE - 30);
+  		return ((crosshairLeft[crosshairNum].x + (crosshairRight[crosshairNum].x - crosshairLeft[crosshairNum].x)/2)/size.width * VIEW_ANGLE - 30) - targetHorizontalAngle;
   	}
 }
