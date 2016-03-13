@@ -13,9 +13,10 @@ public class ShooterSpinUp extends Command {
 	public ShooterSpinUp(double targetSpeed){
 		_target = targetSpeed;
 	}
-	
+
 	@Override
 	protected void initialize() {}
+	@Override
 	protected void execute() {Robot.shoot.setTargetSpeed(_target);}
 	@Override
 	protected boolean isFinished() {

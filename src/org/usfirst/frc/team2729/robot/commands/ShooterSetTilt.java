@@ -6,7 +6,7 @@ import edu.wpi.first.wpilibj.command.Command;
 
 public class ShooterSetTilt extends Command{
 	private double _target;
-	
+
 	public ShooterSetTilt(double target){
 		_target = target;
 	}

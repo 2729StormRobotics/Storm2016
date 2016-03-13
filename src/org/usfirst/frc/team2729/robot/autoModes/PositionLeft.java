@@ -7,7 +7,6 @@ import org.usfirst.frc.team2729.robot.commands.ShooterSpinDown;
 import org.usfirst.frc.team2729.robot.commands.ShooterSpinUp;
 import org.usfirst.frc.team2729.robot.commands.Turn;
 
-
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 public class PositionLeft extends CommandGroup {

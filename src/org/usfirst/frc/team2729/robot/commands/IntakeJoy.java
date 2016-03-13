@@ -6,11 +6,12 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class IntakeJoy extends Command {
-	
+
 	public IntakeJoy(){
 		requires(Robot.intake);
 	}
-	
+
+	@Override
 	protected void initialize() {
 	}
 
@@ -19,8 +20,8 @@ public class IntakeJoy extends Command {
 		Robot.intake.intakeDrive(Robot.oi.getIntake());
 		//When Boulder is not present drive the intake belt as usual
 		//when boulder is present, only drive the intake belt backwards
-		Robot.shoot.setIntake(!Robot.shoot.getIntakeHalt() ? Robot.oi.getIntake() : 
-								(Robot.oi.getIntake() > 0 ? Robot.oi.getIntake() : 0));
+		Robot.shoot.setIntake(!Robot.shoot.getIntakeHalt() ? Robot.oi.getIntake() :
+			(Robot.oi.getIntake() > 0 ? Robot.oi.getIntake() : 0));
 		SmartDashboard.putNumber("ROBOT.oi.getIntake()", Robot.oi.getIntake());
 	}
 

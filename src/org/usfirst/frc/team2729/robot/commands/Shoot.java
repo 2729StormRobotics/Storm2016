@@ -1,10 +1,9 @@
 package org.usfirst.frc.team2729.robot.commands;
 
-import edu.wpi.first.wpilibj.command.Command;
-
 import org.usfirst.frc.team2729.robot.Robot;
 
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.command.Command;
 
 public class Shoot extends Command{
 	Timer timer = new Timer();

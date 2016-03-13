@@ -6,12 +6,12 @@ import edu.wpi.first.wpilibj.command.Command;
 
 public class IntakeTilt extends Command {
 	private final boolean _top;
-	
+
 	public IntakeTilt(boolean top) {
-    	requires(Robot.intake);
-        _top = top;
-    }
-	
+		requires(Robot.intake);
+		_top = top;
+	}
+
 	@Override
 	protected void initialize() {Robot.intake.setIntakeTilt(_top);}
 

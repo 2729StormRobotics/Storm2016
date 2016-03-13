@@ -9,22 +9,22 @@ public class HallEffectSensor implements LiveWindowSendable{
 
 	private DigitalInput _hallEffect;
 	private Counter _counter;
-	
+
 	public HallEffectSensor(int port){
 		_hallEffect = new DigitalInput(port);
 		_counter 	= new Counter(_hallEffect);
 	}
-	
+
 	public int count(){
 		return _counter.get();
 	}
-	
+
 	public void reset(){
 		_counter.reset();
 	}
-	
+
 	ITable _table;
-	
+
 	@Override
 	public void initTable(ITable subtable) {
 		_table = subtable;

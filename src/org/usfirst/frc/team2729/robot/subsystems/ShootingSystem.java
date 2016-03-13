@@ -3,20 +3,14 @@ package org.usfirst.frc.team2729.robot.subsystems;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import org.usfirst.frc.team2729.robot.Robot;
 import org.usfirst.frc.team2729.robot.RobotMap;
-import org.usfirst.frc.team2729.robot.commands.ShooterSpinUp;
-import org.usfirst.frc.team2729.robot.commands.TankDrive;
+import org.usfirst.frc.team2729.robot.util.StringPot;
 
-import edu.wpi.first.wpilibj.AnalogPotentiometer;
-import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
-import org.usfirst.frc.team2729.robot.util.StringPot;
-import edu.wpi.first.wpilibj.DigitalInput;
 
 public class ShootingSystem extends Subsystem {
 
@@ -24,9 +18,9 @@ public class ShootingSystem extends Subsystem {
 	private final Encoder _rightShooter = new Encoder(RobotMap.PORT_ENCODER_SHOOT_RIGHT_1, RobotMap.PORT_ENCODER_SHOOT_RIGHT_2);
 
 	private final Talon _left = new Talon(RobotMap.PORT_MOTOR_SHOOT_LEFT),
-						_right = new Talon(RobotMap.PORT_MOTOR_SHOOT_RIGHT),
-						_tilt = new Talon(RobotMap.PORT_MOTOR_SHOOT_TILT),
-						_intake = new Talon(RobotMap.PORT_MOTOR_SHOOT_INTAKE);
+			_right = new Talon(RobotMap.PORT_MOTOR_SHOOT_RIGHT),
+			_tilt = new Talon(RobotMap.PORT_MOTOR_SHOOT_TILT),
+			_intake = new Talon(RobotMap.PORT_MOTOR_SHOOT_INTAKE);
 
 	private double prevString = -1; // For first run through
 	private static final int stallTimeStep = 200;
@@ -41,7 +35,7 @@ public class ShootingSystem extends Subsystem {
 	private final StringPot _stringPot = new StringPot(RobotMap.PORT_STRINGPOT, 1);
 	private final DigitalInput _intakeHalt = new DigitalInput(RobotMap.PORT_LIMIT_SWITCH_INTAKE_HALT);
 	private final DigitalInput _maxSwitch = new DigitalInput(RobotMap.PORT_SHOOTER_SWITCH_MAX_TILT);
-	
+
 	// Off robot simulation variables
 	public final double TILT_TARGET_MIN = .530;
 	public final double TILT_TARGET_MAX = .317;
@@ -76,6 +70,7 @@ public class ShootingSystem extends Subsystem {
 		targetTicks = 0;
 		Timer _timer = new Timer();
 		_timer.schedule(new TimerTask() {
+			@Override
 			public void run() {
 				// Shooter Wheel PID Calculations
 				errorL = targetTicks - _leftShooter.getRate();
@@ -119,6 +114,7 @@ public class ShootingSystem extends Subsystem {
 		_timer.schedule(new TimerTask() { // Stall Detection
 			int stallFailCount = 0;
 			int estopFailCount = 0;
+			@Override
 			public void run() {
 				if (prevString != 1) {
 					if (!tiltStalled) {
@@ -133,7 +129,7 @@ public class ShootingSystem extends Subsystem {
 						}
 					}
 					if (!tiltEStopped) {
-						 // Checks motor polarity.
+						// Checks motor polarity.
 						if (Math.abs(_stringPot.get() - prevString) > TILT_ESTOP_STRING_DELTA_MIN && Math.abs(_tilt.get()) > TILT_ESTOP_MOTOR_LIMIT) {
 							//Designed to catch macro scale movements.
 							if (Math.signum(_stringPot.get() - prevString) != Math.signum(_tilt.get())) {

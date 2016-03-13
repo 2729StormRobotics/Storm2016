@@ -1,15 +1,14 @@
 package org.usfirst.frc.team2729.robot.autoModes;
 
-import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.command.CommandGroup;
-
 import org.usfirst.frc.team2729.robot.Robot;
-import org.usfirst.frc.team2729.robot.autoModes.BreachDefenseAuto;
 import org.usfirst.frc.team2729.robot.commands.Shoot;
 import org.usfirst.frc.team2729.robot.commands.ShooterSetTilt;
 import org.usfirst.frc.team2729.robot.commands.ShooterSpinDown;
 import org.usfirst.frc.team2729.robot.commands.ShooterSpinUp;
 import org.usfirst.frc.team2729.robot.commands.Turn;
+
+import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.command.CommandGroup;
 
 public class PositionCenter extends CommandGroup{
 	public PositionCenter(){
@@ -18,7 +17,7 @@ public class PositionCenter extends CommandGroup{
 			@Override
 			protected void initialize() {
 				// TODO Auto-generated method stub
-				
+
 			}
 			@Override
 			protected void execute() {
@@ -33,7 +32,7 @@ public class PositionCenter extends CommandGroup{
 			@Override
 			protected void end() {
 				// TODO Auto-generated method stub
-				
+
 			}
 			@Override
 			protected void interrupted() {

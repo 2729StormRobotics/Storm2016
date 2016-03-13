@@ -14,7 +14,7 @@ public class EnableHanging extends Command {
 
 	@Override
 	protected boolean isFinished() {return false;}
-	
+
 	@Override
 	protected void end() {Robot.hang.setEnabled(false);}
 	@Override

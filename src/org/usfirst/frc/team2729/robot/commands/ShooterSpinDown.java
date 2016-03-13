@@ -6,11 +6,12 @@ import edu.wpi.first.wpilibj.command.Command;
 
 public class ShooterSpinDown extends Command {
 	public ShooterSpinDown(){}
-	
+
 	@Override
 	protected void initialize() {}
 
-	protected void execute() {Robot.shoot.setTargetSpeed(0); Robot.shoot.haltSpin();}	
+	@Override
+	protected void execute() {Robot.shoot.setTargetSpeed(0); Robot.shoot.haltSpin();}
 	@Override
 	protected boolean isFinished() {
 		return true;

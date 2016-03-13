@@ -1,11 +1,5 @@
 package org.usfirst.frc.team2729.robot;
 
-import edu.wpi.first.wpilibj.Compressor;
-import edu.wpi.first.wpilibj.IterativeRobot;
-import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.command.Scheduler;
-import edu.wpi.first.wpilibj.livewindow.LiveWindow;
-
 import org.usfirst.frc.team2729.robot.autoModes.BreachDefenseAuto;
 import org.usfirst.frc.team2729.robot.autoModes.DoNothing;
 import org.usfirst.frc.team2729.robot.autoModes.PositionCenter;
@@ -13,14 +7,17 @@ import org.usfirst.frc.team2729.robot.autoModes.PositionCenterLeft;
 import org.usfirst.frc.team2729.robot.autoModes.PositionCenterRight;
 import org.usfirst.frc.team2729.robot.autoModes.PositionLeft;
 import org.usfirst.frc.team2729.robot.autoModes.PositionRight;
-import org.usfirst.frc.team2729.robot.commands.ShooterSpinUp;
-import org.usfirst.frc.team2729.robot.commands.TankDrive;
 import org.usfirst.frc.team2729.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team2729.robot.subsystems.HangingSystem;
 import org.usfirst.frc.team2729.robot.subsystems.IntakeSystem;
 import org.usfirst.frc.team2729.robot.subsystems.ShootingSystem;
 import org.usfirst.frc.team2729.robot.subsystems.VisionSystem;
 
+import edu.wpi.first.wpilibj.Compressor;
+import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.command.Scheduler;
+import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -33,10 +30,11 @@ public class Robot extends IterativeRobot {
 	public static VisionSystem vision;
 	public static OI oi;
 	private Compressor compressor;
-	
-    Command autonomousCommand;
-    SendableChooser chooser;
 
+	Command autonomousCommand;
+	SendableChooser chooser;
+
+	@Override
 	public void robotInit() {
 		Command autoCommand;
 		String[] autoModeNames;
@@ -49,30 +47,32 @@ public class Robot extends IterativeRobot {
 		vision = new VisionSystem();
 		compressor = new Compressor();
 		compressor.start();
-        chooser = new SendableChooser();
-        
+		chooser = new SendableChooser();
+
 		autoModeNames = new String[]{"Do Nothing","Drive To Defense", "Drive to Defense Backwards","Position Center Left", "Position Left", "Position Center", "Position Center Right", "Position Right" };
 		autoModes = new Command[]{new DoNothing(), new BreachDefenseAuto(3000,.4), new BreachDefenseAuto(-3000, .4), new PositionCenterLeft(), new PositionLeft(), new PositionCenter(), new PositionCenterRight(), new PositionRight()};
-		
+
 		//configure and send the sendableChooser, which allows the modes
 		//to be chosen via radio button on the SmartDashboard
 		for(int i = 0; i < autoModes.length; ++i){
 			chooser.addObject(autoModeNames[i], autoModes[i]);
 		}
-        SmartDashboard.putData("Auto mode", chooser);
-        SmartDashboard.putNumber("Encoder", driveTrain.getRightSpeedEnc());
-    }
+		SmartDashboard.putData("Auto mode", chooser);
+		SmartDashboard.putNumber("Encoder", driveTrain.getRightSpeedEnc());
+	}
 
-    public void disabledInit(){
-    	Robot.shoot.setTargetSpeed(0);
-    	Robot.shoot.setTargetTilt(Robot.shoot.getShooterPotRAW());
-    }
-	
+	@Override
+	public void disabledInit(){
+		Robot.shoot.setTargetSpeed(0);
+		Robot.shoot.setTargetTilt(Robot.shoot.getShooterPotRAW());
+	}
+
+	@Override
 	public void disabledPeriodic() {
 		Scheduler.getInstance().run();
-        sendSensorData();
-    	Robot.shoot.setTargetTilt(Robot.shoot.getShooterPotRAW());
-        Robot.vision.addCrosshairs();
+		sendSensorData();
+		Robot.shoot.setTargetTilt(Robot.shoot.getShooterPotRAW());
+		Robot.vision.addCrosshairs();
 	}
 
 	public void sendSensorData() {
@@ -106,9 +106,10 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putBoolean("Transitioning", (Robot.shoot.getTiltPower()>.01 ? true : false));
 		SmartDashboard.putBoolean("String Target Point", Robot.shoot.getTargetReached());
 	}
-    public void autonomousInit() {
-        autonomousCommand = (Command) chooser.getSelected();
-        
+	@Override
+	public void autonomousInit() {
+		autonomousCommand = (Command) chooser.getSelected();
+
 		/* String autoSelected = SmartDashboard.getString("Auto Selector", "Default");
 		switch(autoSelected) {
 		case "My Auto":
@@ -119,31 +120,39 @@ public class Robot extends IterativeRobot {
 			autonomousCommand = new ExampleCommand();
 			break;
 		} */
-    	
-    	// schedule the autonomous command (example)
-        if (autonomousCommand != null) autonomousCommand.start();
-    }
 
-    public void autonomousPeriodic() {
-        Scheduler.getInstance().run();
-        sendSensorData();
-        Robot.vision.addCrosshairs();
-    }
+		// schedule the autonomous command (example)
+		if (autonomousCommand != null) {
+			autonomousCommand.start();
+		}
+	}
 
-    public void teleopInit() {
-        if (autonomousCommand != null) autonomousCommand.cancel();
-        Robot.shoot.unStall();
-        Robot.shoot.setTiltEStopped(false);
-    }
+	@Override
+	public void autonomousPeriodic() {
+		Scheduler.getInstance().run();
+		sendSensorData();
+		Robot.vision.addCrosshairs();
+	}
 
-    public void teleopPeriodic() {
-        Scheduler.getInstance().run();
-        sendSensorData();
-        Robot.vision.addCrosshairs();
-    }
-    
-    public void testPeriodic() {
-        LiveWindow.run();
-        Robot.vision.addCrosshairs();
-    }
+	@Override
+	public void teleopInit() {
+		if (autonomousCommand != null) {
+			autonomousCommand.cancel();
+		}
+		Robot.shoot.unStall();
+		Robot.shoot.setTiltEStopped(false);
+	}
+
+	@Override
+	public void teleopPeriodic() {
+		Scheduler.getInstance().run();
+		sendSensorData();
+		Robot.vision.addCrosshairs();
+	}
+
+	@Override
+	public void testPeriodic() {
+		LiveWindow.run();
+		Robot.vision.addCrosshairs();
+	}
 }
