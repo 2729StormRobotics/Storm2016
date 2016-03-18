@@ -2,6 +2,7 @@ package org.usfirst.frc.team2729.robot;
 
 import org.usfirst.frc.team2729.robot.autoModes.BreachDefenseAuto;
 import org.usfirst.frc.team2729.robot.autoModes.DoNothing;
+import org.usfirst.frc.team2729.robot.autoModes.PIDDriveAuto;
 import org.usfirst.frc.team2729.robot.autoModes.PositionCenter;
 import org.usfirst.frc.team2729.robot.autoModes.PositionCenterLeft;
 import org.usfirst.frc.team2729.robot.autoModes.PositionCenterRight;
@@ -49,8 +50,8 @@ public class Robot extends IterativeRobot {
 		compressor.start();
 		chooser = new SendableChooser();
 
-		autoModeNames = new String[]{"Do Nothing","Drive To Defense", "Drive to Defense Backwards","Position Center Left", "Position Left", "Position Center", "Position Center Right", "Position Right" };
-		autoModes = new Command[]{new DoNothing(), new BreachDefenseAuto(3000,.4), new BreachDefenseAuto(-3000, .4), new PositionCenterLeft(), new PositionLeft(), new PositionCenter(), new PositionCenterRight(), new PositionRight()};
+		autoModeNames = new String[]{"Do Nothing","Drive for 4 Seconds","Drive To Defense", "Drive to Defense Backwards","Position Center Left", "Position Left", "Position Center", "Position Center Right", "Position Right" };
+		autoModes = new Command[]{new DoNothing(), new PIDDriveAuto(1, 4, true), new BreachDefenseAuto(3000,.4, true), new BreachDefenseAuto(-3000, .4, true), new PositionCenterLeft(), new PositionLeft(), new PositionCenter(), new PositionCenterRight(), new PositionRight()};
 
 		//configure and send the sendableChooser, which allows the modes
 		//to be chosen via radio button on the SmartDashboard

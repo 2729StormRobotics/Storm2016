@@ -11,11 +11,14 @@ public class PIDDriveAuto extends Command{
 	double _power;
 	double _time;
 	Timer _timer;
+	boolean _accelerate;
+	double accelFactor = 0;
 
-	public PIDDriveAuto(double power, double time){
+	public PIDDriveAuto(double power, double time, boolean accelerate){
+		requires(Robot.driveTrain);
 		_power = power;
 		_time = time;
-		requires(Robot.driveTrain);
+		_accelerate = accelerate;
 	}
 
 	@Override
@@ -23,15 +26,17 @@ public class PIDDriveAuto extends Command{
 		Robot.driveTrain.resetLeftEnc();
 		Robot.driveTrain.resetRightEnc();
 		_timer.start();
+		accelFactor = _accelerate ? 1 : 0;
 	}
 
 	@Override
 	protected void execute() {
+		accelFactor = (accelFactor >= 1 ? 1 : accelFactor + .02); //20ms tics of execute
 		double gain = SmartDashboard.getNumber("Encoder feedback gain", 0.05),
 				err  = Robot.driveTrain.getRightDistance() - Robot.driveTrain.getLeftDistance(),
 				diff = err*gain,
-				left = _power + diff/2,
-				right= _power - diff/2;
+				left = (_power * accelFactor) + diff/2,
+				right= (_power * accelFactor) - diff/2;
 		if(right < -1){
 			left -= right+1;
 			right = -1;
@@ -47,7 +52,7 @@ public class PIDDriveAuto extends Command{
 			left = 1;
 		}
 		Robot.driveTrain.tankDrive(Math.max(-1, Math.min(1, left)),
-				-Math.max(-1, Math.min(1, right)));
+				Math.max(-1, Math.min(1, right)));
 	}
 
 	@Override

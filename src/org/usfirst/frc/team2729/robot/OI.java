@@ -62,8 +62,8 @@ public class OI {
 		shiftHighDrive.whenPressed(new Shift(true));
 		shiftLowDrive.whenPressed(new Shift(false));
 
-		driveForward.whileHeld(new PIDDrive(0.15));
-		driveBackward.whileHeld(new PIDDrive(-0.15));
+		driveForward.whileHeld(new PIDDrive(1, true));
+		driveBackward.whileHeld(new PIDDrive(1, true));
 
 		//Operator Commands
 		shooterSpinUP.whenPressed(new ShooterSpinUp());

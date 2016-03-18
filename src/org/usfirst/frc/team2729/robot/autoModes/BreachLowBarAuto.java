@@ -9,6 +9,6 @@ public class BreachLowBarAuto extends CommandGroup{
 	public BreachLowBarAuto(){
 		addSequential(new IntakeTilt(false));
 		addSequential(new WaitCommand(1));
-		addSequential(new BreachDefenseAuto(3000, .25));
+		addSequential(new BreachDefenseAuto(3000, .25, true));
 	}
 }

@@ -12,7 +12,7 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 
 public class PositionCenter extends CommandGroup{
 	public PositionCenter(){
-		addSequential(new BreachDefenseAuto(100, .20));
+		addSequential(new BreachDefenseAuto(100, .20, false));
 		addSequential(new Command(){
 			@Override
 			protected void initialize() {

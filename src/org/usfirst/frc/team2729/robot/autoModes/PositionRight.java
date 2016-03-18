@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 
 public class PositionRight extends CommandGroup {
 	public PositionRight(){
-		addSequential(new BreachDefenseAuto(700,5)); //TODO: Determine Experimentally
+		addSequential(new BreachDefenseAuto(700,5, false)); //TODO: Determine Experimentally
 		addSequential(new Turn(-50)); //TODO: Determine Experimentally
 		addSequential(new ShooterSetTilt(Robot.shoot.TILT_TARGET_MAX));
 		addSequential(new ShooterSpinUp());

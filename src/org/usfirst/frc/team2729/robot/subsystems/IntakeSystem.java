@@ -43,8 +43,8 @@ public class IntakeSystem extends Subsystem {
 
 	public void setIntakeTilt(boolean top){
 		_isTopPosition  = top;
-		_intake.set(top ? DoubleSolenoid.Value.kReverse
-				: DoubleSolenoid.Value.kForward);
+		_intake.set(top ? DoubleSolenoid.Value.kForward
+				: DoubleSolenoid.Value.kReverse); //Direction decided by electrical setup
 	}
 
 
