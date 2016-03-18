@@ -61,12 +61,12 @@ public class VisionSystem extends Subsystem {
 	int imaqError;
 
 	//Crosshair
-	Point crosshairTopLeft[] = {new Point(320-50,240-50), new Point(390-50,225-50), new Point(400-50,330-50), new Point(420-50,390-50)};
-	Point crosshairBottomLeft[] = {new Point(320-50,240), new Point(390-50,225), new Point(400-50,330), new Point(420-50,390)};
-	Point crosshairTopRight[] = {new Point(320+50,240-50), new Point(390+50,225-50), new Point(400+50,330-50), new Point(420+50,390-50)};
-	Point crosshairBottomRight[] = {new Point(320+50,240), new Point(390+50,225), new Point(400+50,330), new Point(420+50,390)};
-	Point crosshairLeft[] = {new Point(320-50,240), new Point(390-50,225), new Point(400-50,330), new Point(420-50,390)};
-	Point crosshairRight[] = {new Point(320+50,240), new Point(390+50,225), new Point(400+50,330), new Point(420+50,390)};
+	Point crosshairTopLeft[] = {new Point(320-50,240-50), new Point(390-50-17,225-50), new Point(400-50-17,330-50), new Point(420-50-17,390-50)};
+	Point crosshairBottomLeft[] = {new Point(320-50,240), new Point(390-50-17,225), new Point(400-50-17,330), new Point(420-50-17,390)};
+	Point crosshairTopRight[] = {new Point(320+50,240-50), new Point(390+50-17,225-50), new Point(400+50-17,330-50), new Point(420+50-17,390-50)};
+	Point crosshairBottomRight[] = {new Point(320+50,240), new Point(390+50-17,225), new Point(400+50-17,330), new Point(420+50-17,390)};
+	Point crosshairLeft[] = {new Point(320-50,240), new Point(390-50-17,225), new Point(400-50-17,330), new Point(420-50-17,390)};
+	Point crosshairRight[] = {new Point(320+50,240), new Point(390+50-17,225), new Point(400+50-17,330), new Point(420+50-17,390)};
 	double proximity[] = {0,0,0,0};
 
 	//Ideal values
