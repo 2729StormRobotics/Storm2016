@@ -8,7 +8,7 @@ public class Turn extends Command{
 	int _amount;
 	double _power;
 	double _angle;
-	double ANGLE_TICKS_RATIO;
+	double ANGLE_TICKS_RATIO = 4000/90;
 	/**
 	 * + is right, - is left
 	 */

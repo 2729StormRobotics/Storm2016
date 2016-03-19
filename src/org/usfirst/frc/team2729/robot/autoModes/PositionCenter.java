@@ -43,7 +43,7 @@ public class PositionCenter extends CommandGroup{
 		addSequential(new ShooterSetTilt(Robot.shoot.TILT_TARGET_MAX));
 		addSequential(new ShooterSpinUp());
 		addSequential(new Shoot());
-		addSequential(new ShooterSetTilt(Robot.shoot.TILT_TARGET_MIN));
 		addSequential(new ShooterSpinDown());
+		addSequential(new ShooterSetTilt(Robot.shoot.TILT_TARGET_MIN));
 	}
 }
