@@ -359,8 +359,6 @@ public class VisionSystem extends Subsystem {
 	 * @param  crosshairNum  the number of the crosshair to which the robot is aligning
 	 */
 	public double findCrosshairHorizontalAngle(int crosshairNum){
-		
-		
 		NIVision.IMAQdxGrab(session, frame, 1);
 
 		//Threshold the image looking for green (retroreflective target color)

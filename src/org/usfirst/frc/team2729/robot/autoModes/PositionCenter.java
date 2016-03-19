@@ -15,7 +15,9 @@ public class PositionCenter extends CommandGroup{
 	public PositionCenter(){
 		//addSequential(new BreachDefenseAuto(100, .20, false));
 		//double angle = 
-		addSequential(new Turn(Math.abs(Robot.vision.findCrosshairHorizontalAngle(3))> 90 ? 0 : Robot.vision.findCrosshairHorizontalAngle(3), .40));
+		addSequential(new AlignTurn(.6));
+		addSequential(new AlignTurn(.4));
+		addSequential(new AlignTurn(.2));
 		//SmartDashboard.putNumber("JKAFDHJHDAWHDIAWHDJAWHDI", Robot.vision.findCrosshairHorizontalAngle(3));
 		//addSequential(new Turn(Math.abs(Robot.vision.findCrosshairHorizontalAngle(3))> 90 ? 0 : Robot.vision.findCrosshairHorizontalAngle(3), .30));
 		//addSequential(new Turn(Math.abs(Robot.vision.findCrosshairHorizontalAngle(3))> 90 ? 0 : Robot.vision.findCrosshairHorizontalAngle(3), .20));
