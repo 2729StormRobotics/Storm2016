@@ -13,8 +13,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class PositionCenter extends CommandGroup{
 	public PositionCenter(){
-		//addSequential(new BreachDefenseAuto(100, .20, false));
-		//double angle = 
+		addSequential(new PIDDriveAuto(-.75, 3, true));
 		addSequential(new AlignTurn(.6));
 		addSequential(new AlignTurn(.4));
 		addSequential(new AlignTurn(.2));

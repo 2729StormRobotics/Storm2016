@@ -10,5 +10,8 @@ public class BreachLowBarAuto extends CommandGroup{
 		addSequential(new IntakeTilt(false));
 		addSequential(new WaitCommand(1));
 		addSequential(new PIDDriveAuto(-.25, 4, true));
+		addSequential(new AlignTurn(.6));
+		addSequential(new AlignTurn(.4));
+		addSequential(new AlignTurn(.2));
 	}
 }
