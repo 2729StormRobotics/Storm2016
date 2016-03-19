@@ -3,6 +3,7 @@ package org.usfirst.frc.team2729.robot.subsystems;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import org.usfirst.frc.team2729.robot.Robot;
 import org.usfirst.frc.team2729.robot.RobotMap;
 import org.usfirst.frc.team2729.robot.util.StringPot;
 
@@ -61,7 +62,7 @@ public class ShootingSystem extends Subsystem {
 	// Tilter Control Variables
 	private double targetString = _stringPot.get();
 	private double KpShoot = 10;
-	private double KiShoot = 0.1;
+	private double KiShoot = 0.2;
 	private double errorShoot = 0;
 	private double intErrorShoot = 0;
 	private boolean targetStringReached = true;
@@ -75,8 +76,10 @@ public class ShootingSystem extends Subsystem {
 				// Shooter Wheel PID Calculations
 				errorL = targetTicks - _leftShooter.getRate();
 				errorR = targetTicks - _rightShooter.getRate();
-				IntErrorLeft += errorL;
-				IntErrorRight += errorR;
+				if(targetTicks != 0){
+					IntErrorLeft += errorL;
+					IntErrorRight += errorR;
+				}
 				// _right.set((KpRight * errorR) + (KiRight * IntErrorRight));
 				_right.set((KpLeft * errorL) + (KiLeft * IntErrorLeft)); //Temporary fix to encoder problems
 				_left.set((KpLeft * errorL) + (KiLeft * IntErrorLeft));
@@ -108,7 +111,9 @@ public class ShootingSystem extends Subsystem {
 				if (isMax() || isMin()) {
 					intErrorShoot = 0;
 				}
-
+				if(_stringPot.get() < 0.375){
+					Robot.intake.setIntakeTilt(false);
+				}
 				SmartDashboard.putNumber("Shoot Tilt Target", targetString);
 			}
 		}, 50, 50);

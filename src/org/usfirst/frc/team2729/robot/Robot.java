@@ -51,7 +51,7 @@ public class Robot extends IterativeRobot {
 		chooser = new SendableChooser();
 
 		autoModeNames = new String[]{"Do Nothing","Drive for 4 Seconds","Drive To Defense", "Drive to Defense Backwards","Position Center Left", "Position Left", "Position Center", "Position Center Right", "Position Right" };
-		autoModes = new Command[]{new DoNothing(), new PIDDriveAuto(1, 4, true), new BreachDefenseAuto(3000,.4, true), new BreachDefenseAuto(-3000, .4, true), new PositionCenterLeft(), new PositionLeft(), new PositionCenter(), new PositionCenterRight(), new PositionRight()};
+		autoModes = new Command[]{new DoNothing(), new PIDDriveAuto(.5, 4, false), new BreachDefenseAuto(3000,.4, true), new BreachDefenseAuto(-3000, .4, true), new PositionCenterLeft(), new PositionLeft(), new PositionCenter(), new PositionCenterRight(), new PositionRight()};
 
 		//configure and send the sendableChooser, which allows the modes
 		//to be chosen via radio button on the SmartDashboard

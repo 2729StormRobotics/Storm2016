@@ -11,11 +11,12 @@ public class PIDDriveAuto extends Command{
 	double _power;
 	double _time;
 	Timer _timer;
-	boolean _accelerate;
+	boolean _accelerate = false;
 	double accelFactor = 0;
 
 	public PIDDriveAuto(double power, double time, boolean accelerate){
 		requires(Robot.driveTrain);
+		_timer = new Timer();
 		_power = power;
 		_time = time;
 		_accelerate = accelerate;

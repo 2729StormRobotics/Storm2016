@@ -13,10 +13,7 @@ public class IntakeSystem extends Subsystem {
 	private final Talon _intakeTilt = new Talon(RobotMap.PORT_MOTOR_INTAKE_TILT);
 	private final DoubleSolenoid _intake = new DoubleSolenoid(RobotMap.PORT_SHIFT_HANG_ON, RobotMap.PORT_SHIFT_HANG_OFF);
 
-
-
 	private boolean _isTopPosition = false;
-
 
 	public IntakeSystem(){
 		_intake.set(DoubleSolenoid.Value.kForward);
@@ -46,7 +43,4 @@ public class IntakeSystem extends Subsystem {
 		_intake.set(top ? DoubleSolenoid.Value.kForward
 				: DoubleSolenoid.Value.kReverse); //Direction decided by electrical setup
 	}
-
-
-
 }
