@@ -80,6 +80,7 @@ public class ShootingSystem extends Subsystem {
 				// _right.set((KpRight * errorR) + (KiRight * IntErrorRight));
 				_right.set((KpLeft * errorL) + (KiLeft * IntErrorLeft)); //Temporary fix to encoder problems
 				_left.set((KpLeft * errorL) + (KiLeft * IntErrorLeft));
+				SmartDashboard.putNumber("SHOOT PID OUT", (KpLeft * errorL) + (KiLeft * IntErrorLeft));
 				if (_stringPot.get() > TiltSpinMin) {
 					haltSpin();
 				}
