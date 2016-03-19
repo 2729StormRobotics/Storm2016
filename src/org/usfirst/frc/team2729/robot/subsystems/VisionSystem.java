@@ -78,7 +78,7 @@ public class VisionSystem extends Subsystem {
 	NIVision.Range TARGET_HUE_RANGE = new NIVision.Range(70, 90);	//Default hue range for target //50 140
 	NIVision.Range TARGET_SAT_RANGE = new NIVision.Range(100, 140);	//Default saturation range for target //100 255
 	NIVision.Range TARGET_VAL_RANGE = new NIVision.Range(250, 255);	//Default value range for target
-	double AREA_MINIMUM = 0.5; //Default Area minimum for particle as a percentage of total image area
+	double AREA_MINIMUM = 0.1; //Default Area minimum for particle as a percentage of total image area
 	double SCORE_MIN = 50.0;  //Minimum score to be considered a target
 	double VIEW_ANGLE = 60; //View angle for camera, set to 49.4 for Axis m1011 by default, 64 for m1013, 51.7 for 206, 52 for HD3000 square, 60 for HD3000 640x480
 	NIVision.ParticleFilterCriteria2 criteria[] = new NIVision.ParticleFilterCriteria2[1];
@@ -359,18 +359,29 @@ public class VisionSystem extends Subsystem {
 	 * @param  crosshairNum  the number of the crosshair to which the robot is aligning
 	 */
 	public double findCrosshairHorizontalAngle(int crosshairNum){
+		
+		
 		NIVision.IMAQdxGrab(session, frame, 1);
 
 		//Threshold the image looking for green (retroreflective target color)
 		NIVision.imaqColorThreshold(binaryFrame, frame, 255, NIVision.ColorMode.HSV, TARGET_HUE_RANGE, TARGET_SAT_RANGE, TARGET_VAL_RANGE);
+		
+		//Send particle count to dashboard
+		int numParticles = NIVision.imaqCountParticles(binaryFrame, 1);
+		
+		//Send image to dashboard to assist drivers
+		//CameraServer.getInstance().setImage(frame);
 
+		//Send masked image to dashboard to assist in tweaking mask
+		CameraServer.getInstance().setImage(binaryFrame);
+				
 		//filter out small particles
 		float areaMin = (float)AREA_MINIMUM;
 		criteria[0].lower = areaMin;
 		imaqError = NIVision.imaqParticleFilter4(binaryFrame, binaryFrame, criteria, filterOptions, null);
 
 		//Send particle count after filtering to dashboard
-		int numParticles = NIVision.imaqCountParticles(binaryFrame, 1);
+		numParticles = NIVision.imaqCountParticles(binaryFrame, 1);
 
 		if(numParticles > 0)
 		{
@@ -386,7 +397,7 @@ public class VisionSystem extends Subsystem {
 				par.BoundingRectLeft = NIVision.imaqMeasureParticle(binaryFrame, particleIndex, 0, NIVision.MeasurementType.MT_BOUNDING_RECT_LEFT);
 				par.BoundingRectBottom = NIVision.imaqMeasureParticle(binaryFrame, particleIndex, 0, NIVision.MeasurementType.MT_BOUNDING_RECT_BOTTOM);
 				par.BoundingRectRight = NIVision.imaqMeasureParticle(binaryFrame, particleIndex, 0, NIVision.MeasurementType.MT_BOUNDING_RECT_RIGHT);
-				if(AreaScore(par) > 70 && (par.BoundingRectRight-par.BoundingRectLeft) > 100) {
+				if(AreaScore(par) > 50 && (par.BoundingRectRight-par.BoundingRectLeft) > 50) {
 					particles.add(par); //if(par.BoundingRectTop>480)
 					if((par.BoundingRectRight - par.BoundingRectLeft) > (particles.elementAt(topWidthIndex).BoundingRectRight - particles.elementAt(topWidthIndex).BoundingRectLeft)) {
 						topWidthIndex = particles.size()-1;

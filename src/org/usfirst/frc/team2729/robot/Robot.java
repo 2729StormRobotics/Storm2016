@@ -9,6 +9,7 @@ import org.usfirst.frc.team2729.robot.autoModes.PositionCenterLeft;
 import org.usfirst.frc.team2729.robot.autoModes.PositionCenterRight;
 import org.usfirst.frc.team2729.robot.autoModes.PositionLeft;
 import org.usfirst.frc.team2729.robot.autoModes.PositionRight;
+import org.usfirst.frc.team2729.robot.commands.Turn;
 import org.usfirst.frc.team2729.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team2729.robot.subsystems.HangingSystem;
 import org.usfirst.frc.team2729.robot.subsystems.IntakeSystem;
@@ -51,8 +52,8 @@ public class Robot extends IterativeRobot {
 		compressor.start();
 		chooser = new SendableChooser();
 
-		autoModeNames = new String[]{"Do Nothing","Drive for 4 Seconds","LOW BAR AUTO","Drive To Defense", "Drive to Defense Backwards","Position Center Left", "Position Left", "Position Center", "Position Center Right", "Position Right" };
-		autoModes = new Command[]{new DoNothing(), new PIDDriveAuto(-.5, 4, true),new BreachLowBarAuto(), new BreachDefenseAuto(3000,.4, true), new BreachDefenseAuto(-3000, .4, true), new PositionCenterLeft(), new PositionLeft(), new PositionCenter(), new PositionCenterRight(), new PositionRight()};
+		autoModeNames = new String[]{"Do Nothing","Drive for 4 Seconds","LOW BAR AUTO","TURN 90","Drive To Defense", "Drive to Defense Backwards","Position Center Left", "Position Left", "Position Center", "Position Center Right", "Position Right" };
+		autoModes = new Command[]{new DoNothing(), new PIDDriveAuto(-.5, 4, true),new BreachLowBarAuto(), new Turn(90.0, .4) ,new BreachDefenseAuto(3000,.4, true), new BreachDefenseAuto(-3000, .4, true), new PositionCenterLeft(), new PositionLeft(), new PositionCenter(), new PositionCenterRight(), new PositionRight()};
 
 		//configure and send the sendableChooser, which allows the modes
 		//to be chosen via radio button on the SmartDashboard
