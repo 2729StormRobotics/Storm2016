@@ -246,7 +246,7 @@ public class VisionSystem extends Subsystem {
 		//CameraServer.getInstance().setImage(frame);
 
 		//Send masked image to dashboard to assist in tweaking mask
-		//CameraServer.getInstance().setImage(binaryFrame);
+		CameraServer.getInstance().setImage(binaryFrame);
 
 		//filter out small particles
 		float areaMin = (float)AREA_MINIMUM;
@@ -271,7 +271,7 @@ public class VisionSystem extends Subsystem {
 				par.BoundingRectLeft = NIVision.imaqMeasureParticle(binaryFrame, particleIndex, 0, NIVision.MeasurementType.MT_BOUNDING_RECT_LEFT);
 				par.BoundingRectBottom = NIVision.imaqMeasureParticle(binaryFrame, particleIndex, 0, NIVision.MeasurementType.MT_BOUNDING_RECT_BOTTOM);
 				par.BoundingRectRight = NIVision.imaqMeasureParticle(binaryFrame, particleIndex, 0, NIVision.MeasurementType.MT_BOUNDING_RECT_RIGHT);
-				if(AreaScore(par) > 70 && (par.BoundingRectRight-par.BoundingRectLeft) > 100) {
+				if(AreaScore(par) > 50 && (par.BoundingRectRight-par.BoundingRectLeft) > 50) {
 					particles.add(par); //if(par.BoundingRectTop>480)
 					if((par.BoundingRectRight - par.BoundingRectLeft) > (particles.elementAt(topWidthIndex).BoundingRectRight - particles.elementAt(topWidthIndex).BoundingRectLeft)) {
 						topWidthIndex = particles.size()-1;
@@ -405,6 +405,8 @@ public class VisionSystem extends Subsystem {
 			return 10113; //target not detected (error A-113)
 		}
 
+		SmartDashboard.putNumber("Horizontal Angle to Target", targetHorizontalAngle);
+		SmartDashboard.putNumber("Horizontal Angle from Target to Crosshair", crosshairHorizontalAngle);
 		return crosshairHorizontalAngle;
 	}
 
