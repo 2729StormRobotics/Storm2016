@@ -14,17 +14,17 @@ public class AlignTurn extends Command{
 	 * + is right, - is left
 	 */
 	public AlignTurn(double speed){
-		_amount = (int)(Robot.vision.findCrosshairHorizontalAngle(3) * ANGLE_TICKS_RATIO);
+		_amount = 0;
 		_power = speed;
 	}
 
-	}
 	@Override
 	protected void interrupted() {end();}
 	@Override
 	protected void initialize() {
 		Robot.driveTrain.resetLeftEnc();
 		Robot.driveTrain.resetRightEnc();
+		_amount = (int)(Robot.vision.findCrosshairHorizontalAngle(3) * ANGLE_TICKS_RATIO);
 	}
 	@Override
 	protected void execute() {Robot.driveTrain.tankDrive(_power * (_amount>0 ? 1 :-1), _power * (_amount>0 ? 1 : -1));}
