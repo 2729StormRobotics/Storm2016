@@ -3,6 +3,8 @@ package org.usfirst.frc.team2729.robot;
 import org.usfirst.frc.team2729.robot.autoModes.BreachDefenseAuto;
 import org.usfirst.frc.team2729.robot.autoModes.BreachLowBarAuto;
 import org.usfirst.frc.team2729.robot.autoModes.DoNothing;
+import org.usfirst.frc.team2729.robot.autoModes.ManualDriveAuto;
+import org.usfirst.frc.team2729.robot.autoModes.ManualDriveLowBar;
 import org.usfirst.frc.team2729.robot.autoModes.PIDDriveAuto;
 import org.usfirst.frc.team2729.robot.autoModes.PositionCenter;
 import org.usfirst.frc.team2729.robot.autoModes.PositionCenterLeft;
@@ -45,6 +47,7 @@ public class Robot extends IterativeRobot {
 		driveTrain = new DriveTrain();
 		intake = new IntakeSystem();
 		shoot = new ShootingSystem();
+		
 		hang = new HangingSystem();
 		oi = new OI();
 		vision = new VisionSystem();
@@ -52,8 +55,8 @@ public class Robot extends IterativeRobot {
 		compressor.start();
 		chooser = new SendableChooser();
 
-		autoModeNames = new String[]{"Do Nothing","Drive for 4 Seconds","LOW BAR AUTO","TURN 90","Drive To Defense", "Drive to Defense Backwards","Position Center Left", "Position Left", "Position Center", "Position Center Right", "Position Right" };
-		autoModes = new Command[]{new DoNothing(), new PIDDriveAuto(-.75, 4, true),new BreachLowBarAuto(), new Turn(90.0, .4) ,new BreachDefenseAuto(3000,.4, true), new BreachDefenseAuto(-3000, .4, true), new PositionCenterLeft(), new PositionLeft(), new PositionCenter(), new PositionCenterRight(), new PositionRight()};
+		autoModeNames = new String[]{"Do Nothing","MAX MANUAL","40% MANUAL","MANUAL LOW BAR","Drive for 4 Seconds","LOW BAR AUTO","TURN 90","Drive To Defense", "Drive to Defense Backwards","Position Center Left", "Position Left", "Position Center", "Position Center Right", "Position Right" };
+		autoModes = new Command[]{new DoNothing(), new ManualDriveAuto(-1,5, true),new ManualDriveAuto(-.4,5, true),new ManualDriveLowBar(),new PIDDriveAuto(-.75, 4, true),new BreachLowBarAuto(), new Turn(90.0, .4) ,new BreachDefenseAuto(3000,.4, true), new BreachDefenseAuto(-3000, .4, true), new PositionCenterLeft(), new PositionLeft(), new PositionCenter(), new PositionCenterRight(), new PositionRight()};
 
 		//configure and send the sendableChooser, which allows the modes
 		//to be chosen via radio button on the SmartDashboard
