@@ -14,7 +14,7 @@ public class Turn extends Command{
 	 */
 	public Turn(int amount){
 		_amount = amount;
-		_power = 0.30;
+		_power = 0.60;
 	}
 	public Turn(int amount, double speed){
 		_amount = amount;
@@ -22,7 +22,7 @@ public class Turn extends Command{
 	}
 	public Turn(double angle){
 		_amount = (int) (angle * ANGLE_TICKS_RATIO);
-		_power = 0.30;
+		_power = 0.60;
 	}
 	@Override
 	protected boolean isFinished() {return Math.abs(Robot.driveTrain.getLeftDistance()) >= Math.abs(_amount);}
@@ -34,7 +34,7 @@ public class Turn extends Command{
 		Robot.driveTrain.resetRightEnc();
 	}
 	@Override
-	protected void execute() {Robot.driveTrain.tankDrive(_power * (_amount>0 ? 1 :-1), 0.3 * (_amount>0 ? -1 : 1));}
+	protected void execute() {Robot.driveTrain.tankDrive(_power * (_amount>0 ? 1 :-1), 0);}
 	@Override
 	protected void end() {Robot.driveTrain.halt();}
 }

@@ -12,7 +12,7 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 
 public class PositionCenter extends CommandGroup{
 	public PositionCenter(){
-		addSequential(new BreachDefenseAuto(100, .20, false));
+		//addSequential(new BreachDefenseAuto(100, .20, false));
 		addSequential(new Command(){
 			@Override
 			protected void initialize() {
@@ -40,10 +40,10 @@ public class PositionCenter extends CommandGroup{
 				end();
 			}
 		});
-		addSequential(new ShooterSetTilt(Robot.shoot.TILT_TARGET_MAX));
-		addSequential(new ShooterSpinUp());
-		addSequential(new Shoot());
-		addSequential(new ShooterSpinDown());
-		addSequential(new ShooterSetTilt(Robot.shoot.TILT_TARGET_MIN));
+		//addSequential(new ShooterSetTilt(Robot.shoot.TILT_TARGET_MAX));
+		//addSequential(new ShooterSpinUp());
+		//addSequential(new Shoot());
+		//addSequential(new ShooterSpinDown());
+		//addSequential(new ShooterSetTilt(Robot.shoot.TILT_TARGET_MIN));
 	}
 }
